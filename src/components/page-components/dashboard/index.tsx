@@ -25,10 +25,8 @@ import { UserStakeLevel } from "../../game-base/type";
 import { ModalType } from "../../game-components/base-dialog/type";
 import { ErrorApiText } from "../../game-components/error-api-text";
 import Footer from "../../game-components/footer";
-import Header from "../header";
 import Lobby from "../lobby/lobby";
 import { LobbyGameTransmitter } from "../lobby/lobby-socket-connection";
-import ButtonSwipe from "./button-swipe";
 import Styles from "./dashboard.module.scss";
 import { DashboardHandler } from "./handlers/dash-board-handler";
 import { NotificationHandler } from "./handlers/notification-handler";
@@ -141,17 +139,6 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
     }
 
     async componentDidMount() {
-        const { dashBoardHeight } = this.state;
-
-        const zoomGame = +getComputedStyle(document.getElementById("dashboard")).getPropertyValue("--zoom-game");
-
-        if (isDesktop && dashBoardHeight !== window.innerHeight) {
-            const scaleHeight = document.getElementById("dashboard").clientHeight * zoomGame;
-            this.setState({
-                dashBoardHeight: window.innerHeight + (window.innerHeight - scaleHeight) * (window.innerHeight / scaleHeight),
-            });
-        }
-
         document.addEventListener("visibilitychange", this.onVisibilityChange);
         this.backToLobbyEventId = registerGlobalMessageEvent(GlobalTransmitterEvent.BACK_TO_LOBBY, async () =>
             this.resetGameIdDashboardEvent()
@@ -288,15 +275,14 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
         return (
             <PlayerContextProvider value={authContextValue}>
                 <SettingContextProvider>
-                    {allowSwipeGameOndDesktop && <ButtonSwipe isPrev={true} swiper={this.swiperRef} />}
+
                     <div
-                        className={`${Styles["dashboard"]} ${changeGameStyle} ${!isRenderGames ? "no-scroll" : ""} ${
-                            isMobileOnly ? Styles["hidden-scrollbar"] : ""
-                        }`}
+                        className={`${Styles["dashboard"]} ${changeGameStyle} ${!isRenderGames ? "no-scroll" : ""} ${isMobileOnly ? Styles["hidden-scrollbar"] : ""
+                            }`}
                         id={"dashboard"}
                         style={this.setDashBoardStyle(isRenderGames)}
                     >
-                        <Header />
+                        {/* <Header /> */}
 
                         <SoundSettings />
 
@@ -326,7 +312,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                             </div>
                         )}
                     </div>
-                    {allowSwipeGameOndDesktop && <ButtonSwipe isPrev={false} swiper={this.swiperRef} />}
+
                 </SettingContextProvider>
             </PlayerContextProvider>
         );

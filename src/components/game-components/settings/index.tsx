@@ -1,37 +1,46 @@
-import { useContext } from "react";
-import { URLContext, updateURLContext } from "../../../_shared/react-contexts/url-context";
+
 import { useClickSound } from "../../../_shared/react-hooks";
-import { Menu } from "./menu";
 import styles from "./settings.module.scss";
+import { AnalyticsHelper, TrackingAction, TrackingFunction } from "../../../_shared/helpers";
+import { GameEventActionType } from "../../../_shared/react-contexts/game-state-context/game-event-action";
+import { useGameStateContext, useGameStatesDispatch } from "../../../_shared/react-contexts/game-state-context/game-state-context";
+import { RoundState } from "../../game-base/type";
 
 const ButtonSettingClassName = "setting-button";
 
 export function Settings() {
     const clickSound = useClickSound();
-    const { backToRedirectUrl, isDirectMode, redirectUrl } = useContext(URLContext);
+    const dispatch = useGameStatesDispatch();
+    const { roundState } = useGameStateContext();
 
-    const handleBackToLobbyOnclick = () => {
-        clickSound();
-        updateURLContext({ gameId: 0 });
-        backToRedirectUrl(redirectUrl);
+    const switchSound = () => {
     };
 
+
+    const openGuide = () => {
+        if (roundState === RoundState.Disabled) {
+            return;
+        }
+
+        clickSound();
+        dispatch({
+            type: GameEventActionType.TOGGLE_GAME_GUIDE,
+            payload: {
+                isShowGameGuide: true,
+            },
+        });
+        AnalyticsHelper.trackFunction({ function: TrackingFunction.GameGuide, action: TrackingAction.Open });
+    };
     return (
         <div className={styles["settings-container"]}>
             <div className={styles["setting-right"]}>
-                {isDirectMode && redirectUrl && (
-                    <button className={styles[ButtonSettingClassName]} onClick={() => handleBackToLobbyOnclick()}>
-                        <span id="icon-home" className="icon-home" />
-                    </button>
-                )}
+                <button className={styles[ButtonSettingClassName]} onClick={openGuide}>
+                    <span id="icon-guide  " className="icon-guide  " />
+                </button>
 
-                {!isDirectMode && (
-                    <button className={styles[ButtonSettingClassName]} onClick={() => handleBackToLobbyOnclick()}>
-                        <span id="icon-list-game" className="icon-list-game" />
-                    </button>
-                )}
-
-                <Menu />
+                <button className={styles[ButtonSettingClassName]} onClick={switchSound}>
+                    <span id="icon-sound" className="icon-sound-on" />
+                </button>
             </div>
         </div>
     );

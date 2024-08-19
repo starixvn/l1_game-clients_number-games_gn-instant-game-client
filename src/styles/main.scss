@@ -103,14 +103,17 @@ body {
     height: 100%;
     scrollbar-width: none;
 }
+
 body {
     @media screen and (max-width: 500px) and (orientation: portrait) {
         transform: scale(0.5) translate(0%, -50%);
     }
 }
+
 #__next {
     height: 100%;
 }
+
 // end
 
 .galaxy-bg {
@@ -135,6 +138,8 @@ body {
     color: var(--text-color);
     overscroll-behavior: contain;
     touch-action: pan-y;
+    height: 740px;
+    width: 448px;
 }
 
 .no-scroll-html {
@@ -152,7 +157,9 @@ body {
 
 .game-container {
     position: relative;
-    width: 100%;
+    // width: 100%;
+    width: 448px;
+    height: 740px;
 }
 
 .countdown-timer {

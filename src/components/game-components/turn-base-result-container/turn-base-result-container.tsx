@@ -13,6 +13,7 @@ export type IResultSlotContainer = {
     betChoiceBalls: string;
     groupType?: number;
     delayClassName?: string;
+    ballsPerRow?: number;
 } & Partial<GameStateContextModel>;
 
 export const TurnBaseResultSlotContainer: React.FC<IResultSlotContainer> = (props) => {
@@ -28,6 +29,7 @@ export const TurnBaseResultSlotContainer: React.FC<IResultSlotContainer> = (prop
         playResultAnimation,
         groupType,
         delayClassName,
+        ballsPerRow
     } = props;
 
     const [ballsData, setBallsData] = useState<IBall[]>([]);

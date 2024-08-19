@@ -16,7 +16,7 @@
 
 .result {
     position: relative;
-    display: grid;
+    display: flex;
     grid-template-rows: 15.3rem 1fr;
 }
 
@@ -175,10 +175,8 @@
     left: 0;
     top: 0;
     background-image: url("/static/images/next-ball/winning-previous.png?v=#{$version-image}");
-    background-image: image-set(
-        url("/static/images/next-ball/1x/winning-previous.png?v=#{$version-image}") 1x,
-        url("/static/images/next-ball/2x/winning-previous.png?v=#{$version-image}") 2x
-    );
+    background-image: image-set(url("/static/images/next-ball/1x/winning-previous.png?v=#{$version-image}") 1x,
+        url("/static/images/next-ball/2x/winning-previous.png?v=#{$version-image}") 2x);
 }
 
 .highlight-prev-result-under {
@@ -189,6 +187,7 @@
     transform: scaleY(-1);
     top: 0;
 }
+
 .highlight-prev-result-even {
     transform: scale(-1);
     top: 0;

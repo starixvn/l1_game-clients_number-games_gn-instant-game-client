@@ -16,7 +16,7 @@
     "subGuideDomain": "gn-guide",
     "enableMsgpackParser": false,
     "system": "GN",
-    "appType": 1,
+    "appType": 3,
     "useTolgeeStatic": false,
     "enableDebugLogs": true,
     "socketGatewayPath": "gateway"

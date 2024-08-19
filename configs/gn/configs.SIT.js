@@ -12,7 +12,7 @@ window.envConfig = {
     subGuideDomain: "gnsitguides",
     enableMsgpackParser: true,
     system: "GN",
-    appType: 1,
+    appType: 3,
     enableDebugLogs: true,
     socketGatewayPath: "gateway",
     useTolgeeStatic: true,

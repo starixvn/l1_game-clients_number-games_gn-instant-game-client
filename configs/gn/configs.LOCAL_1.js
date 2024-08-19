@@ -12,7 +12,7 @@ window.envConfig = {
     subGuideDomain: "gn-guide",
     enableMsgpackParser: false,
     system: "GN",
-    appType: 1,
+    appType: 3,
     enableDebugLogs: true,
     socketGatewayPath: "gateway",
     googleAnalyticId: "G-F4HZV0YQ73",

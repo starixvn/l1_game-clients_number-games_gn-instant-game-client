@@ -18,7 +18,7 @@ window.envConfig = {
     subGuideDomain: "gn-guide",
     enableMsgpackParser: false,
     system: "GN",
-    appType: 1,
+    appType: 3,
     useTolgeeStatic: false,
     sequenceGames: [1001, 1002, 1003, 1004],
     googleAnalyticId: "G-F4HZV0YQ73",

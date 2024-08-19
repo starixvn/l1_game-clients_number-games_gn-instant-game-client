@@ -575,7 +575,7 @@ abstract class GameBase<P extends GameBaseProps> extends React.PureComponent<P> 
                                 <SideBetScoreboard>{this.renderStatisticContent()}</SideBetScoreboard>
                             )}
                         </div>
-                        <Footer />
+
                     </div>
                     {!availableInGameData && <OverlayMask removeOverlay={isDisabledGame} />}
                     {this.renderGameGuideModal()}

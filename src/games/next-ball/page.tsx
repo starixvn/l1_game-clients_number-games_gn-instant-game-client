@@ -91,37 +91,11 @@ class NextBall extends GameBase<GameBaseProps> {
     }
 
     renderStatistic() {
-        const { roundHistory } = this.props.gameStateContextModel;
-        const { statisticGroup } = this.state;
-        const locale = tolgee.getLanguage() ?? "en";
-        const classNameIndo = locale === "id" ? Styles["statistic-indo"] : "";
-
-        return (
-            <PercentageStatistic
-                roundHistory={roundHistory}
-                mainChoices={[NextBallBetOptions.OVER, NextBallBetOptions.UNDER, NextBallBetOptions.ODD, NextBallBetOptions.EVEN]}
-                choicesInGroups={[
-                    [NextBallBetOptions.OVER, NextBallBetOptions.UNDER],
-                    [NextBallBetOptions.ODD, NextBallBetOptions.EVEN],
-                ]}
-                selectedGroup={statisticGroup}
-                onSelectGroup={(index: number) => this.setState({ statisticGroup: index })}
-                className={classNameIndo}
-            />
-        );
+        return <></>;
     }
 
     renderScoreboards() {
-        const { roundHistory, isShowBlink } = this.props.gameStateContextModel;
-        const { statisticGroup } = this.state;
-
-        return (
-            <Scoreboard
-                isShowBlink={isShowBlink}
-                roundHistory={roundHistory as Round<NextBallResult, NextBallSettlementResult>[]}
-                isOddEven={statisticGroup === 1}
-            />
-        );
+        return <></>;
     }
 
     renderRoundIdSection(): JSX.Element {

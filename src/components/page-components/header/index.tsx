@@ -1,40 +1,34 @@
-import { useEffect, useState } from "react";
-import {
-    GlobalTransmitterEvent,
-    registerGlobalMessageEvent,
-    unsubscribeGlobalMessageEvent,
-} from "../../../_shared/helpers/message-transmitter/global-transmitter";
-import HeaderTitle from "./header-title";
+
 import Styles from "./header.module.scss";
-import Setting from "./setting";
-import { UserInfo } from "./user-info";
-const Header = () => {
-    const [openingGameId, setOpeningGameId] = useState(0);
+import { NavBarGameName } from "./header-title";
 
-    useEffect(() => {
-        const gameScriberId = registerGlobalMessageEvent(GlobalTransmitterEvent.OPEN_GAME_ID, ({ openingGameId }) => {
-            setOpeningGameId(openingGameId);
-        });
+export type HeaderProps = {
+    lobbyGamesIds: Array<number>;
+};
 
-        return () => {
-            unsubscribeGlobalMessageEvent(gameScriberId);
-        };
-    }, []);
-
-    const isRenderGames = openingGameId > 0;
+const Header: React.FC<HeaderProps> = ({
+    lobbyGamesIds,
+}) => {
     return (
         <header className={`${Styles.header}`} data-testid="header">
             <div className="game-container d-flex">
                 <div className={Styles["header-container"]}>
-                    <HeaderTitle isRenderGames={isRenderGames} openingGameId={openingGameId} />
-                    <div className={Styles["header-right"]}>
-                        <UserInfo isLobby={!isRenderGames} />
-                        <Setting />
-                    </div>
+                    <nav className={Styles["navigation"]}>
+                        <div className={Styles["navigation-menu"]}>
+                            <ul>
+                                {lobbyGamesIds.map((gameId) => {
+                                    const navbarItemId = `Navbar-${gameId}`;
+                                    return <NavBarGameName key={navbarItemId} gameId={gameId} />;
+                                })}
+                            </ul>
+                        </div>
+                    </nav>
                 </div>
             </div>
         </header>
     );
+
 };
+
 
 export default Header;

@@ -31,6 +31,7 @@ import Styles from "./dashboard.module.scss";
 import { DashboardHandler } from "./handlers/dash-board-handler";
 import { NotificationHandler } from "./handlers/notification-handler";
 import { DashboardProps, DashboardState } from "./type";
+import Header from "../header";
 
 const SoundSettings = dynamic(() => import("../../../components/page-components/setting"));
 const Games = dynamic(() => import("../../../games/games"));
@@ -282,7 +283,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                         id={"dashboard"}
                         style={this.setDashBoardStyle(isRenderGames)}
                     >
-                        {/* <Header /> */}
+                        <Header lobbyGamesIds={this.dashboardHandler.getLobbyGamesIds()} />
 
                         <SoundSettings />
 

@@ -1,6 +1,6 @@
 import { useTheme } from "next-themes";
 import dynamic from "next/dynamic";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { isIOS, isMobileOnly } from "react-device-detect";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -21,6 +21,7 @@ import GameLoading from "../components/game-components/game-loading";
 import { getChipSettings } from "../services/user-setting-service";
 import styles from "./games.module.scss";
 import { Props } from "./type";
+import { GlobalTransmitterEvent, registerGlobalMessageEvent, unsubscribeGlobalMessageEvent } from "../_shared/helpers/message-transmitter/global-transmitter";
 
 const BacBall = dynamic(() => import("./bac-ball"));
 const NextBall = dynamic(() => import("./next-ball/page"));
@@ -42,6 +43,8 @@ export const Games: React.FC<Props> = ({
     const { theme } = useTheme();
     const { session } = usePlayerContext();
     const settingDispatch = useSettingDispatch();
+    const [openingGameId, setOpeningGameId] = useState(openGameId);
+
     useEffect(() => {
         (async () => {
             const chipSettings = await getChipSettings(session);
@@ -52,6 +55,16 @@ export const Games: React.FC<Props> = ({
                 },
             });
         })();
+    }, []);
+
+    useEffect(() => {
+        const gameScriberId = registerGlobalMessageEvent(GlobalTransmitterEvent.OPEN_GAME_ID, ({ openingGameId }) => {
+            setOpeningGameId(openingGameId);
+        });
+
+        return () => {
+            unsubscribeGlobalMessageEvent(gameScriberId);
+        };
     }, []);
 
     const gameSound: GameSound = {
@@ -95,71 +108,11 @@ export const Games: React.FC<Props> = ({
         }
     };
 
-    const swiperSlideChild = ({ isActive, gameId }) => {
-        if (isActive) {
-            +gameId !== +openGameId && updateURLContext({ gameId });
-
-            return getGameComponentById(parseInt(gameId));
-        }
-
-        return (
-            <div className={styles["skeleton-game"]}>
-                <GameLoading />
-            </div>
-        );
-    };
-
-    const renderSwiperItems = () => {
-        return (
-            <div>
-                {lobbyGamesIds.map((gameId) => {
-                    const swipeItemId = `SwiperSlide-${gameId}`;
-
-                    return (
-                        <SwiperSlide style={{ height: "auto" }} key={swipeItemId} id={swipeItemId}>
-                            {({ isActive }) => swiperSlideChild({ isActive, gameId })}
-                        </SwiperSlide>
-                    );
-                })}
-            </div>
-        );
-    };
-
-    const renderSwiper = (openGameId: number) => {
-        const gameIndex = lobbyGamesIds.indexOf(openGameId);
-
-        const isSSOToNonOfferGame = gameIndex < 0;
-        if (isSSOToNonOfferGame) {
-            return getGameComponentById(openGameId);
-        }
-        return (
-            <Swiper
-                onBeforeInit={(swiper) => (swiperRef.current = swiper)}
-                speed={isMobileOnly ? 100 : 500}
-                spaceBetween={50}
-                slidesPerView={1}
-                loop={true}
-                autoHeight={true}
-                initialSlide={gameIndex}
-                noSwiping={true}
-                noSwipingClass={SwiperNoSwiping}
-                onRealIndexChange={(swiper) => {
-                    AnalyticsHelper.trackFunction({
-                        function: TrackingFunction.SwitchGame,
-                        action: TrackingAction.Swipe,
-                    });
-                }}
-            >
-                {renderSwiperItems()}
-            </Swiper>
-        );
-    };
-
     return (
         <div className={`game-container ${styles["game-wrapper"]} ${styles["open-chips"]}`}>
             <SystemContextProvider>
                 <div className={`${styles["game-list"]} ${isMobileOnly ? styles[isIOS ? "ios-device" : "android-device"] : ""}`}>
-                    {directMode ? getGameComponentById(openGameId) : renderSwiper(openGameId)}
+                    {getGameComponentById(openingGameId)}
                     {!isDirectMode && isMobileOnly && <SwitchGamesGuide />}
                 </div>
             </SystemContextProvider>

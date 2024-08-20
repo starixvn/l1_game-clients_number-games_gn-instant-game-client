@@ -1,36 +1,25 @@
-import Image from "next/image";
 import React from "react";
 import { getAppSettings } from "../../../../_shared/app-settings";
-import { useURLContext } from "../../../../_shared/react-contexts";
+import { updateURLContext } from "../../../../_shared/react-contexts";
 import { useTranslator } from "../../../../_shared/react-hooks";
 import { ResourceTypes } from "../../../../_shared/resources";
-import Styles from "./header-title.module.scss";
+import { GlobalMessageTransmitter, GlobalTransmitterEvent } from "../../../../_shared/helpers/message-transmitter/global-transmitter";
 
-type Props = {
-    isRenderGames: boolean;
-    openingGameId: number;
-};
-
-const HeaderTitle: React.FC<Props> = (props) => {
+export const NavBarGameName: React.FC<{ gameId: number }> = ({ gameId }) => {
     const { gameSettings } = getAppSettings();
-    const { openingGameId, isRenderGames } = props;
-    const appSetting = gameSettings[openingGameId];
+    const appSetting = gameSettings[gameId];
     const tolgeeNamespace = appSetting ? appSetting["tolgeeNamespace"] : ResourceTypes.SABA_NUMBER;
-    const { isDirectMode } = useURLContext();
-
     const { t } = useTranslator([tolgeeNamespace]);
 
-    const logo = !isDirectMode ? <Image src={`/static/images/logo-site.svg`} height={26} width={110} className="logo" alt="Logo" /> : <></>;
-    const headerTitle = isRenderGames ? (
-        <div className="text-animation">{t(`${tolgeeNamespace}.game_name_${openingGameId}`).toUpperCase()}</div>
-    ) : (
-        logo
-    );
+    const hanldeOnClick = (gameId) => {
+        GlobalMessageTransmitter.broadcast({ [GlobalTransmitterEvent.OPEN_GAME_ID]: gameId });
+        updateURLContext({ gameId });
+    }
 
-    return (
-        <div key={`game-name-${openingGameId}`} id="img-game-name" className={Styles["header-left"]}>
-            {headerTitle}
-        </div>
-    );
+
+    return <li onClick={() => hanldeOnClick(gameId)} >
+        {t(`${tolgeeNamespace}.game_name_${gameId}`).toUpperCase()}
+    </li>;
+
 };
-export default HeaderTitle;
+

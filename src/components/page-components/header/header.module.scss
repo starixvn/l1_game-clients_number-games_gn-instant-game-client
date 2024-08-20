@@ -19,10 +19,10 @@
     z-index: var(--header-index);
     margin: 0 auto;
 
-    @media screen and (min-width: 500px) {
-        max-width: 37.5rem;
-        background-size: 37.5rem;
-    }
+    // @media screen and (min-width: 500px) {
+    //     max-width: 37.5rem;
+    //     background-size: 37.5rem;
+    // }
 
     .header-right {
         display: flex;
@@ -36,3 +36,124 @@
         width: 100%;
     }
 }
+
+
+// .swiper {
+//     width: 100%;
+//     height: 100%;
+// }
+
+.swiper-slide {
+    // text-align: center;
+    // font-size: 18px;
+    // background: #fff;
+
+    // /* Center slide text vertically */
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
+
+    color: white !important;
+    text-align: center;
+}
+
+// .swiper-slide img {
+//     display: block;
+//     width: 100%;
+//     height: 100%;
+//     object-fit: cover;
+// }
+
+// .swiper-wrapper {
+//     transform: none !important;
+// }
+
+
+.navigation {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 60px;
+    width: 100%;
+    // padding: 0.5rem 0rem;
+    color: #fff;
+    box-shadow: 0 2px 2px 2px rgba(9, 9, 9, 0.23);
+}
+
+
+.navigation-menu {
+    margin-left: auto;
+}
+
+.navigation-menu ul {
+    display: flex;
+    padding: 0;
+}
+
+.navigation-menu li {
+    list-style-type: none;
+    margin: 0 1rem;
+}
+
+.navigation-menu li a {
+    text-decoration: none;
+    display: block;
+    width: 100%;
+}
+
+// .hamburger {
+//     border: 0;
+//     height: 40px;
+//     width: 40px;
+//     padding: 0.5rem;
+//     border-radius: 50%;
+//     background-color: #283b8b;
+//     cursor: pointer;
+//     transition: background-color 0.2s ease-in-out;
+//     position: absolute;
+//     top: 50%;
+//     right: 25px;
+//     transform: translateY(-50%);
+//     display: none;
+// }
+
+// .hamburger:hover {
+//     background-color: #2642af;
+// }
+
+// @media screen and (max-width: 550px) {
+//     .hamburger {
+//         display: block;
+//     }
+
+//     .navigation-menu ul {
+//         flex-direction: column;
+//         position: absolute;
+//         top: 60px;
+//         left: 0;
+//         width: 100%;
+//         height: calc(100vh - 60px);
+//         background-color: white;
+//         border-top: 1px solid black;
+//         display: none;
+//     }
+
+//     .navigation-menu li {
+//         text-align: center;
+//         margin: 0;
+//     }
+
+//     .navigation-menu li a {
+//         color: black;
+//         width: 100%;
+//         padding: 1.5rem 0;
+//     }
+
+//     .navigation-menu li:hover {
+//         background-color: #eee;
+//     }
+
+//     .navigation-menu.expanded ul {
+//         display: block;
+//     }
+// }

@@ -17,9 +17,9 @@ export const NavBarGameName: React.FC<{ gameId: number }> = ({ gameId }) => {
     }
 
 
-    return <li onClick={() => hanldeOnClick(gameId)} >
+    return <div onClick={() => hanldeOnClick(gameId)} >
         {t(`${tolgeeNamespace}.game_name_${gameId}`).toUpperCase()}
-    </li>;
+    </div>;
 
 };
 

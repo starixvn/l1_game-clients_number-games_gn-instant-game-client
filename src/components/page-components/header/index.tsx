@@ -5,7 +5,7 @@ import Styles from "./header.module.scss";
 import { NavBarGameName } from "./header-title";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Navigation, Thumbs } from "swiper/modules";
-
+import { useEffect, useRef, useState } from "react";
 
 export type HeaderProps = {
     lobbyGamesIds: Array<number>;
@@ -14,23 +14,60 @@ export type HeaderProps = {
 const Header: React.FC<HeaderProps> = ({
     lobbyGamesIds,
 }) => {
+    const [initialSlide, setInitialSlide] = useState(4);
+    const swiperContainerRef = useRef(null);
+
+
+    useEffect(() => {
+        const savedSlideIndex = localStorage.getItem('currentSlide');
+        if (savedSlideIndex !== null) {
+            setInitialSlide(parseInt(savedSlideIndex, 10));
+        }
+
+        const savedScrollPosition = localStorage.getItem('scrollPosition');
+        if (savedScrollPosition !== null) {
+            window.scrollTo(0, parseInt(savedScrollPosition, 10));
+        }
+    }, []);
+
+    const handleSlideChange = (swiper) => {
+        localStorage.setItem('currentSlide', swiper.activeIndex);
+    };
+
+    useEffect(() => {
+        const handleBeforeUnload = () => {
+            if (typeof window !== 'undefined') {
+                const scrollPosition = window.scrollY || window.pageYOffset;
+                localStorage.setItem('scrollPosition', scrollPosition.toString());
+            }
+        };
+        window.addEventListener('beforeunload', handleBeforeUnload);
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, []);
+
 
     return (
         <header className={`${Styles.header}`} data-testid="header">
             <div className="game-container d-flex">
-                <div className={Styles["header-container"]}>
+                <div className={Styles["header-container"]} ref={swiperContainerRef}>
                     <Swiper
+                        initialSlide={initialSlide}
+                        onSlideChange={handleSlideChange}
                         // onSwiper={setThumbsSwiper}
-                        spaceBetween={10}
-                        slidesPerView={4}
+                        // spaceBetween={10}
+
+                        // slidesPerView={4}
+                        slidesPerView="auto"
                         freeMode={true}
                         watchSlidesProgress={true}
-                        modules={[FreeMode, Navigation, Thumbs]}
-                        className=""
+                        modules={[FreeMode, Navigation]}
+                        className={Styles["swiper"]}
                     >
                         {lobbyGamesIds.map((gameId) => {
                             const swipeItemId = `SwiperSlide-${gameId}`;
-                            return <SwiperSlide className={Styles["swiper-slide"]} key={swipeItemId} id={swipeItemId}>
+                            return <SwiperSlide style={{ width: 'auto', display: 'flex', justifyContent: 'center' }} className={Styles["swiper-slide"]} key={swipeItemId} id={swipeItemId}>
                                 <NavBarGameName gameId={gameId} />
                             </SwiperSlide>;
                         })}
@@ -40,27 +77,6 @@ const Header: React.FC<HeaderProps> = ({
             </div>
         </header>
     );
-
-
-    return (
-        <header className={`${Styles.header}`} data-testid="header">
-            <div className="game-container d-flex">
-                <div className={Styles["header-container"]}>
-                    <nav className={Styles["navigation"]}>
-                        <div className={Styles["navigation-menu"]}>
-                            <ul>
-                                {lobbyGamesIds.map((gameId) => {
-                                    const navbarItemId = `Navbar-${gameId}`;
-                                    return <NavBarGameName key={navbarItemId} gameId={gameId} />;
-                                })}
-                            </ul>
-                        </div>
-                    </nav>
-                </div>
-            </div>
-        </header>
-    );
-
 };
 
 

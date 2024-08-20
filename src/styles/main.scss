@@ -176,8 +176,9 @@ body {
 
 .round-id {
     padding-left: 0.8rem;
-    line-height: 3.2rem;
-    font-size: 1.2rem;
+    line-height: 26.82px;
+    font-size: 22px;
+    font-weight: 400;
     color: #fff;
     opacity: 0;
 }
@@ -219,9 +220,17 @@ body {
 .game-area {
     display: grid;
     grid-template-rows: 5rem 18.5rem 20.4rem 7.8rem 3.8rem 11.3rem;
-    grid-template-columns: 37.5rem;
+    grid-template-columns: 44rem;
     justify-content: center;
     padding-top: 1rem;
+
+    &.game-1003 {
+        grid-template-rows: 84px 146px 262px 108px 46px;
+    }
+
+    &.game-1004 {
+        grid-template-rows: 84px 146px 262px 108px 46px;
+    }
 
     &.game-1005 {
         grid-template-rows: 5rem 13.5rem 25.4rem 7.8rem 3.8rem 11.3rem;

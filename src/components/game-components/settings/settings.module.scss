@@ -16,8 +16,8 @@
 }
 
 .setting-button {
-    height: 3.2rem;
-    width: 3.2rem;
+    height: 4.8rem;
+    width: 4.8rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -25,4 +25,12 @@
     border-radius: 1rem;
     border: none;
     cursor: pointer;
+}
+
+.icon-guide,
+.icon-sound-on,
+.icon-sound-off {
+    &::before {
+        font-size: 2.5rem;
+    }
 }

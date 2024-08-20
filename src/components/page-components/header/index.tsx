@@ -50,7 +50,7 @@ const Header: React.FC<HeaderProps> = ({
 
     return (
         <header className={`${Styles.header}`} data-testid="header">
-            <div className="game-container d-flex">
+            <div className="game-container d-flex" style={{ height: '100%' }}>
                 <div className={Styles["header-container"]} ref={swiperContainerRef}>
                     <Swiper
                         initialSlide={initialSlide}

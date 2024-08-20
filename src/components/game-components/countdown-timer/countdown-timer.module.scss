@@ -10,20 +10,24 @@
 .game-status {
     display: flex;
     position: absolute;
-    top: 2.5rem;
-    font-size: 1.1rem;
-    line-height: 1.5rem;
+    top: 5rem;
+    font-size: 1.6rem;
+    line-height: 1.95rem;
+    font-weight: 600;
     gap: 0.5rem;
 
     .start-betting {
         color: #05ff00;
     }
+
     .open-result {
         color: #fff;
     }
+
     .balanced-betting-pool {
         color: #29ebd4;
     }
+
     .no-more-bets {
         color: #ff4343;
     }
@@ -32,13 +36,15 @@
 .countdown-timer {
     position: relative;
     text-shadow: 0px 0px 15px #ffffff;
-    width: 3.8rem;
-    height: 3.8rem;
-    font-size: 1.8rem;
+    width: 6rem;
+    height: 6rem;
+    font-size: 2.8rem;
+    line-height: 3.4rem;
+    font-weight: 600;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-size: 4rem 4rem;
+    background-size: 6.4rem 6.4rem;
     color: #1ceefc;
 
     .countdown-timer-number {
@@ -48,10 +54,10 @@
 
     .countdown-timer-background {
         position: absolute;
-        width: 3.8rem;
-        height: 3.8rem;
+        width: 6rem;
+        height: 6rem;
         background: url("/static/images/countdown-timer/countdown-placebet.png?v=#{$version-image}") no-repeat center center;
-        background-size: 3.8rem 3.8rem;
+        background-size: 6rem 6rem;
         animation: spin 2s infinite linear;
     }
 
@@ -65,7 +71,7 @@
 
         .countdown-timer-background {
             background: url("/static/images/countdown-timer/countdown-blockbet.png?v=#{$version-image}") no-repeat center center;
-            background-size: 3.8rem 3.8rem;
+            background-size: 6rem 6rem;
         }
     }
 }

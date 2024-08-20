@@ -5,7 +5,7 @@ $show-number-delay-time: 1s;
 
 $loading-duration: 2s;
 
-$ball-size: 4.2rem;
+$ball-size: 5.4rem;
 
 .ball {
     position: relative;
@@ -39,8 +39,8 @@ $ball-size: 4.2rem;
     position: absolute;
     z-index: 1;
     width: 100%;
-    font-size: 1.3rem;
-    line-height: 2;
+    font-size: 22px;
+    line-height: 28px;
     font-weight: 600;
     color: #2c2f3e;
     text-align: center;

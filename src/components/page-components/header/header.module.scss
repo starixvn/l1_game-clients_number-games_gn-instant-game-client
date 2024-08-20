@@ -16,6 +16,7 @@
     background: var(--header-background);
     top: 0;
     width: 100%;
+    height: 76px;
     z-index: var(--header-index);
     margin: 0 auto;
 
@@ -33,21 +34,29 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        width: 100%;
+        width: 98%;
+        height: 76px;
     }
 }
 
 .swiper {
+    height: 100%;
     border-bottom: 1px solid #ffc909;
 
 }
 
 .swiper-slide {
+    display: flex;
+    align-items: center;
+    /* Vertically centers the text */
+    justify-content: center;
     color: white !important;
-    text-align: center;
     // padding-left: 10px;
     // border-right: 1px solid white;
     padding-left: 10px;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 34.13px;
 }
 
 .swiper-slide-active {

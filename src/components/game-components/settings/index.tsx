@@ -35,11 +35,11 @@ export function Settings() {
         <div className={styles["settings-container"]}>
             <div className={styles["setting-right"]}>
                 <button className={styles[ButtonSettingClassName]} onClick={openGuide}>
-                    <span id="icon-guide  " className="icon-guide  " />
+                    <span id="icon-guide" className={`icon-guide ${styles["icon-guide"]}`} />
                 </button>
 
                 <button className={styles[ButtonSettingClassName]} onClick={switchSound}>
-                    <span id="icon-sound" className="icon-sound-on" />
+                    <span id="icon-sound" className={`icon-sound-on ${styles["icon-sound-on"]}`} />
                 </button>
             </div>
         </div>

@@ -158,8 +158,8 @@ const NextBallBetOptionsComponent = () => {
                 <Image
                     key={uuidv4}
                     className={Style["bg-bet-option"]}
-                    width={176}
-                    height={94}
+                    width={208}
+                    height={125}
                     src={loadingComplete[choice] ? BetChoiceImagesData[backgroundName]?.src : BetChoiceImagesData[backgroundName]?.blur}
                     onLoad={() => setLoadingComplete((prevState) => ({ ...prevState, [choice]: true }))}
                     alt={choice}

@@ -7,15 +7,13 @@ import { useGameContext } from "../../_shared/react-contexts";
 import { useGameStateContext } from "../../_shared/react-contexts/game-state-context/game-state-context";
 import { isShowHighlightPrevResult } from "../../_shared/react-hooks/use-high-light";
 import { RoundState } from "../../components/game-base/type";
-import { BetChoiceImagesData, NextBallBetOptions, NextBallBetOptionsPercentageColor } from "./next-ball-constants";
+import { BetChoiceImagesData, NextBallBetOptions } from "./next-ball-constants";
 import Style from "./next-ball.module.scss";
 
 const BetChoice = dynamic(() => import("../../components/game-components/bet-option/bet-choice"));
 const RippleButton = dynamic(() => import("../../components/game-components/bet-option/ripple-button"));
-const BetPercentage = dynamic(() => import("../../components/game-components/bet-option/bet-percentage"));
 const Odds = dynamic(() => import("../../components/game-components/bet-option/odds"));
 const OwnBet = dynamic(() => import("../../components/game-components/bet-option/own-bet"));
-const PlayerBetCount = dynamic(() => import("../../components/game-components/bet-option/player-bet-count"));
 const TotalBet = dynamic(() => import("../../components/game-components/bet-option/total-bet"));
 const NextBallWinningAnimation = dynamic(() => import("./next-ball-winning-animation"));
 
@@ -26,35 +24,12 @@ const NextBallBetOptionsComponent = () => {
     const isShowDisabledLayer = roundState === RoundState.LockingBet;
 
     const [loadingComplete, setLoadingComplete] = useState({
-        [NextBallBetOptions.ODD]: false,
-        [NextBallBetOptions.EVEN]: false,
         [NextBallBetOptions.OVER]: false,
         [NextBallBetOptions.UNDER]: false,
     });
 
     const renderTotalBet = (choice: string, className?: string) => {
         return <TotalBet choice={choice} className={className} tolgeeNamespace={tolgeeNamespace} />;
-    };
-
-    const renderBetPercentage = (choice: string) => {
-        return (
-            <BetPercentage
-                choice={choice}
-                className={Style.percent}
-                tolgeeNamespace={tolgeeNamespace}
-                percentageColor={NextBallBetOptionsPercentageColor[choice]}
-            />
-        );
-    };
-
-    const renderPlayerBetCount = (choice: string, className?: string) => {
-        return (
-            <PlayerBetCount
-                choice={choice}
-                className={`flex items-center players gap-1 relative ${className}`}
-                tolgeeNamespace={tolgeeNamespace}
-            />
-        );
     };
 
     const renderBetChoice = (choice: string) => {
@@ -94,13 +69,6 @@ const NextBallBetOptionsComponent = () => {
             case NextBallBetOptions.UNDER:
                 className = `${Style["highlight-prev-result-under"]} fade-in`;
                 break;
-
-            case NextBallBetOptions.ODD:
-                className = `${Style["highlight-prev-result-odd"]} fade-in`;
-                break;
-            case NextBallBetOptions.EVEN:
-                className = `${Style["highlight-prev-result-even"]} fade-in`;
-                break;
             default:
         }
         return <div className={className}></div>;
@@ -111,13 +79,11 @@ const NextBallBetOptionsComponent = () => {
 
         switch (choice) {
             case NextBallBetOptions.OVER:
-            case NextBallBetOptions.ODD:
                 backgroundName = NextBallBetOptions.OVER;
                 break;
 
             case NextBallBetOptions.UNDER:
-            case NextBallBetOptions.EVEN:
-                backgroundName = NextBallBetOptions.ODD;
+                backgroundName = NextBallBetOptions.UNDER;
                 break;
         }
 
@@ -129,13 +95,11 @@ const NextBallBetOptionsComponent = () => {
 
         switch (choice) {
             case NextBallBetOptions.OVER:
-            case NextBallBetOptions.UNDER:
                 resourceName = NextBallBetOptions.OVER;
                 break;
 
-            case NextBallBetOptions.ODD:
-            case NextBallBetOptions.EVEN:
-                resourceName = NextBallBetOptions.ODD;
+            case NextBallBetOptions.OVER:
+                resourceName = NextBallBetOptions.UNDER;
                 break;
         }
 
@@ -158,20 +122,19 @@ const NextBallBetOptionsComponent = () => {
                 <Image
                     key={uuidv4}
                     className={Style["bg-bet-option"]}
-                    width={208}
-                    height={125}
+                    width={210}
+                    height={200}
                     src={loadingComplete[choice] ? BetChoiceImagesData[backgroundName]?.src : BetChoiceImagesData[backgroundName]?.blur}
                     onLoad={() => setLoadingComplete((prevState) => ({ ...prevState, [choice]: true }))}
                     alt={choice}
                     priority={true}
                 />
-
                 <div className={`${Style["choice-info"]} ${choiceClassName}`}>
                     <div className={Style.stake}>
                         {renderTotalBet(choice, Style["stake-style"])}
-                        {renderPlayerBetCount(choice, Style["stake-style"])}
+                        {/* {renderPlayerBetCount(choice, Style["stake-style"])} */}
                     </div>
-                    {renderBetPercentage(choice)}
+                    {/* {renderBetPercentage(choice)} */}
                 </div>
                 <div className={`${Style["choice-odds-area"]} ${oddsClassName}`}>
                     {renderBetChoice(choice)}
@@ -194,11 +157,9 @@ const NextBallBetOptionsComponent = () => {
         <>
             <div className={Style["bet-option-row"]}>
                 {renderMainOption(NextBallBetOptions.OVER)}
-                {renderMainOption(NextBallBetOptions.ODD)}
             </div>
             <div className={Style["bet-option-row"]}>
                 {renderMainOption(NextBallBetOptions.UNDER)}
-                {renderMainOption(NextBallBetOptions.EVEN)}
             </div>
         </>
     );

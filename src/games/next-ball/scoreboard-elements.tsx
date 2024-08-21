@@ -20,11 +20,7 @@ export function createBeadRoadElement(isOddEven: boolean = ODD_EVEN_AS_DEFAULT_S
                 return <span className={`${styles.blink}`}></span>;
             }
 
-            if (isOddEven) {
-                return round.settlementResult.odd ? character(NextBallBetOptions.ODD) : character(NextBallBetOptions.EVEN);
-            } else {
-                return round.settlementResult.over ? character(NextBallBetOptions.OVER) : character(NextBallBetOptions.UNDER);
-            }
+            return round.settlementResult.over ? character(NextBallBetOptions.OVER) : character(NextBallBetOptions.UNDER);
         }
 
         render(): ReactNode {
@@ -64,7 +60,7 @@ export class NextBallBigRoadConverter extends Converter<NextBallSettlementResult
     }
 
     protected positiveKey(): string {
-        return this.isOddEven ? NextBallBetOptions.ODD : NextBallBetOptions.OVER;
+        return NextBallBetOptions.OVER;
     }
 
     protected specialKey(): string {

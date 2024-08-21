@@ -155,7 +155,6 @@ const NextBallFC = (props) => {
                 tolgeeNamespace,
                 hedgeBetGroups: [
                     [NextBallBetOptions.OVER, NextBallBetOptions.UNDER],
-                    [NextBallBetOptions.ODD, NextBallBetOptions.EVEN],
                 ],
             }}
         />

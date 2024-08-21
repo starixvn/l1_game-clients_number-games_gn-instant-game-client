@@ -245,3 +245,45 @@
 .statistic-indo {
     font-size: 0.9rem !important;
 }
+
+.statistic {
+    margin: 1.5rem 5rem 1.5rem 0;
+    position: relative;
+    // display: flex;
+}
+
+
+%icon {
+    position: absolute;
+    top: calc(50% - 2.5rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 5.7rem;
+    width: 5.7rem;
+
+    background: url("/static/images/icons/button-statistic.svg?v=#{$version-image}") no-repeat center;
+
+    &:hover:not(.disabled) {
+        cursor: pointer;
+        text-shadow: 0 -1px 6px rgb(82 244 40 / 70%), 0px 1px 6px rgb(82 244 40 / 70%);
+    }
+
+    &.disabled {
+        color: #fff;
+        opacity: 0.5;
+    }
+
+    &.quick-bet {
+        color: #52f428 !important;
+
+        &.disabled {
+            color: #4ee42c;
+        }
+    }
+}
+
+.icon-statistic {
+    @extend %icon;
+    right: -5.5rem;
+}

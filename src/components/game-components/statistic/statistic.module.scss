@@ -31,7 +31,7 @@
 
 .statistic-container {
     position: relative;
-    background: linear-gradient(180deg, rgba(19, 47, 81, 1) 0%, rgba(12, 45, 64, 1) 100%);
+    // background: linear-gradient(180deg, rgba(19, 47, 81, 1) 0%, rgba(12, 45, 64, 1) 100%);
     border-top-left-radius: 0.4rem;
     border-top-right-radius: 0.4rem;
     padding: 0.4rem 0.9rem;
@@ -41,9 +41,11 @@
     font-size: 1.2rem;
     gap: 1.5rem;
     height: 3.6rem;
+
     :hover {
         cursor: pointer;
     }
+
     &.other {
         justify-content: space-between;
     }
@@ -139,10 +141,12 @@
         -webkit-transform: scale(1);
         transform: scale(1);
     }
+
     50% {
         -webkit-transform: scale(0.9);
         transform: scale(0.9);
     }
+
     100% {
         -webkit-transform: scale(1);
         transform: scale(1);
@@ -179,6 +183,7 @@ $green_choices: tie;
         gap: 0.2rem;
     }
 }
+
 .scoreboard-side-bet {
     position: relative;
     display: inline-flex;

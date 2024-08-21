@@ -22,6 +22,11 @@ import NextBallResultBlock from "./next-ball-result-block";
 import Styles from "./next-ball.module.scss";
 import Scoreboard from "./scoreboard";
 import { NextBallResult, NextBallSettlementResult } from "./types";
+import NextBallStatisticSideBetDetail from "./next-ball-statistic-side";
+import SideBetScoreboardContainer from "../../components/game-components/round-history/side-bet-scoreboard/side-bet-scoreboard-container";
+import { createBeadRoadElement } from "./scoreboard-elements";
+import { BeadRoadElement } from "../../components/game-components/round-history/scoreboard/elements";
+import { SwitchableScoreboard } from "../../components/game-components/round-history/scoreboard";
 
 const DrawIdBlock = dynamic(() => import("../../components/game-components/draw-id"));
 const NextBallBetHistoryModal = dynamic(() => import("./history"));
@@ -91,7 +96,30 @@ class NextBall extends GameBase<GameBaseProps> {
     }
 
     renderStatistic() {
-        return <></>;
+        const { roundHistory, isShowBlink } = this.props.gameStateContextModel;
+        const rounds = isShowBlink ? [{}, ...roundHistory] : roundHistory;
+
+        return (
+            <div className={Styles["statistic"]} id="bead-road" >
+                <SwitchableScoreboard
+                    rounds={rounds}
+                    type="switch"
+                    scoreboards={[
+                        {
+                            element: createBeadRoadElement(false),
+                            arrange: BeadRoadElement.arrange,
+                            column: 10,
+                            row: 1,
+                        },
+                    ]}
+                />
+                <span
+                    id="icon-statistic"
+                    className={`${Styles["icon-statistic"]} `}
+                    onClick={() => { }}
+                ></span>
+            </div>
+        );
     }
 
     renderScoreboards() {

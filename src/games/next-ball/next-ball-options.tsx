@@ -108,7 +108,6 @@ const NextBallBetOptionsComponent = () => {
 
                 {isShowDisabledLayer && <div className={Style["disable-layer"]}></div>}
 
-                {/* <div className={Style["disable-layer"]}></div> */}
                 {
                     isShowHighlightPrevResult({ betChoice: choice, roundState, roundHistory }) &&
                     <div className={`${Style[`highlight-prev-result-${choice}`]} fade-in`}></div>

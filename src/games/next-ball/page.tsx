@@ -24,8 +24,8 @@ import Scoreboard from "./scoreboard";
 import { NextBallResult, NextBallSettlementResult } from "./types";
 import NextBallStatisticSideBetDetail from "./next-ball-statistic-side";
 import SideBetScoreboardContainer from "../../components/game-components/round-history/side-bet-scoreboard/side-bet-scoreboard-container";
-import { createBeadRoadElement } from "./scoreboard-elements";
-import { BeadRoadElement } from "../../components/game-components/round-history/scoreboard/elements";
+import { createBeadRoadElement, createBigRoadElement, NextBallBigRoadConverter } from "./scoreboard-elements";
+import { BeadRoadElement, BigRoadElement } from "../../components/game-components/round-history/scoreboard/elements";
 import { SwitchableScoreboard } from "../../components/game-components/round-history/scoreboard";
 
 const DrawIdBlock = dynamic(() => import("../../components/game-components/draw-id"));
@@ -33,10 +33,11 @@ const NextBallBetHistoryModal = dynamic(() => import("./history"));
 
 export type NextBallState = {
     statisticGroup?: number;
+    showScoreboard: boolean;
 };
 
-class NextBall extends GameBase<GameBaseProps> {
-    state: NextBallState = { statisticGroup: 0 };
+class NextBall extends GameBase<GameBaseProps, NextBallState> {
+    state: NextBallState = { statisticGroup: 0, showScoreboard: false };
 
     private turnIdHandler?: TurnIdHandler;
 
@@ -95,6 +96,12 @@ class NextBall extends GameBase<GameBaseProps> {
         return <NextBallBetHistoryModal />;
     }
 
+    handleSwitchScoreboard() {
+        this.setState(prevState => ({
+            showScoreboard: !prevState.showScoreboard
+        }));
+    }
+
     renderStatistic() {
         const { roundHistory, isShowBlink } = this.props.gameStateContextModel;
         const rounds = isShowBlink ? [{}, ...roundHistory] : roundHistory;
@@ -116,14 +123,61 @@ class NextBall extends GameBase<GameBaseProps> {
                 <span
                     id="icon-statistic"
                     className={`${Styles["icon-statistic"]} `}
-                    onClick={() => { }}
+                    onClick={() => this.handleSwitchScoreboard()}
                 ></span>
             </div>
         );
     }
 
+    renderStatistic1() {
+        const { roundHistory } = this.props.gameStateContextModel;
+        const { statisticGroup } = this.state;
+
+        return (
+            <PercentageStatistic
+                roundHistory={roundHistory}
+                mainChoices={[NextBallBetOptions.OVER, NextBallBetOptions.UNDER]}
+                choicesInGroups={[
+                    [NextBallBetOptions.OVER, NextBallBetOptions.UNDER]
+                ]}
+                selectedGroup={statisticGroup}
+                onSelectGroup={(index: number) => this.setState({ statisticGroup: index })}
+            />
+        );
+    }
+
     renderScoreboards() {
-        return <></>;
+        if (!this.state.showScoreboard) {
+            return <></>;
+        }
+
+        const { roundHistory, isShowBlink } = this.props.gameStateContextModel;
+        const settlements = [...roundHistory].map((round) => round.settlementResult);
+
+        isShowBlink && NextBallBigRoadConverter.addBlinkNode(settlements as any);
+
+        return (
+            <div className={Styles["scoreboard"]} id="big-road">
+                <div style={{ display: "flex" }}>
+                    {this.renderStatistic1()}
+                    <div onClick={() => this.handleSwitchScoreboard()} style={{ width: "300px", display: "flex", justifyContent: "flex-end", alignItems: "center" }}> <span style={{ fontSize: "25px", color: "red", marginRight: "1rem" }}>X</span></div>
+
+                </div>
+                <SwitchableScoreboard
+                    rounds={settlements}
+                    type="scale"
+                    scoreboards={[
+                        {
+                            element: createBigRoadElement(false),
+                            arrange: BigRoadElement.arrange(NextBallBigRoadConverter.getInstance(false)),
+                            column: 12,
+                            row: 6,
+                        },
+                    ]}
+                />
+            </div>
+
+        );
     }
 
     renderRoundIdSection(): JSX.Element {

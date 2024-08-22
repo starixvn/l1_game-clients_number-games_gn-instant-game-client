@@ -275,3 +275,13 @@
     @extend %icon;
     right: -5.5rem;
 }
+
+.scoreboard {
+    position: absolute;
+    bottom: 0;
+    z-index: 999;
+    background: blue;
+    width: 430px;
+    left: 9px;
+    border: 1px solid yellow;
+}

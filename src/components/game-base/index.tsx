@@ -50,7 +50,7 @@ import { PFWrapper } from "./handlers/pf-wrapper/pf-wrapper";
 import { PlaceBetHandlerWrapper } from "./handlers/place-bet-wrapper/place-bet-handler-wrapper";
 import { GameBaseHandlers, GameBaseProps, RoundState } from "./type";
 
-abstract class GameBase<P extends GameBaseProps> extends React.PureComponent<P> {
+abstract class GameBase<P extends GameBaseProps, S> extends React.PureComponent<P, S> {
     protected socket: Socket;
     protected gameCronInterval: NodeJS.Timeout;
     protected roundTimeCounter: number;
@@ -568,13 +568,7 @@ abstract class GameBase<P extends GameBaseProps> extends React.PureComponent<P> 
                         </PlaceBetProvider>
                         <div>{this.renderStatistic()}</div>
                         <div className={SwiperNoSwiping}> {this.renderSlidingChips()}</div>
-                        <div className={SwiperNoSwiping}>
-                            {isScoreboardTab ? (
-                                this.renderScoreboards()
-                            ) : (
-                                <SideBetScoreboard>{this.renderStatisticContent()}</SideBetScoreboard>
-                            )}
-                        </div>
+                        {this.renderScoreboards()}
 
                     </div>
                     {!availableInGameData && <OverlayMask removeOverlay={isDisabledGame} />}

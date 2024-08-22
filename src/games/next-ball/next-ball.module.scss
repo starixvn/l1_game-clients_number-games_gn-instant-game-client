@@ -33,8 +33,8 @@
 
     position: relative;
     overflow: hidden;
-    width: 21rem;
-    height: 21.5rem;
+    width: 20.7rem;
+    height: 21.4rem;
     border: none;
 
     .btn-ripple {
@@ -46,8 +46,8 @@
         position: absolute;
         top: 0;
         background: url("/static/images/next-ball/lockbet.png?v=#{$version-image}") no-repeat;
-        width: 21rem;
-        height: 21.5rem;
+        width: 20.7rem;
+        height: 21.4rem;
         opacity: 0;
         animation: show-disabled-layer 0.3s ease-in forwards;
     }
@@ -65,13 +65,17 @@
     --borderTopRight: 1.2rem;
     --borderBottomLeft: 1.2rem;
     --borderBottomRight: 1.2rem;
+
+    .disable-layer {
+        transform: scaleX(-1);
+    }
 }
 
 .under {
     --border-radius: 1.2rem 3rem 1.2rem 1.2rem;
 
     .disable-layer {
-        transform: scaleX(-1);
+        // transform: scaleX(-1);
     }
 }
 
@@ -106,8 +110,8 @@
 
 .highlight-winning-bg-over,
 .highlight-winning-bg-under {
-    width: 21rem;
-    height: 21.5rem;
+    width: 20.7rem;
+    height: 21.4rem;
     background: url("/static/images/next-ball/highlight-winning-bg.png?v=#{$version-image}") no-repeat;
 }
 
@@ -125,8 +129,8 @@
 
 .highlight-prev-result-over,
 .highlight-prev-result-under {
-    width: 21rem;
-    height: 21.5rem;
+    width: 20.7rem;
+    height: 21.4rem;
     position: absolute;
     left: 0;
     top: 0;

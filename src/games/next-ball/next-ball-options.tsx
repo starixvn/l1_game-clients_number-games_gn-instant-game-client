@@ -122,8 +122,8 @@ const NextBallBetOptionsComponent = () => {
                 <Image
                     key={uuidv4}
                     className={Style["bg-bet-option"]}
-                    width={210}
-                    height={200}
+                    width={207}
+                    height={210}
                     src={loadingComplete[choice] ? BetChoiceImagesData[backgroundName]?.src : BetChoiceImagesData[backgroundName]?.blur}
                     onLoad={() => setLoadingComplete((prevState) => ({ ...prevState, [choice]: true }))}
                     alt={choice}
@@ -148,6 +148,8 @@ const NextBallBetOptionsComponent = () => {
                 <RippleButton className={`${Style["btn-ripple"]}`} id={`${tolgeeNamespace}-choice-${choice}`} choice={choice} />
 
                 {isShowDisabledLayer && <div className={Style["disable-layer"]}></div>}
+
+                {/* <div className={Style["disable-layer"]}></div> */}
                 {isShowHighlightPrevResult({ betChoice: choice, roundState, roundHistory }) && renderHighlightWinningPrevResult(choice)}
             </div>
         );

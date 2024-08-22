@@ -38,7 +38,7 @@ const NextBallBetOptionsComponent = () => {
     };
 
     const renderOdds = (choice: string) => {
-        return <Odds turnCounter={turnCounter} choice={choice} tolgeeNamespace={tolgeeNamespace} animationDuration={6} />;
+        return <Odds className={Style["odds"]} turnCounter={turnCounter} choice={choice} tolgeeNamespace={tolgeeNamespace} animationDuration={6} />;
     };
 
     const renderOwnBet = (choice: string) => {
@@ -60,62 +60,18 @@ const NextBallBetOptionsComponent = () => {
         return null;
     };
 
-    const renderHighlightWinningPrevResult = (choice: string) => {
-        let className = "";
-        switch (choice) {
-            case NextBallBetOptions.OVER:
-                className = `${Style["highlight-prev-result-over"]} fade-in`;
-                break;
-            case NextBallBetOptions.UNDER:
-                className = `${Style["highlight-prev-result-under"]} fade-in`;
-                break;
-            default:
-        }
-        return <div className={className}></div>;
-    };
-
-    const getBackgroundName = (choice) => {
-        let backgroundName = "";
-
-        switch (choice) {
-            case NextBallBetOptions.OVER:
-                backgroundName = NextBallBetOptions.OVER;
-                break;
-
-            case NextBallBetOptions.UNDER:
-                backgroundName = NextBallBetOptions.UNDER;
-                break;
-        }
-
-        return backgroundName;
-    };
-
     const renderMainOption = (choice: string) => {
-        let resourceName = "";
-
-        switch (choice) {
-            case NextBallBetOptions.OVER:
-                resourceName = NextBallBetOptions.OVER;
-                break;
-
-            case NextBallBetOptions.OVER:
-                resourceName = NextBallBetOptions.UNDER;
-                break;
-        }
-
         const winningResult = (
             <NextBallWinningAnimation
                 showResultInfo={showResultInfo}
                 roundState={roundState}
                 settlementResult={settlementResult}
                 choice={choice}
-                resourceName={resourceName}
+                resourceName={NextBallBetOptions.OVER}
             />
         );
         const choiceClassName = Style[`choice-${choice}`];
         const oddsClassName = Style[`choice-${choice}`];
-
-        const backgroundName = getBackgroundName(choice);
 
         return (
             <div className={`${Style[choice]} text-white relative`}>
@@ -124,7 +80,7 @@ const NextBallBetOptionsComponent = () => {
                     className={Style["bg-bet-option"]}
                     width={207}
                     height={210}
-                    src={loadingComplete[choice] ? BetChoiceImagesData[backgroundName]?.src : BetChoiceImagesData[backgroundName]?.blur}
+                    src={loadingComplete[choice] ? BetChoiceImagesData[choice]?.src : BetChoiceImagesData[choice]?.blur}
                     onLoad={() => setLoadingComplete((prevState) => ({ ...prevState, [choice]: true }))}
                     alt={choice}
                     priority={true}
@@ -132,14 +88,17 @@ const NextBallBetOptionsComponent = () => {
                 <div className={`${Style["choice-info"]} ${choiceClassName}`}>
                     <div className={Style.stake}>
                         {renderTotalBet(choice, Style["stake-style"])}
-                        {/* {renderPlayerBetCount(choice, Style["stake-style"])} */}
                     </div>
-                    {/* {renderBetPercentage(choice)} */}
                 </div>
                 <div className={`${Style["choice-odds-area"]} ${oddsClassName}`}>
-                    {renderBetChoice(choice)}
-                    {renderBetInfo(choice)}
-                    {renderOdds(choice)}
+                    <div className={Style["choice-odds-wrapper"]}>
+                        {renderBetChoice(choice)}
+                        {renderOdds(choice)}
+                    </div>
+
+                    <div className={Style["bet-info-wrapper"]}>
+                        {renderBetInfo(choice)}
+                    </div>
                 </div>
 
                 {renderOwnBet(choice)}
@@ -150,7 +109,10 @@ const NextBallBetOptionsComponent = () => {
                 {isShowDisabledLayer && <div className={Style["disable-layer"]}></div>}
 
                 {/* <div className={Style["disable-layer"]}></div> */}
-                {isShowHighlightPrevResult({ betChoice: choice, roundState, roundHistory }) && renderHighlightWinningPrevResult(choice)}
+                {
+                    isShowHighlightPrevResult({ betChoice: choice, roundState, roundHistory }) &&
+                    <div className={`${Style[`highlight-prev-result-${choice}`]} fade-in`}></div>
+                }
             </div>
         );
     };

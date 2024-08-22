@@ -8,7 +8,7 @@ if __name__ == '__main__':
     current_dir = os.path.dirname(os.path.realpath(__file__))
     project_dir = os.path.join(current_dir, '')
 
-    images_dir = ".\images\\sic-ball\\winning-effect-sub"
+    images_dir = ".\images\\next-ball\\highlight-winning-over"
 
     # Pack.
     packer_path = os.path.join(

@@ -1,5 +1,6 @@
 .icon-coin {
     color: var(--color);
+    font-size: 2rem;
 }
 
 .bet-name,
@@ -49,10 +50,12 @@
 .player-count,
 .total-stakes {
     height: 1.8rem;
-    font-size: 1.2rem;
-    font-weight: 500;
+    font-size: 1.8rem;
+    font-weight: 600;
     color: var(--color);
     position: relative;
+    text-align: center;
+
 }
 
 .own-bet {
@@ -68,12 +71,12 @@
     height: 1.5rem;
 
     .bet-value {
-        height: 1.6rem;
+        // height: 2.4rem;
         font-size: 2rem;
         font-weight: 600;
         color: #fff;
         padding: 0 0.4rem;
-        border-radius: 1rem;
+        border-radius: 2rem;
         background: linear-gradient(133deg, rgba(53, 206, 97, 1) 0%, rgba(11, 178, 66, 1) 100%);
 
         &::before {
@@ -100,9 +103,10 @@
 
 .stakes-value,
 .player-count-value {
-    height: 1.8rem;
+    // height: 1.8rem;
     line-height: 1.7;
-    font-size: 1.1rem;
+    font-weight: 600;
+    font-size: 1.8rem;
     font-variant-numeric: tabular-nums;
 }
 

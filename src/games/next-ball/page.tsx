@@ -108,7 +108,7 @@ class NextBall extends GameBase<GameBaseProps> {
                         {
                             element: createBeadRoadElement(false),
                             arrange: BeadRoadElement.arrange,
-                            column: 10,
+                            column: 12,
                             row: 1,
                         },
                     ]}

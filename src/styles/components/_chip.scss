@@ -1,8 +1,8 @@
 .chip-container {
     --ratio: 1;
-    --chip-width: calc(7rem * var(--ratio));
-    --chip-height: calc(7.1rem * var(--ratio));
-    --chip-value-font-size: calc(1.6rem * var(--ratio));
+    --chip-width: calc(8.5rem * var(--ratio));
+    --chip-height: calc(8.6rem * var(--ratio));
+    --chip-value-font-size: calc(3.2rem * var(--ratio));
 
     position: relative;
     display: grid !important;

@@ -56,7 +56,7 @@
 .under,
 .over {
     @extend %main-option;
-    --color: #f9bcb9;
+    --color: white;
 }
 
 .over {
@@ -85,13 +85,15 @@
     gap: 0.6rem;
 
     .own-bet {
-        bottom: 0.4rem;
+        bottom: 2.4rem;
     }
 }
 
 .winning-effect {
     position: absolute;
-    top: 0;
+    top: -1px;
+    left: 1px;
+    transform: scale(0.98);
 }
 
 .winning-light-anim {
@@ -100,10 +102,6 @@
     left: -0.6rem;
 
     &.anim-under {
-        transform: scaleX(-1);
-    }
-
-    &.anim-even {
         transform: scaleX(-1);
     }
 }
@@ -115,7 +113,7 @@
     background: url("/static/images/next-ball/highlight-winning-bg.png?v=#{$version-image}") no-repeat;
 }
 
-.highlight-winning-bg-under {
+.highlight-winning-bg-over {
     transform: scaleX(-1);
     left: -0.1rem;
 }
@@ -145,7 +143,7 @@
 
 .choice-info {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     padding-top: 0.6rem;
     padding-left: 1rem;
@@ -162,20 +160,75 @@
 }
 
 .choice-odds-area {
-    position: relative;
-    margin-top: -0.5rem;
+    width: 20rem;
+    height: 21rem;
+    padding: 0 rem 0 1rem;
+    left: 0px;
+    top: 0px;
+    position: absolute;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
-    &.choice-over,
-    &.choice-under {
-        margin-top: -1.3rem;
+    .bet-option {
+        width: 18rem;
+        justify-content: center;
+        align-items: flex-start;
+        display: inline-flex;
+    }
+
+    .choice-odds-wrapper {
+        width: 100%;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 2px;
+        display: flex;
+
+    }
+
+    .odds {
+        text-align: center;
+        color: white;
+        font-size: 2.4rem;
+        font-weight: 600;
+        letter-spacing: 0.96px;
+    }
+
+    .bet-name-over,
+    .bet-name-under {
+        width: 102px;
+        color: white;
+        font-size: 24px;
+        font-family: Montserrat;
+        font-weight: 600;
+        letter-spacing: 0.96px;
+        word-wrap: break-word;
+        text-align: left !important;
+
+    }
+
+
+    .bet-info-wrapper {
+        width: 100%;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 10px;
+        display: flex;
+        padding-left: 1.5rem;
     }
 
     .bet-info {
+        width: 82px;
+        font-weight: 600;
+        text-transform: uppercase;
+        word-wrap: break-word;
         font-size: 1.8rem;
         color: var(--color);
-        text-align: center;
-        line-height: 1.2;
-        margin-top: -0.4rem;
+
+
     }
 }
 

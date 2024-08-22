@@ -22,13 +22,13 @@ const NextBallWinningAnimation: React.FC<Props> = ({ choice, resourceName, round
                 <Spritesheet
                     className={`${Styles[`winning-light-anim`]} ${Styles[`anim-${choice}`]}`}
                     image={`/static/images/next-ball/highlight-winning-${resourceName}.png?v=${buildVersion}`}
-                    widthFrame={190}
+                    widthFrame={217}
                     isResponsive
-                    heightFrame={106}
-                    steps={10}
+                    heightFrame={224}
+                    steps={6}
                     autoplay={true}
                     loop={true}
-                    fps={20}
+                    fps={30}
                     startAt={0}
                     endAt={29}
                 />

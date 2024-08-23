@@ -157,20 +157,28 @@ class NextBall extends GameBase<GameBaseProps, NextBallState> {
         isShowBlink && NextBallBigRoadConverter.addBlinkNode(settlements as any);
 
         return (
-            <div className={Styles["scoreboard"]} id="big-road">
-                <div style={{ display: "flex" }}>
+            <div className={Styles["scoreboard-and-statistic"]} id="big-road">
+                <div className={Styles["statistic-header"]}>
                     {this.renderStatistic1()}
-                    <div onClick={() => this.handleSwitchScoreboard()} style={{ width: "300px", display: "flex", justifyContent: "flex-end", alignItems: "center" }}> <span style={{ fontSize: "25px", color: "red", marginRight: "1rem" }}>X</span></div>
+                    <div
+                        style={{ width: "300px", display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
+                        <span
+                            id="icon-close"
+                            className={`${Styles["icon-close"]} `}
+                            onClick={() => this.handleSwitchScoreboard()}
+                        ></span>
+                    </div>
 
                 </div>
                 <SwitchableScoreboard
+                    className={Styles["scoreboard"]}
                     rounds={settlements}
-                    type="scale"
+                    type="switch"
                     scoreboards={[
                         {
                             element: createBigRoadElement(false),
                             arrange: BigRoadElement.arrange(NextBallBigRoadConverter.getInstance(false)),
-                            column: 12,
+                            column: 10,
                             row: 6,
                         },
                     ]}

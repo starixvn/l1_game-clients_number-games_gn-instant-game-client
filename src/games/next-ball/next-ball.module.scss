@@ -258,7 +258,7 @@
     height: 5.7rem;
     width: 5.7rem;
 
-    background: url("/static/images/icons/button-statistic.svg?v=#{$version-image}") no-repeat center;
+
 
     &:hover:not(.disabled) {
         cursor: pointer;
@@ -273,15 +273,37 @@
 
 .icon-statistic {
     @extend %icon;
+    background: url("/static/images/icons/button-statistic.svg?v=#{$version-image}") no-repeat center;
     right: -5.5rem;
 }
 
-.scoreboard {
+.icon-close {
+    @extend %icon;
+    background: url("/static/images/icons/icon-close.svg?v=#{$version-image}") no-repeat center;
+    top: 0;
+    right: 0.5rem;
+}
+
+.scoreboard-and-statistic {
     position: absolute;
     bottom: 0;
     z-index: 999;
-    background: blue;
+    background: linear-gradient(180deg, #053261 0%, #001020 100%);
+    border-radius: 10px;
+    border: 2px #C59447 solid;
     width: 430px;
+    height: 34.4rem;
     left: 9px;
-    border: 1px solid yellow;
+    padding: 0 1rem;
+
+    .statistic-header {
+        display: flex;
+        height: 6rem;
+        align-items: center;
+    }
+}
+
+.scoreboard {
+    background: rgba(0, 0, 0, 0.80) !important;
+    height: 25rem;
 }

@@ -107,25 +107,30 @@ class NextBall extends GameBase<GameBaseProps, NextBallState> {
         const rounds = isShowBlink ? [{}, ...roundHistory] : roundHistory;
 
         return (
-            <div className={Styles["statistic"]} id="bead-road" >
-                <SwitchableScoreboard
-                    rounds={rounds}
-                    type="switch"
-                    scoreboards={[
-                        {
-                            element: createBeadRoadElement(false),
-                            arrange: BeadRoadElement.arrange,
-                            column: 12,
-                            row: 1,
-                        },
-                    ]}
-                />
-                <span
-                    id="icon-statistic"
-                    className={`${Styles["icon-statistic"]} `}
-                    onClick={() => this.handleSwitchScoreboard()}
-                ></span>
+            <div className={Styles["statistic-wrapper"]} >
+                <div className={Styles["statistic"]} id="bead-road" >
+                    <SwitchableScoreboard
+                        className={Styles["scoreboard-wrapper"]}
+                        rounds={rounds}
+                        blockClassName={Styles["scoreboard-block"]}
+                        type="scale"
+                        scoreboards={[
+                            {
+                                element: createBeadRoadElement(false),
+                                arrange: BeadRoadElement.arrange,
+                                column: 10,
+                                row: 1,
+                            },
+                        ]}
+                    />
+                    <span
+                        id="icon-statistic"
+                        className={`${Styles["icon-statistic"]} `}
+                        onClick={() => this.handleSwitchScoreboard()}
+                    ></span>
+                </div>
             </div>
+
         );
     }
 
@@ -184,12 +189,11 @@ class NextBall extends GameBase<GameBaseProps, NextBallState> {
                     ]}
                 />
             </div>
-
         );
     }
 
     renderRoundIdSection(): JSX.Element {
-        return <DrawIdBlock />;
+        return <div className={Styles["round-id-wrapper"]}><DrawIdBlock /></div>;
     }
 }
 

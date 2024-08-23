@@ -566,7 +566,7 @@ abstract class GameBase<P extends GameBaseProps, S> extends React.PureComponent<
                                 {this.renderConfirmBet()}
                             </PlaceBetHandlerWrapper>
                         </PlaceBetProvider>
-                        <div>{this.renderStatistic()}</div>
+                        {this.renderStatistic()}
                         <div className={SwiperNoSwiping}> {this.renderSlidingChips()}</div>
                         {this.renderScoreboards()}
 

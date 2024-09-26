@@ -41,14 +41,9 @@
 
 .modal-center {
     @extend .modal;
-    top: 35%;
+    bottom: 15.4rem;
     z-index: var(--modal-index);
     overflow: hidden;
-
-    &.adjusted-bet-notice {
-        top: auto;
-        bottom: 23rem;
-    }
 
     .modal-icon-warning {
         display: flex;

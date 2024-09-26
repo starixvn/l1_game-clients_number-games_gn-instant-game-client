@@ -31,16 +31,14 @@ const BaseNotice: React.FC<{
         return () => {
             clearTimeout(timer);
             unsubscribeGlobalMessageEvent(onCloseHandlerId as any);
-        }
+        };
     }, []);
 
     const clickSound = useClickSound();
 
-    const adjustBetNoticePositionClass = adjustBetNoticePosition ? "modal-center adjusted-bet-notice" : "modal-center";
-
     return (
         <BaseDialog type={ModalType.Center} isOpen={true} onCloseModal={onClose}>
-            <div className={`${adjustBetNoticePositionClass} red-color`}>
+            <div className={`modal-center red-color`}>
                 <span
                     className={`icon-close ${Styles["icon-close"]}`}
                     onClick={() => {

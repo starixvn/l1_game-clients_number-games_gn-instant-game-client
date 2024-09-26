@@ -1,7 +1,6 @@
 window.envConfig = {
     serverDomainMapper: {
         localhost: "lumigame.com",
-        localhost: "nexentgame.com",
         "10.5.10.12": "lumigame.com",
         "10.5.10.35": "lumigame.com",
         "10.5.10.66": "lumigame.com",

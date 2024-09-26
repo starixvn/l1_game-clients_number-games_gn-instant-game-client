@@ -36,7 +36,6 @@ import Header from "../header";
 const SoundSettings = dynamic(() => import("../../../components/page-components/setting"));
 const Games = dynamic(() => import("../../../games/games"));
 const BaseDialog = dynamic(() => import("../../game-components/base-dialog"));
-const MusicPlayer = dynamic(() => import("../music-player"));
 const LandscapeMode = dynamic(() => import("./landscape-mode/landscape-mode"));
 
 class Dashboard extends React.Component<DashboardProps, DashboardState> {
@@ -276,10 +275,10 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
         return (
             <PlayerContextProvider value={authContextValue}>
                 <SettingContextProvider>
-
                     <div
-                        className={`${Styles["dashboard"]} ${changeGameStyle} ${!isRenderGames ? "no-scroll" : ""} ${isMobileOnly ? Styles["hidden-scrollbar"] : ""
-                            }`}
+                        className={`${Styles["dashboard"]} ${changeGameStyle} ${!isRenderGames ? "no-scroll" : ""} ${
+                            isMobileOnly ? Styles["hidden-scrollbar"] : ""
+                        }`}
                         id={"dashboard"}
                         style={this.setDashBoardStyle(isRenderGames)}
                     >
@@ -290,8 +289,6 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                         {isNoGameOffer ? <></> : renderOfferGameContainer()}
 
                         {isNoGameOffer ? <></> : !isRenderGames && <Footer />}
-
-                        {<MusicPlayer />}
 
                         {isShowErrorModal && (
                             <div className={Styles["container-modal"]}>
@@ -313,7 +310,6 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                             </div>
                         )}
                     </div>
-
                 </SettingContextProvider>
             </PlayerContextProvider>
         );

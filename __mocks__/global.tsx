@@ -31,6 +31,7 @@ jest.mock("next/config", () => () => ({
         appType: 3,
         useTolgeeStatic: false,
         socketGatewayPath: "gateway",
+        displayMenuGameIds: [1003, 1004],
         gameSettings: {
             "1001": {
                 id: 1001,

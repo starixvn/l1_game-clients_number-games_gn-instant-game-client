@@ -17,4 +17,5 @@ window.envConfig = {
     socketGatewayPath: "gateway",
     googleAnalyticId: "G-F4HZV0YQ73",
     useTolgeeStatic: true,
+    displayMenuGameIds: [1003, 1004]
 };

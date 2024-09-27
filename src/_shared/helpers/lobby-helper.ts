@@ -10,7 +10,8 @@ export const getBanners = (lobbyConfigs: ILobbyConfigs): IBanner[] => {
 };
 
 export const getOfferGamesIds = (authorizeInfo: AuthorizeResponse): number[] => {
-    return authorizeInfo?.user?.offerGames?.map((game: any) => +game?.gameId) || [];
+    const displayMenuGameIds = getAppSettings().displayMenuGameIds;
+    return authorizeInfo?.user?.offerGames?.map((game: any) => +game?.gameId).filter((gameId) => displayMenuGameIds.includes(gameId)) || [];
 };
 
 export const getLobbyGameIds = (lobbyConfigs: ILobbyConfigs): number[] => {

@@ -15,6 +15,7 @@ window.envConfig = {
     appType: 3,
     enableDebugLogs: true,
     socketGatewayPath: "gateway",
+    displayMenuGameIds: [1003, 1004],
     googleAnalyticId: "G-F4HZV0YQ73",
     useTolgeeStatic: true,
     enablePreloadResource: false,

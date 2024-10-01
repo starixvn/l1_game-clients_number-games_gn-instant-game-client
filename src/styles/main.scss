@@ -73,7 +73,7 @@ html {
 }
 
 [data-theme="light"] {
-    --page-background-color: #000;
+    --page-background-color: #fff;
     --game-background-image: url("/static/images/bg-galaxy.webp?v=#{$version-image}");
     --game-small-background-image: url("/static/images/bg-galaxy-small.webp?v=#{$version-image}");
     --background-image: url("/static/images/bg.webp?v=#{$version-image}");
@@ -106,7 +106,7 @@ body {
 
 body {
     @media screen and (max-width: 500px) and (orientation: portrait) {
-        transform: scale(0.5) translate(0%, -50%);
+        transform: scale(0.5) translate(-50%, -50%);
     }
 }
 

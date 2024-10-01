@@ -38,17 +38,7 @@ const BaseNotice: React.FC<{
 
     return (
         <BaseDialog type={ModalType.Center} isOpen={true} onCloseModal={onClose}>
-            <div className={`modal-center red-color`}>
-                <span
-                    className={`icon-close ${Styles["icon-close"]}`}
-                    onClick={() => {
-                        clickSound();
-                        onClose();
-                    }}
-                    data-testid="close-btn"
-                ></span>
-                {children}
-            </div>
+            <div className={`modal-center red-color`}>{children}</div>
         </BaseDialog>
     );
 };

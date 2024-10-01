@@ -8,15 +8,15 @@
 .modal {
     position: absolute;
     text-align: center;
-    padding: 1.5rem 4.5rem 1.5rem 2.1rem;
+    padding: 1.5rem;
     background-color: var(--error-message-container-background);
     box-shadow: rgba(0, 0, 0, 0.5) 0px 19px 38px, rgba(0, 0, 0, 0.3) 0px 15px 12px;
     border-radius: 1.6rem;
-    font-size: 1.4rem;
+    font-size: 2.2rem;
     border: 1px solid var(--error-message-container-border);
     left: 50%;
     transform: translate(-50%, 0);
-    min-width: 30rem;
+    min-width: 44rem;
     color: var(--error-message-container-color);
     font-weight: normal;
 
@@ -41,7 +41,7 @@
 
 .modal-center {
     @extend .modal;
-    bottom: 15.4rem;
+    bottom: 11.6rem;
     z-index: var(--modal-index);
     overflow: hidden;
 

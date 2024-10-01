@@ -6,7 +6,7 @@ import React from "react";
 import { isDesktop, isMobile, isMobileOnly } from "react-device-detect";
 import SwiperCore from "swiper";
 
-import { ErrorNoGameOffer } from "../../../_shared/constants/error-code-dictionary";
+import ErrorCodeDictionary, { NoticeErrorCode } from "../../../_shared/constants/error-code-dictionary";
 import { GetLocalizedErrorMessage, localStorageKeys, StorageHelper } from "../../../_shared/helpers";
 import {
     GlobalMessageTransmitter,
@@ -147,7 +147,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
         if (this.dashboardHandler.checkIsNotOfferGame()) {
             this.setState({
                 apiError: {
-                    message: ErrorNoGameOffer,
+                    message: ErrorCodeDictionary[NoticeErrorCode.noGameOffer],
                     errorCode: "",
                 },
                 isShowErrorModal: true,
@@ -259,7 +259,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
 
         const allowSwipeGameOndDesktopStyle = isChangePrevGame ? Styles["slide-left"] : Styles["slide-right"];
         const changeGameStyle = isChangedGame && allowSwipeGameOndDesktop ? allowSwipeGameOndDesktopStyle : "";
-        const isNoGameOffer = this.state.apiError?.message === ErrorNoGameOffer;
+        const isNoGameOffer = this.state.apiError?.message === ErrorCodeDictionary[NoticeErrorCode.noGameOffer];
         const renderOfferGameContainer = () => (isRenderGames ? this.renderGames() : this.renderLobby());
 
         const authContextValue = {

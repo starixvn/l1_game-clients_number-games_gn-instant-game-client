@@ -1,4 +1,5 @@
 import ErrorCodeDictionary, { CommonErrorCodeList } from "../constants/error-code-dictionary";
+import { ResourceTypes } from "../resources";
 
 export interface INotice {
     errorCode: string;
@@ -11,7 +12,7 @@ export interface INotice {
 }
 export const GetLocalizedErrorMessage = (errorCode: string, isPlaceBet = false) => {
     if (!ErrorCodeDictionary[errorCode]) {
-        return "Common.message_error_occurred";
+        return `${ResourceTypes.INSTANT_GAME}.message_error_occurred`;
     }
 
     let key = ErrorCodeDictionary[errorCode];

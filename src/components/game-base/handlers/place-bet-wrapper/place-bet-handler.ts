@@ -23,6 +23,7 @@ import {
 } from "../../../../_shared/react-contexts/game-state-context/place-bet-context/place-bet-action";
 import { PlaceBetContextModel } from "../../../../_shared/react-contexts/game-state-context/place-bet-context/place-bet-context-model";
 import { NoticeModel, RoundState, SuggestBet } from "../../type";
+import { ResourceTypes } from "../../../../_shared/resources";
 
 export type PlaceBetHandlerProps = {
     tolgeeNamespace: string;
@@ -280,7 +281,7 @@ export class PlaceBetHandler {
     };
 
     handleProcessingBet = () => {
-        this.broadcastNotice({ message: "Common.message_processing_action", duration: 2, adjustBetNoticePosition: true });
+        this.broadcastNotice({ message: `${ResourceTypes.INSTANT_GAME}.message_processing_action`, duration: 2, adjustBetNoticePosition: true });
     };
 
     sendConfirmBet(notConfirmOwnBets: object) {

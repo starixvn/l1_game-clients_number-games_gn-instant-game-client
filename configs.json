@@ -1,6 +1,7 @@
 {
     "serverDomainMapper": {
-        "localhost": "lumigame.com"
+        "localhost": "lumigame.com",
+        "gn-mini.lumigame.com": "lumigame.com"
     },
     "proxy": {
         "ssl": true,

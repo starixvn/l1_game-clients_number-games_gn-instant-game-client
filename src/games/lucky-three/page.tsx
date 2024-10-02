@@ -12,7 +12,7 @@ import { useTranslator } from "../../_shared/react-hooks";
 import { tolgee } from "../../_shared/tolgee";
 import GameBase from "../../components/game-base";
 import { GameMessageHandler, TurnIdHandler } from "../../components/game-base/handlers";
-import { GameBaseHandlers, GameBaseProps, Round } from "../../components/game-base/type";
+import { GameBaseHandlers, GameBaseProps, GameBaseState, Round } from "../../components/game-base/type";
 import { NewRoundTransitionWithinExtraSeconds } from "../../components/game-components/new-round-transition";
 import { TurnStateHandler } from "../../components/turn-base/turn-state-handler";
 import { LuckyThreeBetOptions } from "./lucky-three-constants";
@@ -28,12 +28,9 @@ const RedAndBlueStatistic = dynamic(() => import("../../components/game-componen
 const LuckyThreeBetHistoryModal = dynamic(() => import("./history"));
 const ScoreboardLuckyThree = dynamic(() => import("./scoreboard"));
 
-export type LuckyThreeState = {
-    statisticGroup?: number;
-};
+class LuckyThree extends GameBase<GameBaseProps, GameBaseState> {
+    state: GameBaseState = { statisticGroup: 0, showScoreboard: false };
 
-class LuckyThree extends GameBase<GameBaseProps> {
-    state: LuckyThreeState = { statisticGroup: 0 };
     private readonly turnIdHandler?: TurnIdHandler;
     constructor(props: GameBaseProps) {
         const gameMessageHandler = new GameMessageHandler(props.dispatch);

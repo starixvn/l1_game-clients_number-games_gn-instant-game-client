@@ -12,7 +12,7 @@ import { useTranslator } from "../../_shared/react-hooks";
 import { tolgee } from "../../_shared/tolgee";
 import GameBase from "../../components/game-base/";
 import { GameMessageHandler, TurnIdHandler } from "../../components/game-base/handlers";
-import { GameBaseHandlers, GameBaseProps, Round } from "../../components/game-base/type";
+import { GameBaseHandlers, GameBaseProps, GameBaseState, Round } from "../../components/game-base/type";
 import { PercentageStatistic } from "../../components/game-components/statistic";
 import { TurnStateHandler } from "../../components/turn-base/turn-state-handler";
 import NextBallBettingBlock from "./next-ball-betting-block";
@@ -31,13 +31,9 @@ import { SwitchableScoreboard } from "../../components/game-components/round-his
 const DrawIdBlock = dynamic(() => import("../../components/game-components/draw-id"));
 const NextBallBetHistoryModal = dynamic(() => import("./history"));
 
-export type NextBallState = {
-    statisticGroup?: number;
-    showScoreboard: boolean;
-};
 
-class NextBall extends GameBase<GameBaseProps, NextBallState> {
-    state: NextBallState = { statisticGroup: 0, showScoreboard: false };
+class NextBall extends GameBase<GameBaseProps, GameBaseState> {
+    state: GameBaseState = { statisticGroup: 0, showScoreboard: false };
 
     private turnIdHandler?: TurnIdHandler;
 

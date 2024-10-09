@@ -138,8 +138,8 @@ body {
     color: var(--text-color);
     overscroll-behavior: contain;
     touch-action: pan-y;
-    height: 740px;
-    width: 448px;
+    width: 812px;
+    height: 456px;
 }
 
 .no-scroll-html {
@@ -151,21 +151,21 @@ body {
 }
 
 .game-header {
-    height: 8.4rem;
+    height: 4.5rem;
     position: relative;
 }
 
 .game-container {
     position: relative;
     // width: 100%;
-    width: 448px;
-    height: 664px;
+    width: 812px;
+    height: 410px;
 }
 
 .countdown-timer {
     position: absolute;
     top: 3.5rem;
-    left: 0;
+    left: -6.2rem;
     width: 100%;
     height: 7rem;
     display: flex;
@@ -220,16 +220,16 @@ body {
 .game-area {
     display: grid;
     grid-template-rows: 5rem 18.5rem 20.4rem 7.8rem 3.8rem 11.3rem;
-    grid-template-columns: 44rem;
+    grid-template-columns: 80rem;
     justify-content: center;
     // padding-top: 1rem;
 
     &.game-1003 {
-        grid-template-rows: 108px 160px 220px 46px 108px;
+        grid-template-rows: 40px 220px 46px 108px;
     }
 
     &.game-1004 {
-        grid-template-rows: 108px 160px 220px 46px 108px;
+        grid-template-rows: 40px 220px 46px 108px;
     }
 
     &.game-1005 {

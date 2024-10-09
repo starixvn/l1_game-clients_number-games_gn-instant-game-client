@@ -541,6 +541,46 @@ abstract class GameBase<P extends GameBaseProps, S> extends React.PureComponent<
         return <NewRoundTransitionWithoutExtraSeconds />;
     }
 
+    getRenderLandscapeTemplate() {
+        const uid = (this.context as PlayerContextModel).authorizeInfo?.user?.UID;
+        const { availableInGameData, isScoreboardTab, roundState } = this.props.gameStateContextModel;
+        const isDisabledGame = roundState === RoundState.Disabled;
+
+        return (
+            <>
+                <BackgroundGalaxy gameId={this.props.id} />
+                <>
+                    <div className={`game-area game-${this.props.id}`}>
+                        <PFProvider gameId={this.props.id} uid={uid}>
+                            <PFWrapper socket={this.socket} gameMessageHandler={this.gameMessageHandler} gameId={this.props.id} uid={uid}>
+                                {this.renderHeaderBlock()}
+                                {this.renderPFSettingModal()}
+                                {this.renderBetHistoryModal()}
+                            </PFWrapper>
+                        </PFProvider>
+                        <div>{availableInGameData && this.renderResultBlock()}</div>
+                        <PlaceBetProvider>
+                            <PlaceBetHandlerWrapper handler={this.placeBetHandler} signOut={(this.context as PlayerContextModel)?.signOut}>
+                                {this.renderBettingBlock()}
+                                {this.renderConfirmDialog()}
+                                {this.renderConfirmBet()}
+                            </PlaceBetHandlerWrapper>
+                        </PlaceBetProvider>
+                        {this.renderStatistic()}
+                        <div className={SwiperNoSwiping} style={{ position: "relative", top: "-110px" }}> {this.renderSlidingChips()}</div>
+                        {this.renderScoreboards()}
+
+                    </div>
+                    {!availableInGameData && <OverlayMask removeOverlay={isDisabledGame} />}
+                    {this.renderGameGuideModal()}
+                    {this.renderMenuButtons()}
+                    {this.renderNewRoundTransition()}
+                    {this.renderNotice()}
+                </>
+            </>
+        );
+    }
+
     getRenderTemplate() {
         const uid = (this.context as PlayerContextModel).authorizeInfo?.user?.UID;
         const { availableInGameData, isScoreboardTab, roundState } = this.props.gameStateContextModel;
@@ -567,7 +607,7 @@ abstract class GameBase<P extends GameBaseProps, S> extends React.PureComponent<
                             </PlaceBetHandlerWrapper>
                         </PlaceBetProvider>
                         {this.renderStatistic()}
-                        <div className={SwiperNoSwiping}> {this.renderSlidingChips()}</div>
+                        <div className={SwiperNoSwiping} style={{ position: "relative", top: "-110px" }}> {this.renderSlidingChips()}</div>
                         {this.renderScoreboards()}
 
                     </div>
@@ -588,7 +628,7 @@ abstract class GameBase<P extends GameBaseProps, S> extends React.PureComponent<
 
         return (
             <GameContextProvider value={{ ...this.props, gameMessageHandler: this.gameMessageHandler }}>
-                <GameActionsContextProvider value={gameActionsContext}>{this.getRenderTemplate()}</GameActionsContextProvider>
+                <GameActionsContextProvider value={gameActionsContext}>{this.getRenderLandscapeTemplate()}</GameActionsContextProvider>
             </GameContextProvider>
         );
     }

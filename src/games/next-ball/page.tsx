@@ -71,16 +71,18 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
             this.props.gameStateContextModel;
 
         return (
-            <NextBallResultBlock
-                roundHistory={roundHistory as Round<NextBallResult, NextBallSettlementResult>[]}
-                result={result}
-                roundState={roundState}
-                roundData={roundData}
-                turnCounter={turnCounter}
-                drawId={drawId}
-                playResultAnimation={playResultAnimation}
-                isPlayStartRoundAnimation={isPlayStartRoundAnimation}
-            />
+            <div className={Styles["result-zone-wrapper"]}>
+                <NextBallResultBlock
+                    roundHistory={roundHistory as Round<NextBallResult, NextBallSettlementResult>[]}
+                    result={result}
+                    roundState={roundState}
+                    roundData={roundData}
+                    turnCounter={turnCounter}
+                    drawId={drawId}
+                    playResultAnimation={playResultAnimation}
+                    isPlayStartRoundAnimation={isPlayStartRoundAnimation}
+                />
+            </div>
         );
     }
 

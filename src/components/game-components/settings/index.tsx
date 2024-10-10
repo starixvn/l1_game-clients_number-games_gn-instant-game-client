@@ -11,11 +11,11 @@ export const Settings: React.FC<{ isLandscapeMode: boolean }> = ({ isLandscapeMo
     const clickSound = useClickSound();
     const [enabledSound, setEnabledSound] = useState(StorageHelper.get(localStorageKeys.enableSound) ?? true);
     const [roundState, setRoundState] = useState(RoundState.None);
-    const [isLandscapeOrientation, setIiLandscapeOrientation] = useState(false);
+    const [isLandscapeOrientation, setIsLandscapeOrientation] = useState(false);
 
     useEffect(() => {
         const checkOrientation = () => {
-            setIiLandscapeOrientation(window.innerHeight < window.innerWidth);
+            setIsLandscapeOrientation(window.innerHeight < window.innerWidth);
         };
 
         checkOrientation();
@@ -49,6 +49,7 @@ export const Settings: React.FC<{ isLandscapeMode: boolean }> = ({ isLandscapeMo
         AnalyticsHelper.trackFunction({ function: TrackingFunction.GameGuide, action: TrackingAction.Open });
     };
 
+    const soundClassNames = ` ${enabledSound ? "icon-sound-on" : "icon-sound-off"}  ${enabledSound ? styles["icon-sound-on"] : styles["icon-sound-off"]}`;
     if ((isLandscapeOrientation && isLandscapeMode) || (!isLandscapeOrientation && !isLandscapeMode)) {
         return (
             <div className={styles["settings-container"]}>
@@ -58,7 +59,7 @@ export const Settings: React.FC<{ isLandscapeMode: boolean }> = ({ isLandscapeMo
                     </button>
 
                     <button className={styles[ButtonSettingClassName]} onClick={onToggleSound}>
-                        <span id="icon-sound" className={enabledSound ? `icon-sound-on` : `icon-sound-off`} />
+                        <span id="icon-sound" className={soundClassNames} />
                     </button>
                 </div>
             </div>

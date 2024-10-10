@@ -28,7 +28,6 @@ const DrawIdBlock = dynamic(() => import("../../components/game-components/draw-
 const NextBallBetHistoryModal = dynamic(() => import("./history"));
 
 class NextBall extends GameBase<GameBaseProps, GameBaseState> {
-    state: GameBaseState = { statisticGroup: 0, showScoreboard: false };
 
     private turnIdHandler?: TurnIdHandler;
 
@@ -49,6 +48,9 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
             totalTurns: props.totalTurns,
             durations: props.durations,
         });
+
+        this.state = { statisticGroup: 0, showScoreboard: false, scoreboardColumns: window.innerHeight < window.innerWidth ? 20 : 10 };
+        this.changeOrientation = this.changeOrientation.bind(this);
     }
 
     override registerHandlers(): void {
@@ -59,7 +61,14 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
 
     componentDidMount() {
         super.componentDidMount();
+        window.addEventListener("resize", this.changeOrientation);
     }
+
+    changeOrientation() {
+        const isLandscapeMode = window.innerHeight < window.innerWidth;
+        this.setState({ scoreboardColumns: isLandscapeMode ? 20 : 10 });
+    }
+
 
     renderResultBlock() {
         const { roundHistory, result, roundState, roundData, turnCounter, drawId, playResultAnimation, isPlayStartRoundAnimation } =
@@ -111,7 +120,7 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
                             {
                                 element: createBeadRoadElement(false),
                                 arrange: BeadRoadElement.arrange,
-                                column: 10,
+                                column: this.state.scoreboardColumns,
                                 row: 1,
                             },
                         ]}
@@ -176,7 +185,7 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
                         {
                             element: createBigRoadElement(false),
                             arrange: BigRoadElement.arrange(NextBallBigRoadConverter.getInstance(false)),
-                            column: 10,
+                            column: this.state.scoreboardColumns,
                             row: 6,
                         },
                     ]}

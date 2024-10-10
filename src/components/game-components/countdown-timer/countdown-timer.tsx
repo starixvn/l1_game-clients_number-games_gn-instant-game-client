@@ -95,7 +95,7 @@ export const TurnBaseStatus = ({ children }) => {
 
     return (
         <div className={`${styles["game-status"]}`}>
-            <span>{t(`draw_${turnCounter}`)}</span>
+            {/* <span>{t(`draw_${turnCounter}`)}</span> */}
             {children}
         </div>
     );

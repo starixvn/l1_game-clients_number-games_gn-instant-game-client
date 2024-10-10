@@ -286,18 +286,19 @@ body {
 
     .countdown-timer {
         width: 812px;
-        left: -5rem;
+        left: -7rem;
+        top: 4rem;
     }
 
     .game-area {
         grid-template-columns: 80rem;
 
         &.game-1003 {
-            grid-template-rows: 40px 220px 46px 108px;
+            grid-template-rows: 40px 224px 59px 129px 0px;
         }
 
         &.game-1004 {
-            grid-template-rows: 40px 220px 46px 108px;
+            grid-template-rows: 40px 224px 59px 129px 0px;
         }
     }
 

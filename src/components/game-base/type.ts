@@ -89,6 +89,7 @@ export type GameBaseProps = GamePropsContext & WithRouterProps;
 export type GameBaseState = {
     statisticGroup?: number;
     showScoreboard: boolean;
+    scoreboardColumns?: number;
 };
 
 export interface NoticeModel {

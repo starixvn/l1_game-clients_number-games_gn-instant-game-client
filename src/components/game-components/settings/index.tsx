@@ -1,23 +1,33 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnalyticsHelper, localStorageKeys, StorageHelper, TrackingAction, TrackingFunction } from "../../../_shared/helpers";
-import { GameEventActionType } from "../../../_shared/react-contexts/game-state-context/game-event-action";
-import { useGameStateContext, useGameStatesDispatch } from "../../../_shared/react-contexts/game-state-context/game-state-context";
+import { useGameStatesDispatch } from "../../../_shared/react-contexts/game-state-context/game-state-context";
 import { useClickSound } from "../../../_shared/react-hooks";
 import { RoundState } from "../../game-base/type";
 import styles from "./settings.module.scss";
+import { GlobalMessageTransmitter, GlobalTransmitterEvent, registerGlobalMessageEvent, unsubscribeGlobalMessageEvent } from "../../../_shared/helpers/message-transmitter/global-transmitter";
 
 const ButtonSettingClassName = "setting-button";
 
 export function Settings() {
     const clickSound = useClickSound();
     const dispatch = useGameStatesDispatch();
-    const { roundState } = useGameStateContext();
     const [enabledSound, setEnabledSound] = useState(StorageHelper.get(localStorageKeys.enableSound) ?? true);
+    const [roundState, setRoundState] = useState(RoundState.None);
 
     const onToggleSound = () => {
         StorageHelper.set(localStorageKeys.enableSound, !enabledSound);
         setEnabledSound(!enabledSound);
     };
+
+    useEffect(() => {
+        const userInfoRedHandlerId = registerGlobalMessageEvent(GlobalTransmitterEvent.ROUND_STATE, ({ roundState }) => {
+            setRoundState(roundState);
+        });
+
+        return () => {
+            unsubscribeGlobalMessageEvent(userInfoRedHandlerId as any);
+        };
+    }, []);
 
     const openGuide = () => {
         if (roundState === RoundState.Disabled) {
@@ -25,12 +35,7 @@ export function Settings() {
         }
 
         clickSound();
-        dispatch({
-            type: GameEventActionType.TOGGLE_GAME_GUIDE,
-            payload: {
-                isShowGameGuide: true,
-            },
-        });
+        GlobalMessageTransmitter.broadcast({ [GlobalTransmitterEvent.TOGGLE_GAME_GUIDE]: true });
         AnalyticsHelper.trackFunction({ function: TrackingFunction.GameGuide, action: TrackingAction.Open });
     };
     return (

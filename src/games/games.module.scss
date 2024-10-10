@@ -26,11 +26,17 @@
 .game-container {
     border-bottom: 0.1rem solid var(--game-category-border);
     background: var(--game-category-background);
-    z-index: calc(var(--header-index) - 1);
+    z-index: calc(var(--header-index) + 1);
+
+    position: relative;
+    top: 9rem;
 }
 
 .game-wrapper {
-    position: absolute;
-    top: 7.5rem;
+    // position: absolute;
+    top: 8rem;
     overflow: hidden;
+
+    height: 100%;
+    // z-index: 400;
 }

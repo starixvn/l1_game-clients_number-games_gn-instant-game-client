@@ -6,6 +6,7 @@ import { NavBarGameName } from "./header-title";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Navigation, Thumbs } from "swiper/modules";
 import { useEffect, useRef, useState } from "react";
+import { Settings } from "../../game-components/settings";
 
 export type HeaderProps = {
     lobbyGamesIds: Array<number>;
@@ -75,6 +76,7 @@ const Header: React.FC<HeaderProps> = ({
                     </Swiper>
                 </div>
             </div>
+            <Settings />
         </header>
     );
 };

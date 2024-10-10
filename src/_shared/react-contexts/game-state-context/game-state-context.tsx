@@ -59,7 +59,6 @@ function gameStateReducer(state: GameStateContextModel, action: GameEventAction)
         turnCounter,
         isUMInFirstLoad,
         isShowBetHistory,
-        isShowGameGuide,
         isShowBetDetail,
         betDetailModalData,
         isPlayStartRoundAnimation,
@@ -268,13 +267,6 @@ function gameStateReducer(state: GameStateContextModel, action: GameEventAction)
             return {
                 ...state,
                 isShowBetDetail,
-            };
-        }
-
-        case GameEventActionType.TOGGLE_GAME_GUIDE: {
-            return {
-                ...state,
-                isShowGameGuide,
             };
         }
 

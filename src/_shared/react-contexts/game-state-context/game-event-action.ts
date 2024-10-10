@@ -73,7 +73,6 @@ export interface GameEventPayload {
     turnCounter?: number;
     isUMInFirstLoad?: boolean;
     isShowBetHistory?: boolean;
-    isShowGameGuide?: boolean;
     isShowBetDetail?: boolean;
     betDetailModalData?: {
         drawInfo: DrawInfo;

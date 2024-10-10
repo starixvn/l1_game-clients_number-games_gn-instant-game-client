@@ -8,6 +8,7 @@ import { RoundState } from "../../../game-base/type";
 import { AnalyticsHelper, TrackingAction, TrackingFunction } from "../../../../_shared/helpers";
 import { PFEventActionType } from "../../../../_shared/react-contexts/game-state-context/pf/pf-action";
 import { usePFDispatch } from "../../../../_shared/react-contexts/game-state-context/pf/pf-context";
+import { GlobalMessageTransmitter, GlobalTransmitterEvent } from "../../../../_shared/helpers/message-transmitter/global-transmitter";
 
 const dropdownItemClassName = "dropdown-item";
 
@@ -63,12 +64,8 @@ export const Menu: React.FC = () => {
         }
 
         clickSound();
-        dispatch({
-            type: GameEventActionType.TOGGLE_GAME_GUIDE,
-            payload: {
-                isShowGameGuide: true,
-            },
-        });
+        GlobalMessageTransmitter.broadcast({ [GlobalTransmitterEvent.TOGGLE_GAME_GUIDE]: true });
+
         setDropdownOpen(false);
         AnalyticsHelper.trackFunction({ function: TrackingFunction.GameGuide, action: TrackingAction.Open });
     };

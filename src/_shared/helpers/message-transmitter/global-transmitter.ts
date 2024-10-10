@@ -8,7 +8,9 @@ export enum GlobalTransmitterEvent {
     NOTICE = "notice",
     USER_INFO_RED = "userInfoRed",
     CHANGE_AVATAR_ID = "avatarId",
-    CLOSE_DIALOG = "closeDialog"
+    CLOSE_DIALOG = "closeDialog",
+    ROUND_STATE = "roundState",
+    TOGGLE_GAME_GUIDE = "toggleGameGuide"
 }
 
 export const registerGlobalMessageEvent = (messageKey: string, handler: Function) => {

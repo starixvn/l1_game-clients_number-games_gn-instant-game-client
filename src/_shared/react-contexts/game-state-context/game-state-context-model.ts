@@ -29,7 +29,6 @@ export interface GameStateContextModel {
     userStakeLevel: IUserStakeLevel;
     isShowBetHistory: boolean;
     isShowBetDetail: boolean;
-    isShowGameGuide: boolean;
     betDetailModalData?: {
         drawInfo: DrawInfo;
         betLogDetails: any[];
@@ -76,7 +75,6 @@ export const initialGameStateContextModel = () => {
             maxBet: 200_000,
         },
         isShowBetHistory: false,
-        isShowGameGuide: false,
         isPlayStartRoundAnimation: false,
         isScoreboardTab: true,
         availableInGameData: false

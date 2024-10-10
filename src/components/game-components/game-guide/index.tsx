@@ -1,23 +1,33 @@
-import { FC, memo, useMemo, useRef, useState } from "react";
+import { FC, memo, useEffect, useMemo, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import { buildVersion, Themes } from "../../../_shared/constants";
 import { buildGameGuideUrl } from "../../../_shared/helpers";
 import { usePlayerContext } from "../../../_shared/react-contexts";
-import { useGameStateContext, useGameStatesDispatch } from "../../../_shared/react-contexts/game-state-context/game-state-context";
+import { useGameStateContext } from "../../../_shared/react-contexts/game-state-context/game-state-context";
 import { useCommonTranslate } from "../../../_shared/react-hooks";
 import { tolgee } from "../../../_shared/tolgee";
 import { LoadingSpinner } from "../game-loading/loading-spinner";
 import ModalContainer from "../modal-container";
 import Styles from "./game-guide.module.scss";
+import { GlobalTransmitterEvent, registerGlobalMessageEvent, unsubscribeGlobalMessageEvent } from "../../../_shared/helpers/message-transmitter/global-transmitter";
 
 const GameGuideModal: FC = () => {
-    const { isShowGameGuide } = useGameStateContext();
-    const dispatch = useGameStatesDispatch();
     const { t: translate } = useCommonTranslate();
+    const [isShowGameGuide, setIsShowGameGuide] = useState(false);
+
+    useEffect(() => {
+        const gameGuideHandlerId = registerGlobalMessageEvent(GlobalTransmitterEvent.TOGGLE_GAME_GUIDE, ({ toggleGameGuide }) => {
+            setIsShowGameGuide(toggleGameGuide);
+        });
+
+        return () => {
+            unsubscribeGlobalMessageEvent(gameGuideHandlerId as any);
+        };
+    }, []);
 
     const handleCloseModal = () => {
-        dispatch({ type: "TOGGLE_GAME_GUIDE", payload: { isShowGameGuide: false } });
+        setIsShowGameGuide(false);
     };
 
     return (

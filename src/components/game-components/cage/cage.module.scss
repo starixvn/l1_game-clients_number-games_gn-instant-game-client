@@ -3,8 +3,7 @@
     --cage-height: 13rem;
 
     position: relative;
-    top: -120px;
-    left: 250px;
+
     display: grid;
     grid: 1fr/1fr;
     place-items: center;
@@ -194,5 +193,14 @@
 
     to {
         opacity: 0;
+    }
+}
+
+@media screen and (orientation: portrait) {}
+
+@media screen and (orientation: landscape) {
+    .cage-area {
+        top: -120px;
+        left: 250px;
     }
 }

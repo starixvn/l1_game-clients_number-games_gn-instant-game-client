@@ -19,7 +19,6 @@ import CountdownTimer, { GameStatusMap } from "../game-components/countdown-time
 import DisabledModal from "../game-components/disabled-modal";
 import { ConnectFailedMessage } from "../game-components/error-message";
 import { ConnectFailedReasonKey } from "../game-components/error-message/type";
-import Footer from "../game-components/footer";
 import GameContainer from "../game-components/game-container";
 import GameGuideModal from "../game-components/game-guide";
 import GameLoading from "../game-components/game-loading";
@@ -28,7 +27,6 @@ import { NewRoundTransitionWithoutExtraSeconds } from "../game-components/new-ro
 import { NoticeDialog } from "../game-components/notice";
 import { OverlayMask } from "../game-components/overlay-mask";
 import { PFSettingModal } from "../game-components/provably-fair";
-import SideBetScoreboard from "../game-components/round-history/side-bet-scoreboard";
 import { Settings } from "../game-components/settings";
 import BackgroundGalaxy from "../page-components/background";
 import BetSettings from "../page-components/bet-settings";
@@ -484,7 +482,7 @@ abstract class GameBase<P extends GameBaseProps, S> extends React.PureComponent<
                 <div id="countdown-timer" className="countdown-timer">
                     {availableInGameData && <CountdownTimer GameStatusProp={this.renderGameStatus()} />}
                 </div>
-                <Settings />
+                <Settings isLandscapeMode={false} />
             </div>
         );
     }
@@ -542,49 +540,9 @@ abstract class GameBase<P extends GameBaseProps, S> extends React.PureComponent<
         return <NewRoundTransitionWithoutExtraSeconds />;
     }
 
-    getRenderLandscapeTemplate() {
-        const uid = (this.context as PlayerContextModel).authorizeInfo?.user?.UID;
-        const { availableInGameData, isScoreboardTab, roundState } = this.props.gameStateContextModel;
-        const isDisabledGame = roundState === RoundState.Disabled;
-
-        return (
-            <>
-                <BackgroundGalaxy gameId={this.props.id} />
-                <>
-                    <div className={`game-area game-${this.props.id}`}>
-                        <PFProvider gameId={this.props.id} uid={uid}>
-                            <PFWrapper socket={this.socket} gameMessageHandler={this.gameMessageHandler} gameId={this.props.id} uid={uid}>
-                                {this.renderHeaderBlock()}
-                                {this.renderPFSettingModal()}
-                                {this.renderBetHistoryModal()}
-                            </PFWrapper>
-                        </PFProvider>
-                        <div>{availableInGameData && this.renderResultBlock()}</div>
-                        <PlaceBetProvider>
-                            <PlaceBetHandlerWrapper handler={this.placeBetHandler} signOut={(this.context as PlayerContextModel)?.signOut}>
-                                {this.renderBettingBlock()}
-                                {this.renderConfirmDialog()}
-                                {this.renderConfirmBet()}
-                            </PlaceBetHandlerWrapper>
-                        </PlaceBetProvider>
-                        {this.renderStatistic()}
-                        <div className={SwiperNoSwiping} style={{ position: "relative", top: "-110px" }}> {this.renderSlidingChips()}</div>
-                        {this.renderScoreboards()}
-
-                    </div>
-                    {!availableInGameData && <OverlayMask removeOverlay={isDisabledGame} />}
-                    {this.renderGameGuideModal()}
-                    {this.renderMenuButtons()}
-                    {this.renderNewRoundTransition()}
-                    {this.renderNotice()}
-                </>
-            </>
-        );
-    }
-
     getRenderTemplate() {
         const uid = (this.context as PlayerContextModel).authorizeInfo?.user?.UID;
-        const { availableInGameData, isScoreboardTab, roundState } = this.props.gameStateContextModel;
+        const { availableInGameData, roundState } = this.props.gameStateContextModel;
         const isDisabledGame = roundState === RoundState.Disabled;
 
         return (
@@ -608,7 +566,7 @@ abstract class GameBase<P extends GameBaseProps, S> extends React.PureComponent<
                             </PlaceBetHandlerWrapper>
                         </PlaceBetProvider>
                         {this.renderStatistic()}
-                        <div className={SwiperNoSwiping} style={{ position: "relative", top: "-110px" }}> {this.renderSlidingChips()}</div>
+                        <div className={`${SwiperNoSwiping} slide-chip-wrapper`} > {this.renderSlidingChips()}</div>
                         {this.renderScoreboards()}
 
                     </div>
@@ -629,7 +587,10 @@ abstract class GameBase<P extends GameBaseProps, S> extends React.PureComponent<
 
         return (
             <GameContextProvider value={{ ...this.props, gameMessageHandler: this.gameMessageHandler }}>
-                <GameActionsContextProvider value={gameActionsContext}>{this.getRenderLandscapeTemplate()}</GameActionsContextProvider>
+                <GameActionsContextProvider value={gameActionsContext}>{
+                    this.getRenderTemplate()
+                }
+                </GameActionsContextProvider>
             </GameContextProvider>
         );
     }

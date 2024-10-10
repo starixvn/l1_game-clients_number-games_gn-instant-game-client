@@ -6,9 +6,6 @@
 }
 
 .header {
-    position: fixed;
-    left: 0;
-    right: 0;
     padding-left: 0.8rem;
     display: flex;
     align-items: center;
@@ -19,11 +16,6 @@
     height: 76px;
     z-index: var(--header-index);
     margin: 0 auto;
-
-    // @media screen and (min-width: 500px) {
-    //     max-width: 37.5rem;
-    //     background-size: 37.5rem;
-    // }
 
     .header-right {
         display: flex;
@@ -41,8 +33,8 @@
 
 .swiper {
     height: 100%;
+    width: 100%;
     border-bottom: 1px solid #ffc909;
-
 }
 
 .swiper-slide {

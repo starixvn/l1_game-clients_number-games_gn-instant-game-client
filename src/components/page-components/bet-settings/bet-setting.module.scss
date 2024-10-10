@@ -51,3 +51,12 @@
     width: 38rem;
     z-index: 1;
 }
+
+
+@media screen and (orientation: portrait) {}
+
+@media screen and (orientation: landscape) {
+    .chips-container {
+        width: 70rem;
+    }
+}

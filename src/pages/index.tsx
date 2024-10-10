@@ -6,6 +6,7 @@ import SplashScreen from "../components/page-components/splash-screen";
 
 const Home = () => {
     usePWAWoker();
+
     const router = useRouter();
 
     if (!router?.isReady || typeof window === "undefined") {

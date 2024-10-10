@@ -97,21 +97,23 @@ html {
     --icon-favorite-game-guide: #2c2f3e;
 }
 
-// To dock the footer
+// To dock the footer~
 html,
 body {
     height: 100%;
+    width: 100%;
     scrollbar-width: none;
 }
 
 body {
     @media screen and (max-width: 500px) and (orientation: portrait) {
-        transform: scale(0.5) translate(-50%, -50%);
+        transform: scale(0.5) translate(0, -50%);
     }
 }
 
 #__next {
-    height: 100%;
+    height: 740px;
+    width: 448px;
 }
 
 // end
@@ -138,8 +140,8 @@ body {
     color: var(--text-color);
     overscroll-behavior: contain;
     touch-action: pan-y;
-    width: 812px;
-    height: 456px;
+    display: flex;
+    justify-content: center;
 }
 
 .no-scroll-html {
@@ -151,27 +153,30 @@ body {
 }
 
 .game-header {
-    height: 4.5rem;
+    height: 8.4rem;
     position: relative;
 }
 
 .game-container {
     position: relative;
     // width: 100%;
-    width: 812px;
-    height: 410px;
+    width: 448px;
+    height: 664px;
+
 }
 
 .countdown-timer {
     position: absolute;
     top: 3.5rem;
-    left: -5rem;
+
     width: 100%;
     height: 7rem;
     display: flex;
     justify-content: center;
     font-size: 1.7rem;
     color: white;
+    left: 0;
+
 }
 
 .round-id {
@@ -220,16 +225,17 @@ body {
 .game-area {
     display: grid;
     grid-template-rows: 5rem 18.5rem 20.4rem 7.8rem 3.8rem 11.3rem;
-    grid-template-columns: 80rem;
+
     justify-content: center;
     // padding-top: 1rem;
+    grid-template-columns: 44rem;
 
     &.game-1003 {
-        grid-template-rows: 40px 220px 46px 108px;
+        grid-template-rows: 108px 160px 220px 46px 108px;
     }
 
     &.game-1004 {
-        grid-template-rows: 40px 220px 46px 108px;
+        grid-template-rows: 108px 160px 220px 46px 108px;
     }
 
     &.game-1005 {
@@ -258,4 +264,46 @@ body {
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: var(--modal-index);
+}
+
+@media screen and (orientation: portrait) {}
+
+@media screen and (orientation: landscape) {
+
+    #__next {
+        width: 812px;
+        height: 456px;
+    }
+
+    .game-header {
+        height: 4.5rem;
+    }
+
+    .game-container {
+        width: 812px;
+        height: 410px;
+    }
+
+    .countdown-timer {
+        width: 812px;
+        left: -5rem;
+    }
+
+    .game-area {
+        grid-template-columns: 80rem;
+
+        &.game-1003 {
+            grid-template-rows: 40px 220px 46px 108px;
+        }
+
+        &.game-1004 {
+            grid-template-rows: 40px 220px 46px 108px;
+        }
+    }
+
+    .slide-chip-wrapper {
+        position: relative;
+        top: -11rem;
+    }
+
 }

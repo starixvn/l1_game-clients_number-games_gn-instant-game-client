@@ -9,7 +9,6 @@ import {
     useGameStatesDispatch,
 } from "../../_shared/react-contexts/game-state-context/game-state-context";
 import { useTranslator } from "../../_shared/react-hooks";
-import { tolgee } from "../../_shared/tolgee";
 import GameBase from "../../components/game-base/";
 import { GameMessageHandler, TurnIdHandler } from "../../components/game-base/handlers";
 import { GameBaseHandlers, GameBaseProps, GameBaseState, Round } from "../../components/game-base/type";
@@ -20,17 +19,13 @@ import { NextBallBetOptions } from "./next-ball-constants";
 import { NextGameRoundDataHandler } from "./next-ball-game-round-data-handler";
 import NextBallResultBlock from "./next-ball-result-block";
 import Styles from "./next-ball.module.scss";
-import Scoreboard from "./scoreboard";
 import { NextBallResult, NextBallSettlementResult } from "./types";
-import NextBallStatisticSideBetDetail from "./next-ball-statistic-side";
-import SideBetScoreboardContainer from "../../components/game-components/round-history/side-bet-scoreboard/side-bet-scoreboard-container";
 import { createBeadRoadElement, createBigRoadElement, NextBallBigRoadConverter } from "./scoreboard-elements";
 import { BeadRoadElement, BigRoadElement } from "../../components/game-components/round-history/scoreboard/elements";
 import { SwitchableScoreboard } from "../../components/game-components/round-history/scoreboard";
 
 const DrawIdBlock = dynamic(() => import("../../components/game-components/draw-id"));
 const NextBallBetHistoryModal = dynamic(() => import("./history"));
-
 
 class NextBall extends GameBase<GameBaseProps, GameBaseState> {
     state: GameBaseState = { statisticGroup: 0, showScoreboard: false };

@@ -10,6 +10,7 @@
     --paging-item-text-color: #28526d;
 }
 
+
 .game-list {
     flex-wrap: wrap;
     justify-content: flex-start;
@@ -26,17 +27,28 @@
 .game-container {
     border-bottom: 0.1rem solid var(--game-category-border);
     background: var(--game-category-background);
-    z-index: calc(var(--header-index) + 1);
+    z-index: calc(var(--header-index) - 1);
 
-    position: relative;
-    top: 9rem;
 }
 
 .game-wrapper {
-    // position: absolute;
-    top: 8rem;
-    overflow: hidden;
+    position: absolute;
+    top: 7.5rem;
+}
 
-    height: 100%;
-    // z-index: 400;
+
+@media screen and (orientation: portrait) {}
+
+@media screen and (orientation: landscape) {
+    .game-container {
+        position: relative;
+        top: 9rem;
+    }
+
+    .game-wrapper {
+        top: 8rem;
+        overflow: hidden;
+
+        height: 100%;
+    }
 }

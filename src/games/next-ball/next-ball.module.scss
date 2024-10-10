@@ -1,10 +1,3 @@
-.result-zone-wrapper {
-    top: 112px;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
 .betting-zone {
     position: relative;
     display: flex;
@@ -14,8 +7,6 @@
     z-index: 2;
     padding: 0 0.5rem 0 0.5rem;
     // margin-top: 1rem;
-
-    top: -220px;
 }
 
 .result-container {
@@ -92,8 +83,6 @@
     display: flex;
     flex-direction: column;
     gap: 0.6rem;
-    height: 234px;
-
 
     .own-bet {
         bottom: 2.4rem;
@@ -263,8 +252,6 @@
     position: relative;
     // height: 4.6rem;
     // display: flex;
-
-    top: -75px;
 }
 
 
@@ -344,4 +331,30 @@
 .scoreboard-block {
     width: 3.8rem;
     height: 3.9rem;
+}
+
+
+@media screen and (orientation: portrait) {}
+
+@media screen and (orientation: landscape) {
+    .result-zone-wrapper {
+        top: 112px;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .betting-zone {
+        top: -220px;
+
+    }
+
+    .bet-option-row {
+        height: 234px;
+    }
+
+    .statistic {
+        top: -75px;
+    }
+
 }

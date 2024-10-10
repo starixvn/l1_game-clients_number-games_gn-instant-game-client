@@ -76,7 +76,7 @@ const Header: React.FC<HeaderProps> = ({
                     </Swiper>
                 </div>
             </div>
-            <Settings />
+            <Settings isLandscapeMode={true} />
         </header>
     );
 };

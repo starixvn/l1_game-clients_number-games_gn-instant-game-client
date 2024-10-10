@@ -4,7 +4,15 @@
     gap: 0.6rem;
     margin-top: 2.4rem;
     flex-wrap: wrap;
+}
 
-    position: relative;
-    left: -20%;
+
+
+@media screen and (orientation: portrait) {}
+
+@media screen and (orientation: landscape) {
+    .ball-container {
+        position: relative;
+        left: -20%;
+    }
 }

@@ -1,6 +1,7 @@
 import { Attributes, CSSProperties, Component, ComponentType, HTMLAttributes, ReactNode, createElement } from "react";
 import styles from "./scoreboard.module.scss";
 import { chunk } from "./utilities";
+import React from "react";
 
 export type ScoreboardProps<Round> = {
     arrange: (data: unknown[], scoreboard: unknown) => unknown[];
@@ -12,6 +13,7 @@ export type ScoreboardProps<Round> = {
     elementClassName?: string;
     blockClassName?: string;
     block?: number;
+    updateScoreboardColumns?: (actualColumns: number) => void;
 } & HTMLAttributes<unknown>;
 
 export type ScoreboardItemProps<Round> = {
@@ -19,7 +21,19 @@ export type ScoreboardItemProps<Round> = {
     scoreboard?: Scoreboard<Round>;
 };
 
-export class Scoreboard<Round> extends Component<ScoreboardProps<Round>> {
+export type ScoreboardState = {
+    actualColumns: number;
+}
+export class Scoreboard<Round> extends Component<ScoreboardProps<Round>, ScoreboardState> {
+    private scrollableDivRef: React.RefObject<HTMLDivElement>;
+    private actualColumns: number;
+    state = {
+        actualColumns: 17
+    }
+    constructor(props) {
+        super(props);
+        this.scrollableDivRef = React.createRef();
+    }
     static defaultProps: Partial<ScoreboardProps<unknown>> = {
         column: 17,
         row: 6,
@@ -62,6 +76,16 @@ export class Scoreboard<Round> extends Component<ScoreboardProps<Round>> {
         return groups;
     }
 
+    componentDidMount(): void {
+        if (this.scrollableDivRef.current) {
+            this.scrollableDivRef.current.scrollLeft = this.scrollableDivRef.current.scrollWidth;
+        }
+
+        if (this.props.updateScoreboardColumns) {
+            this.props.updateScoreboardColumns(this.actualColumns);
+        }
+    }
+
     getHTMLAttributes() {
         const { rounds, className, elementClassName, block, row: originalRow, element, arrange, blockClassName, ...htmlProps } = this.props;
 
@@ -75,18 +99,18 @@ export class Scoreboard<Round> extends Component<ScoreboardProps<Round>> {
         const groupItems = this.createGroup(arranged);
 
         return (
-            <div className={`${styles.scoreboard} ${className}`} {...htmlProps} data-testid="scoreboard">
+            <div ref={this.scrollableDivRef} className={`${styles.scoreboard} ${className}`} {...htmlProps} data-testid="scoreboard">
                 {groupItems.map((items: Round[], index: number) => {
                     const rowByGroup = (originalRow / block) >> 0;
-                    const column = (index / rowByGroup + 1) >> 0;
+                    const parentColumn = (index / rowByGroup + 1) >> 0;
                     const row = (index % rowByGroup) + 1;
                     const style: CSSProperties = {
-                        gridColumnStart: column,
+                        gridColumnStart: parentColumn,
                         gridRowStart: row,
                     };
 
                     return (
-                        <div className={`${styles["scoreboard-block"]} ${blockClassName}`} key={index} style={style}>
+                        <div className={`scoreboard-block ${styles["scoreboard-block"]} ${blockClassName}`} key={index} style={style}>
                             {items.map((round, index) => {
                                 const column = (index / block + 1) >> 0;
                                 const row = (index % block) + 1;
@@ -94,6 +118,10 @@ export class Scoreboard<Round> extends Component<ScoreboardProps<Round>> {
                                     gridColumnStart: column,
                                     gridRowStart: row,
                                 };
+
+                                if (round && round["data"]?.length > 0) {
+                                    this.actualColumns = parentColumn;
+                                }
 
                                 return this.renderElement(round, {
                                     className: `${styles["scoreboard-item"]} ${elementClassName}`,

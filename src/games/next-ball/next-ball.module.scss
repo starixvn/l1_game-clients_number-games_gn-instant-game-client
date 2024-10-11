@@ -314,6 +314,9 @@
 .scoreboard {
     background: rgba(0, 0, 0, 0.80) !important;
     height: 25rem;
+    width: 41rem;
+    overflow-x: scroll;
+    overflow-y: hidden;
 }
 
 .round-id-wrapper {
@@ -359,7 +362,7 @@
 
     .scoreboard-and-statistic {
         width: 792px;
-        height: 30rem;
+        height: 32rem;
     }
 
     .scoreboard-block {
@@ -368,7 +371,9 @@
     }
 
     .scoreboard {
-        height: 23rem;
+        // height: 23rem;
+        width: 77rem;
+        overflow-x: scroll;
+        overflow-y: hidden;
     }
-
 }

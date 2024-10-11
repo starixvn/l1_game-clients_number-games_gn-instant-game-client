@@ -12,7 +12,7 @@ export abstract class BigRoadElement<Round> extends Component<ScoreboardItemProp
             const { row, column } = scoreboard.props;
             const bigRoad = new BigRoadScoreboard({ converter, height: row });
             const input = [...rounds].reverse();
-            const total = column * row;
+            let total = Math.max(Math.round((rounds.length ?? 0) / row), column) * row;
 
             bigRoad.initialize(input);
 

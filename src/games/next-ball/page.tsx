@@ -49,8 +49,15 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
             durations: props.durations,
         });
 
-        this.state = { statisticGroup: 0, showScoreboard: false, scoreboardColumns: window.innerHeight < window.innerWidth ? 20 : 10 };
+        this.state = {
+            statisticGroup: 0,
+            showScoreboard: false,
+            scoreboardColumns: 100,
+            statisticColumns: this.getStatisticColumns()
+        };
+
         this.changeOrientation = this.changeOrientation.bind(this);
+        this.updateScoreboardColumns = this.updateScoreboardColumns.bind(this);
     }
 
     override registerHandlers(): void {
@@ -64,9 +71,13 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
         window.addEventListener("resize", this.changeOrientation);
     }
 
-    changeOrientation() {
+    getStatisticColumns() {
         const isLandscapeMode = window.innerHeight < window.innerWidth;
-        this.setState({ scoreboardColumns: isLandscapeMode ? 20 : 10 });
+        return isLandscapeMode ? 20 : 10;
+    }
+
+    changeOrientation() {
+        this.setState({ statisticColumns: this.getStatisticColumns() });
     }
 
 
@@ -104,6 +115,11 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
         }));
     }
 
+    updateScoreboardColumns(actualColumns: number) {
+        console.log("this.actualColumns: " + actualColumns);
+        this.setState({ scoreboardColumns: actualColumns });
+    }
+
     renderStatistic() {
         const { roundHistory, isShowBlink } = this.props.gameStateContextModel;
         const rounds = isShowBlink ? [{}, ...roundHistory] : roundHistory;
@@ -120,7 +136,7 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
                             {
                                 element: createBeadRoadElement(false),
                                 arrange: BeadRoadElement.arrange,
-                                column: this.state.scoreboardColumns,
+                                column: this.state.statisticColumns,
                                 row: 1,
                             },
                         ]}
@@ -187,6 +203,7 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
                             arrange: BigRoadElement.arrange(NextBallBigRoadConverter.getInstance(false)),
                             column: this.state.scoreboardColumns,
                             row: 6,
+                            updateScoreboardColumns: this.updateScoreboardColumns,
                         },
                     ]}
                 />

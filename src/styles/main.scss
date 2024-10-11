@@ -294,17 +294,17 @@ body {
         grid-template-columns: 80rem;
 
         &.game-1003 {
-            grid-template-rows: 40px 224px 59px 129px 0px;
+            grid-template-rows: 26px 224px 32px 90px 0;
         }
 
         &.game-1004 {
-            grid-template-rows: 40px 224px 59px 129px 0px;
+            grid-template-rows: 26px 224px 32px 90px 0;
         }
     }
 
     .slide-chip-wrapper {
         position: relative;
-        top: -11rem;
+        top: -9.5rem;
     }
 
 }

@@ -625,7 +625,6 @@ abstract class GameBase<P extends GameBaseProps, S> extends React.PureComponent<
                     id={id}
                     onReconnect={this.retryConnect.bind(this)}
                     reason={disconnectReason}
-                    enableBackdrop={true}
                 />
             )
         );

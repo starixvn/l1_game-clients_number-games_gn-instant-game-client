@@ -149,6 +149,10 @@ img {
     background: var(--opacity-background);
 }
 
+.disconnect {
+    background: #09263f;
+}
+
 .overlay-mask-white {
     @extend .overlay-mask-no-bg;
     background: var(--opacity-background-grey);

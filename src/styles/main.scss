@@ -70,6 +70,13 @@ html {
 
     // footer
     --color-copyright: rgba(161, 161, 161, 0.6);
+
+    //layout
+    --height-game-container-portrait: 667px;
+    --width-game-container-portrait: 448px;
+
+    --height-game-container-landscape: 448px;
+    --width-game-container-landscape: 812px;
 }
 
 [data-theme="light"] {
@@ -163,7 +170,6 @@ body {
     // width: 100%;
     width: 448px;
     height: 664px;
-
 }
 
 .countdown-timer {
@@ -177,7 +183,6 @@ body {
     font-size: 1.7rem;
     color: white;
     left: 0;
-
 }
 
 .round-id {
@@ -267,10 +272,10 @@ body {
     z-index: var(--modal-index);
 }
 
-@media screen and (orientation: portrait) {}
+@media screen and (orientation: portrait) {
+}
 
 @media screen and (orientation: landscape) {
-
     #__next {
         width: 812px;
         height: 456px;
@@ -307,5 +312,4 @@ body {
         position: relative;
         top: -9.5rem;
     }
-
 }

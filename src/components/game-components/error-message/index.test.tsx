@@ -32,11 +32,8 @@ describe(ConnectFailedMessage.name, () => {
     });
     const ns = "gameA";
     const gameId = 1;
-    const enableBackdrop = false;
     const renderComponent = (reason) =>
-        render(
-            <ConnectFailedMessage enableBackdrop={enableBackdrop} id={gameId} onReconnect={null} reason={reason} tolgeeNamespace={ns} />
-        );
+        render(<ConnectFailedMessage id={gameId} onReconnect={null} reason={reason} tolgeeNamespace={ns} />);
     describe("when restrictPlayPermission", () => {
         const reason = ConnectFailedReasonKey.restrictPlayPermission;
 
@@ -167,13 +164,7 @@ describe(ConnectFailedMessage.name, () => {
                 useContextMock.mockReturnValue({ isDirectMode: false });
                 const onReconnect = jest.fn();
                 const { getAllByRole } = render(
-                    <ConnectFailedMessage
-                        enableBackdrop={enableBackdrop}
-                        id={gameId}
-                        onReconnect={onReconnect}
-                        reason={reason}
-                        tolgeeNamespace={ns}
-                    />
+                    <ConnectFailedMessage id={gameId} onReconnect={onReconnect} reason={reason} tolgeeNamespace={ns} />
                 );
                 const reconnectButton = getAllByRole("button")[1];
 
@@ -220,13 +211,7 @@ describe(ConnectFailedMessage.name, () => {
                 useContextMock.mockReturnValue({ isDirectMode: true, redirectUrl: "returnUrl" });
                 const onReconnect = jest.fn();
                 const { getAllByRole } = render(
-                    <ConnectFailedMessage
-                        enableBackdrop={enableBackdrop}
-                        id={gameId}
-                        onReconnect={onReconnect}
-                        reason={reason}
-                        tolgeeNamespace={ns}
-                    />
+                    <ConnectFailedMessage id={gameId} onReconnect={onReconnect} reason={reason} tolgeeNamespace={ns} />
                 );
                 const reconnectButton = getAllByRole("button")[1];
 
@@ -257,13 +242,7 @@ describe(ConnectFailedMessage.name, () => {
                 useContextMock.mockReturnValue({ isDirectMode: true });
                 const onReconnect = jest.fn();
                 const { getAllByRole } = render(
-                    <ConnectFailedMessage
-                        enableBackdrop={enableBackdrop}
-                        id={gameId}
-                        onReconnect={onReconnect}
-                        reason={reason}
-                        tolgeeNamespace={ns}
-                    />
+                    <ConnectFailedMessage id={gameId} onReconnect={onReconnect} reason={reason} tolgeeNamespace={ns} />
                 );
                 const reconnectButton = getAllByRole("button")[0];
 

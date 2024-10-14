@@ -20,4 +20,8 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+
+    @media screen and (orientation: landscape) {
+        height: var(--height-game-container-landscape);
+    }
 }

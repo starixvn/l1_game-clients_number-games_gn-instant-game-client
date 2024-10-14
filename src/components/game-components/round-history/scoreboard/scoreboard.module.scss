@@ -57,13 +57,27 @@
 }
 
 @media screen and (orientation: landscape) {
-    // .scoreboard-block {
-    //     width: auto;
-    //     height: auto;
-    // }
+    .scoreboard-block {
+        .scoreboard-item {
+            width: 2.2rem;
+            height: 2.2rem;
 
-    // .scoreboard-item {
-    //     width: 2.5rem;
-    //     height: 2.5rem;
-    // }
+            [class^="icon-"] {
+                font-size: 2.2rem;
+            }
+        }
+    }
+
+    .scoreboard-popup-block {
+        .scoreboard-item {
+            width: 3.2rem;
+            height: 3.2rem;
+
+            [class^="icon-"] {
+                font-size: 3.2rem;
+            }
+        }
+    }
+
+
 }

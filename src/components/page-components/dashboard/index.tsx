@@ -275,12 +275,29 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
         return (
             <PlayerContextProvider value={authContextValue}>
                 <SettingContextProvider>
+                    <div style={{
+                        width: "812px",
+                        height: "456px",
+                        // backgroundImage: 'url("/static/images/next-ball/mockup/landscape-scoreboard-popup.png")',
+                        backgroundImage: 'url("/static/images/next-ball/mockup/landscape.jpg")',
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                        backgroundRepeat: "no-repeat",
+                        top: "0",
+                        left: "0",
+                        position: "absolute",
+                        zIndex: "1",
+                        opacity: "0.5",
+                        display: "none",
+                    }}>
+                    </div>
                     <div
-                        className={`${Styles["dashboard"]} ${changeGameStyle} ${!isRenderGames ? "no-scroll" : ""} ${
-                            isMobileOnly ? Styles["hidden-scrollbar"] : ""
-                        }`}
+                        className={`${Styles["dashboard"]} ${changeGameStyle} ${!isRenderGames ? "no-scroll" : ""} ${isMobileOnly ? Styles["hidden-scrollbar"] : ""
+                            }`}
                         id={"dashboard"}
-                        style={this.setDashBoardStyle(isRenderGames)}
+                        style={{
+                            ...this.setDashBoardStyle(isRenderGames), zIndex: "2", opacity: "1"
+                        }}
                     >
                         <Header lobbyGamesIds={this.dashboardHandler.getLobbyGamesIds()} />
 
@@ -311,7 +328,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                         )}
                     </div>
                 </SettingContextProvider>
-            </PlayerContextProvider>
+            </PlayerContextProvider >
         );
     }
 

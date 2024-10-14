@@ -103,6 +103,7 @@ body {
     height: 100%;
     width: 100%;
     scrollbar-width: none;
+    // overflow: hidden;
 }
 
 body {
@@ -286,19 +287,19 @@ body {
 
     .countdown-timer {
         width: 812px;
-        left: -7rem;
-        top: 4rem;
+        left: -5.5rem;
+        top: 5.5rem;
     }
 
     .game-area {
         grid-template-columns: 80rem;
 
         &.game-1003 {
-            grid-template-rows: 26px 224px 32px 90px 0;
+            grid-template-rows: 26px 229px 40px 108px 0;
         }
 
         &.game-1004 {
-            grid-template-rows: 26px 224px 32px 90px 0;
+            grid-template-rows: 26px 229px 40px 108px 0;
         }
     }
 

@@ -87,3 +87,9 @@
         transform: scale(1);
     }
 }
+
+@media screen and (orientation: landscape) {
+    .game-status {
+        top: 4rem;
+    }
+}

@@ -120,6 +120,51 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
         this.setState({ scoreboardColumns: actualColumns });
     }
 
+    renderScoreboards() {
+        if (!this.state.showScoreboard) {
+            return <></>;
+        }
+
+        const { roundHistory, isShowBlink } = this.props.gameStateContextModel;
+        const settlements = [...roundHistory].map((round) => round.settlementResult);
+
+        isShowBlink && NextBallBigRoadConverter.addBlinkNode(settlements as any);
+
+        return (
+            <div className={Styles["scoreboard-and-statistic"]} id="big-road">
+                <div className={Styles["statistic-header"]}>
+                    {this.renderStatistic1()}
+                    <div
+                        style={{ width: "300px", display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
+                        <span
+                            id="icon-close"
+                            className={`${Styles["icon-close"]} `}
+                            onClick={() => this.handleSwitchScoreboard()}
+                        ></span>
+                    </div>
+
+                </div>
+                <SwitchableScoreboard
+                    className={Styles["scoreboard"]}
+                    rounds={settlements}
+                    type="switch"
+                    blockClassName={Styles["scoreboard-popup-block"]}
+                    scoreboards={[
+                        {
+                            element: createBigRoadElement(false),
+                            arrange: BigRoadElement.arrange(NextBallBigRoadConverter.getInstance(false)),
+                            column: this.state.scoreboardColumns,
+                            row: 6,
+                            updateScoreboardColumns: this.updateScoreboardColumns,
+                            elementClassName: Styles["scoreboard-popup-element"],
+                        },
+                    ]}
+                />
+            </div>
+        );
+    }
+
+
     renderStatistic() {
         const { roundHistory, isShowBlink } = this.props.gameStateContextModel;
         const rounds = isShowBlink ? [{}, ...roundHistory] : roundHistory;
@@ -166,48 +211,6 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
                 selectedGroup={statisticGroup}
                 onSelectGroup={(index: number) => this.setState({ statisticGroup: index })}
             />
-        );
-    }
-
-    renderScoreboards() {
-        if (!this.state.showScoreboard) {
-            return <></>;
-        }
-
-        const { roundHistory, isShowBlink } = this.props.gameStateContextModel;
-        const settlements = [...roundHistory].map((round) => round.settlementResult);
-
-        isShowBlink && NextBallBigRoadConverter.addBlinkNode(settlements as any);
-
-        return (
-            <div className={Styles["scoreboard-and-statistic"]} id="big-road">
-                <div className={Styles["statistic-header"]}>
-                    {this.renderStatistic1()}
-                    <div
-                        style={{ width: "300px", display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
-                        <span
-                            id="icon-close"
-                            className={`${Styles["icon-close"]} `}
-                            onClick={() => this.handleSwitchScoreboard()}
-                        ></span>
-                    </div>
-
-                </div>
-                <SwitchableScoreboard
-                    className={Styles["scoreboard"]}
-                    rounds={settlements}
-                    type="switch"
-                    scoreboards={[
-                        {
-                            element: createBigRoadElement(false),
-                            arrange: BigRoadElement.arrange(NextBallBigRoadConverter.getInstance(false)),
-                            column: this.state.scoreboardColumns,
-                            row: 6,
-                            updateScoreboardColumns: this.updateScoreboardColumns,
-                        },
-                    ]}
-                />
-            </div>
         );
     }
 

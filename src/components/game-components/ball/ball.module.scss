@@ -7,10 +7,6 @@ $loading-duration: 2s;
 
 $ball-size: 5.4rem;
 
-@media screen and (orientation: landscape) {
-    $ball-size: 4.4rem;
-}
-
 .ball {
     position: relative;
     width: $ball-size;
@@ -101,7 +97,7 @@ $ball-size: 5.4rem;
 }
 
 @media screen and (orientation: landscape) {
-    $ball-size: 4.4rem;
+    $ball-size: 5rem;
 
     .ball {
         width: $ball-size;

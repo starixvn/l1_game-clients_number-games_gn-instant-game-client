@@ -76,7 +76,7 @@ export const NoticeDialog = () => {
         } = notice;
 
         const closeNotice = () => {
-            setNotice(null);
+            // setNotice(null);
         };
 
         const onCloseNotice = onClose || (() => closeNotice());

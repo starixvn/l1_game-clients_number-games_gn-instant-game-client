@@ -6,7 +6,7 @@
     // margin: 1rem auto auto;
     z-index: 2;
     padding: 0 0.5rem 0 0.5rem;
-    // margin-top: 1rem;
+    top: 0.5rem // margin-top: 1rem;
 }
 
 .result-container {
@@ -322,7 +322,7 @@
 .round-id-wrapper {
     display: flex;
     position: absolute;
-    // top: 1rem;
+    top: 2rem;
 }
 
 .scoreboard-wrapper {
@@ -350,6 +350,10 @@
 @media screen and (orientation: portrait) {}
 
 @media screen and (orientation: landscape) {
+    .round-id-wrapper {
+        top: .7rem;
+    }
+
     .result-zone-wrapper {
         top: 112px;
         position: absolute;
@@ -358,7 +362,7 @@
     }
 
     .betting-zone {
-        top: -220px;
+        top: -22rem !important;
 
     }
 

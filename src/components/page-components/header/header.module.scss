@@ -6,11 +6,14 @@
 }
 
 .header {
+    padding-left: 0.8rem;
     display: flex;
     align-items: center;
+    height: 7.5rem;
     background: var(--header-background);
     top: 0;
     width: 100%;
+
     z-index: var(--header-index);
     margin: 0 auto;
 
@@ -24,11 +27,7 @@
         justify-content: space-between;
         align-items: center;
         width: 98%;
-        height: 76px;
-
-        @media screen and (orientation: landscape) {
-            height: 45px;
-        }
+        height: 7.5rem;
     }
 }
 
@@ -61,4 +60,14 @@
 .swiper-slide-inactive {
     padding-right: 10px;
     border-right: 1px solid white;
+}
+
+@media screen and (orientation: landscape) {
+    .header {
+        height: 4.5rem !important;
+    }
+
+    .header-container {
+        height: 4.5rem !important;
+    }
 }

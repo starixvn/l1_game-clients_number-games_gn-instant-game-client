@@ -2,8 +2,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 10rem;
-    width: 10rem !important;
+    height: 11rem;
+    width: 11rem !important;
 }
 
 .slick-slider {
@@ -16,6 +16,6 @@
     margin: 0 0.8rem;
 }
 
-.slick-track {
-    padding-left: 0.7rem;
+.slick-current {
+    margin: 0 0.5rem;
 }

@@ -116,7 +116,6 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
     }
 
     updateScoreboardColumns(actualColumns: number) {
-        console.log("this.actualColumns: " + actualColumns);
         this.setState({ scoreboardColumns: actualColumns });
     }
 

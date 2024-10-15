@@ -1,9 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useTranslator } from "../../../_shared/react-hooks/use-translator";
 import { ResourceTypes } from "../../../_shared/resources";
 import Styles from "./error-message.module.scss";
 import { ConnectFailedReasonKey } from "./type";
-import { URLContext, updateURLContext } from "../../../_shared/react-contexts";
 
 export const ConnectFailedMessage: React.FC<{
     tolgeeNamespace: string;
@@ -31,7 +30,11 @@ export const ConnectFailedMessage: React.FC<{
                     <div className={Styles[`content`]}>
                         {t(reason, { gameName: tolgeeNamespace }).replaceTolgeeFormat().replace(tolgeeNamespace, "")}
                     </div>
-                    <div className={Styles[`action`]}>{renderLostConnectionButtons()}</div>
+                    {reason === ConnectFailedReasonKey.lostConnection ? (
+                        <div className={Styles[`action`]}>{renderLostConnectionButtons()}</div>
+                    ) : (
+                        <></>
+                    )}
                 </div>
             </div>
         </>

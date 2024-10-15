@@ -24,19 +24,27 @@
         font-size: xxx-large;
 
         @media screen and (orientation: landscape) {
-            padding-top: 0rem;
+            padding: 0.2rem;
+            padding-top: 0.3rem;
             width: 68rem;
             margin: 0 auto;
+            font-size: 44px;
         }
     }
     .content {
         color: white;
         text-align: center;
-        text-transform: uppercase;
         font-weight: 600;
         padding-top: 13rem;
         font-size: x-large;
         margin: 0 5rem;
+        @media screen and (orientation: landscape) {
+            padding-top: 7rem;
+
+            width: 308px;
+            margin: 0 auto;
+            font-size: 24px;
+        }
     }
     .action {
         padding-top: 6rem;
@@ -45,7 +53,11 @@
             font-size: x-large;
             height: 6rem;
             margin: auto;
-            min-width: 25rem;
+            height: 48px;
+            width: 206px;
+        }
+        @media screen and (orientation: landscape) {
+            padding-top: 1.8rem;
         }
     }
 }

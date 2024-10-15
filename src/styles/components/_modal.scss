@@ -8,7 +8,7 @@
 .modal {
     position: absolute;
     text-align: center;
-    padding: 1.5rem;
+    padding: 1rem;
     background-color: var(--error-message-container-background);
     box-shadow: rgba(0, 0, 0, 0.5) 0px 19px 38px, rgba(0, 0, 0, 0.3) 0px 15px 12px;
     border-radius: 1.6rem;
@@ -16,9 +16,15 @@
     border: 1px solid var(--error-message-container-border);
     left: 50%;
     transform: translate(-50%, 0);
-    min-width: 44rem;
+    min-width: 43rem;
     color: var(--error-message-container-color);
     font-weight: normal;
+    @media screen and (orientation: landscape) {
+        font-size: 2rem;
+        min-width: 50rem;
+
+        padding: 1.5rem;
+    }
 
     .icon-close {
         position: absolute;
@@ -41,9 +47,12 @@
 
 .modal-center {
     @extend .modal;
-    bottom: 11.6rem;
+    bottom: 7.5rem;
     z-index: var(--modal-index);
     overflow: hidden;
+    @media screen and (orientation: landscape) {
+        bottom: 12.5rem;
+    }
 
     .modal-icon-warning {
         display: flex;

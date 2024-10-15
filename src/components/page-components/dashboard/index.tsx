@@ -271,32 +271,44 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
             enableQuickBet: true,
             locale: this.props.tolgee.getLanguage(),
         };
-
+        const orientation = document.querySelector('meta[name="screen-orientation"]')["content"];
+        const isLandscape = orientation == "landscape";
         return (
             <PlayerContextProvider value={authContextValue}>
                 <SettingContextProvider>
-                    <div style={{
-                        width: "812px",
-                        height: "456px",
-                        // backgroundImage: 'url("/static/images/next-ball/mockup/landscape-scoreboard-popup.png")',
-                        backgroundImage: 'url("/static/images/next-ball/mockup/landscape.jpg")',
-                        backgroundSize: "cover",
-                        backgroundPosition: "center",
-                        backgroundRepeat: "no-repeat",
-                        top: "0",
-                        left: "0",
-                        position: "absolute",
-                        zIndex: "1",
-                        opacity: "0.5",
-                        display: "none",
-                    }}>
-                    </div>
                     <div
-                        className={`${Styles["dashboard"]} ${changeGameStyle} ${!isRenderGames ? "no-scroll" : ""} ${isMobileOnly ? Styles["hidden-scrollbar"] : ""
-                            }`}
+                        style={{
+                            // width: "812px",
+                            // height: "456px",
+
+                            width: `${isLandscape ? "812px" : "448px"}`,
+                            height: `${isLandscape ? "456px" : "740px"}`,
+
+                            // backgroundImage: 'url("/static/images/next-ball/mockup/landscape-scoreboard-popup.png")',
+                            backgroundImage: isLandscape
+                                ? 'url("/static/images/next-ball/mockup/instantgame-landscape-lucky-next-notify.png")'
+                                : 'url("/static/images/next-ball/mockup/instantgame-potrait-lucky-next-notify.png")',
+
+                            backgroundSize: "cover",
+                            backgroundPosition: "center",
+                            backgroundRepeat: "no-repeat",
+                            top: "0",
+                            left: isLandscape ? "0px" : "-115px",
+                            position: "absolute",
+                            zIndex: "1",
+                            opacity: "0.5",
+                            display: "none",
+                        }}
+                    ></div>
+                    <div
+                        className={`${Styles["dashboard"]} ${changeGameStyle} ${!isRenderGames ? "no-scroll" : ""} ${
+                            isMobileOnly ? Styles["hidden-scrollbar"] : ""
+                        }`}
                         id={"dashboard"}
                         style={{
-                            ...this.setDashBoardStyle(isRenderGames), zIndex: "2", opacity: "1"
+                            ...this.setDashBoardStyle(isRenderGames),
+                            zIndex: "2",
+                            opacity: "1",
                         }}
                     >
                         <Header lobbyGamesIds={this.dashboardHandler.getLobbyGamesIds()} />
@@ -328,7 +340,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                         )}
                     </div>
                 </SettingContextProvider>
-            </PlayerContextProvider >
+            </PlayerContextProvider>
         );
     }
 

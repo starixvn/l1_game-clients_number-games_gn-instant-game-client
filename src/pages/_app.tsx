@@ -20,15 +20,61 @@ declare global {
 }
 
 const SabaNumberApp = ({ Component, pageProps }: AppProps) => {
+    const [scale, setScale] = useState(1);
+
+    useEffect(() => {
+        const handleResize = () => {
+            const isLandscape = window.innerHeight < window.innerWidth;
+
+            let scaleValue = Math.min(
+                window.innerWidth / 812,
+                window.innerHeight / 456
+            );
+
+            if (!isLandscape) {
+                scaleValue = Math.min(
+                    window.innerWidth / 448,
+                    window.innerHeight / 740
+                );
+            }
+
+            setScale(scaleValue);
+
+
+            // console.log({
+            //     scaleValue,
+            //     scaleWidth: window.innerWidth / 812,
+            //     scaleHeight: window.innerHeight / 456,
+            //     innerHeight: window.innerHeight,
+            //     innerWidth: window.innerWidth
+            // })
+        };
+
+        window.addEventListener('resize', handleResize);
+        handleResize();
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     return (
-        <ThemeProvider defaultTheme={Themes.light} forcedTheme={Themes.light}>
-            <TolgeeProvider tolgee={tolgee} fallback={<LoadingSpinner />}>
-                <AppTittle />
-                <Component {...pageProps} />
-                <GoogleAnalytic />
-            </TolgeeProvider>
-        </ThemeProvider>
+        <div
+            style={{
+                transform: `scale(${scale})`,
+                transformOrigin: 'top center',
+                width: '100%',
+                height: '100%',
+            }}
+        >
+            <ThemeProvider defaultTheme={Themes.light} forcedTheme={Themes.light}>
+                <TolgeeProvider tolgee={tolgee} fallback={<LoadingSpinner />}>
+                    <AppTittle />
+                    <Component {...pageProps} />
+                    <GoogleAnalytic />
+                </TolgeeProvider>
+            </ThemeProvider>
+        </div>
     );
 };
 
@@ -52,7 +98,7 @@ export const AppTittle = () => {
 
     return (
         <Head>
-            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
             <meta
                 name="screen-orientation"
                 content={isLandscape ? 'landscape' : 'portrait'}

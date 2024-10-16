@@ -67,6 +67,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
             isChangePrevGame: false,
             gameTransmitters: {},
             dashBoardHeight: 0,
+            scale: 1
         };
 
         this.closeDialog = this.closeDialog.bind(this);
@@ -80,6 +81,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
         this.resetGameIdDashboardEvent = this.resetGameIdDashboardEvent.bind(this);
         this.updateGameTransmitters = this.updateGameTransmitters.bind(this);
         this.updateUserBalance = this.updateUserBalance.bind(this);
+        this.handleResize = this.handleResize.bind(this);
 
         const buildId = process.env.buildVersion;
         const buildVersion = StorageHelper.get(localStorageKeys.buildVersion) ?? 0;
@@ -113,11 +115,24 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
         }
     }
 
+    handleResize() {
+        const scaleValue = Math.min(
+            window.innerWidth / 456,
+            window.innerHeight / 812
+        );
+
+        // console.log({ scaleValue })
+        this.setState({ scale: scaleValue });
+    }
+
     changeOrientation() {
+        this.handleResize();
         setTimeout(() => {
             const isLandscapeMode = window.innerHeight < window.innerWidth;
             this.setState({ isLandscapeMode });
         }, 100);
+
+
     }
 
     resetGameIdDashboardEvent() {
@@ -161,6 +176,9 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
             window.addEventListener("touchmove", this.preventZoomBehavior, { passive: false });
         }
 
+        this.handleResize();
+        window.addEventListener("resize", this.handleResize);
+
         const { queryGame } = this.props;
         queryGame && this.openGame(queryGame);
     }
@@ -178,6 +196,8 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
 
         this.notificationHandler.reset();
         this.dashboardHandler.reset();
+
+        window.removeEventListener('resize', this.handleResize);
     }
 
     signOut() {
@@ -252,7 +272,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
     renderDashBoard() {
         window.history.pushState(null, null, "/");
 
-        const { isShowErrorModal, authorizeInfo, isBlockUI, isChangedGame, isChangePrevGame, openGameId } = this.state;
+        const { scale, isShowErrorModal, authorizeInfo, isBlockUI, isChangedGame, isChangePrevGame, openGameId } = this.state;
         const offerGames = this.dashboardHandler.getOfferGamesIds();
         const isRenderGames = this.dashboardHandler.shouldRenderGames(offerGames, openGameId);
         const allowSwipeGameOndDesktop = !this.props.directMode && !isMobileOnly && isRenderGames;
@@ -306,6 +326,10 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                         id={"dashboard"}
                         style={{
                             ...this.setDashBoardStyle(isRenderGames),
+                            // transform: `scale(${scale}) `,
+                            // transformOrigin: 'top left',
+                            // width: '100%',
+                            // height: '100%',
                             zIndex: "2",
                             // opacity: "0.8",
                         }}

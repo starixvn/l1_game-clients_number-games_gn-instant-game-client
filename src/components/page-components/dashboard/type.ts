@@ -34,6 +34,7 @@ export type DashboardState = {
     isChangePrevGame: boolean;
     gameTransmitters: Record<number, LobbyGameTransmitter>;
     dashBoardHeight: number;
+    scale: number
 };
 
 export type GameOffer = {

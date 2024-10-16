@@ -59,10 +59,8 @@
             height: 9.4rem;
             width: 37.4rem;
             background-image: url("/static/images/splash-screen/1x/light.png?v=#{$version-image}");
-            background-image: image-set(
-                url("/static/images/splash-screen/1x/light.png?v=#{$version-image}") 1x,
-                url("/static/images/splash-screen/2x/light.png?v=#{$version-image}") 2x
-            );
+            background-image: image-set(url("/static/images/splash-screen/1x/light.png?v=#{$version-image}") 1x,
+                url("/static/images/splash-screen/2x/light.png?v=#{$version-image}") 2x);
         }
 
         &::after {
@@ -130,7 +128,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    max-width: 448px;
+    width: 448px;
     height: 740px;
     margin: auto;
     background: var(--game-background-image) no-repeat center;
@@ -187,10 +185,8 @@
             height: 9.4rem;
             width: 37.4rem;
             background-image: url("/static/images/splash-screen/1x/light.png?v=#{$version-image}");
-            background-image: image-set(
-                url("/static/images/splash-screen/1x/light.png?v=#{$version-image}") 1x,
-                url("/static/images/splash-screen/2x/light.png?v=#{$version-image}") 2x
-            );
+            background-image: image-set(url("/static/images/splash-screen/1x/light.png?v=#{$version-image}") 1x,
+                url("/static/images/splash-screen/2x/light.png?v=#{$version-image}") 2x);
         }
 
         &::after {

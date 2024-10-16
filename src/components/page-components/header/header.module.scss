@@ -55,6 +55,17 @@
     color: yellow !important;
     padding-right: 10px;
     border-right: 1px solid #ffc909;
+
+    .arrow-active-game {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        img {
+            position: absolute;
+            bottom: 0;
+        }
+    }
 }
 
 .swiper-slide-inactive {

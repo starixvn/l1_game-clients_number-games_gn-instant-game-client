@@ -5,6 +5,7 @@ import { useTranslator } from "../../../../_shared/react-hooks";
 import { ResourceTypes } from "../../../../_shared/resources";
 import { GlobalMessageTransmitter, GlobalTransmitterEvent, registerGlobalMessageEvent, unsubscribeGlobalMessageEvent } from "../../../../_shared/helpers/message-transmitter/global-transmitter";
 import Styles from "../header.module.scss";
+import Image from "next/image";
 
 export const NavBarGameName: React.FC<{ gameId: number }> = ({ gameId }) => {
     const { gameSettings } = getAppSettings();
@@ -28,8 +29,20 @@ export const NavBarGameName: React.FC<{ gameId: number }> = ({ gameId }) => {
         updateURLContext({ gameId });
     }
 
+    const isGameActive = gameId === openingGameId;
 
-    return <div className={gameId === openingGameId ? Styles["swiper-slide-active"] : Styles["swiper-slide-inactive"]} onClick={() => hanldeOnClick(gameId)} >
+    return <div className={isGameActive ? Styles["swiper-slide-active"] : Styles["swiper-slide-inactive"]} onClick={() => hanldeOnClick(gameId)} >
+        {
+            isGameActive && <div className={Styles["arrow-active-game"]}>
+                <Image
+                    src="/static/images/arrow-active-game.png"
+                    alt=""
+                    width={20}
+                    height={10}
+                    priority
+                />
+            </div>
+        }
         {t(`${tolgeeNamespace}.game_name_${gameId}`).toUpperCase()}
     </div>;
 

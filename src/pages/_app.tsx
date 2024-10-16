@@ -39,14 +39,13 @@ const SabaNumberApp = ({ Component, pageProps }: AppProps) => {
             let scaleValue = Math.min(
                 window.innerWidth / portrait.width,
                 window.innerHeight / portrait.height
-            );;
+            );
 
             if (window.innerHeight < window.innerWidth) {
                 scaleValue = Math.min(
                     window.innerWidth / landscape.width,
                     window.innerHeight / landscape.height
                 )
-
             }
 
             setScale(scaleValue);

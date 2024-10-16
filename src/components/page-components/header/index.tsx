@@ -74,6 +74,7 @@ const Header: React.FC<HeaderProps> = ({
                         })}
 
                     </Swiper>
+                    <div className={Styles["header-bottom"]}></div>
                 </div>
             </div>
             <Settings isLandscapeMode={true} />

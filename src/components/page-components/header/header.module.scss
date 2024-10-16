@@ -6,7 +6,6 @@
 }
 
 .header {
-    padding-left: 0.8rem;
     display: flex;
     align-items: center;
     height: 7.5rem;
@@ -22,11 +21,22 @@
         padding-right: 1.2rem;
     }
 
+    .header-bottom {
+        width: 44.8rem;
+        height: 0.2rem;
+        background-image: url('/static/images/header/header-bottom.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        position: absolute;
+        bottom: 0;
+    }
+
     .header-container {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        width: 98%;
+        width: 100%;
         height: 7.5rem;
     }
 }
@@ -34,51 +44,72 @@
 .swiper {
     height: 100%;
     width: 100%;
-    border-bottom: 1px solid #ffc909;
+    // border-bottom: 1px solid #ffc909;
 }
 
 .swiper-slide {
     display: flex;
     align-items: center;
-    /* Vertically centers the text */
     justify-content: center;
     color: white !important;
-    // padding-left: 10px;
-    // border-right: 1px solid white;
     padding-left: 10px;
     font-size: 28px;
     font-weight: 700;
     line-height: 34.13px;
+
+    .game-divider {
+        width: 0.2rem;
+        height: 7.6rem;
+        background-image: url('/static/images/header/divider-portrait.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
 }
 
 .swiper-slide-active {
     color: yellow !important;
     padding-right: 10px;
-    border-right: 1px solid #ffc909;
 
     .arrow-active-game {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        img {
-            position: absolute;
-            bottom: 0;
-        }
+        width: 2rem;
+        height: 1rem;
+        background-image: url('/static/images/header/arrow-active-game.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        position: absolute;
+        bottom: 0;
+        left: 50%;
     }
 }
 
 .swiper-slide-inactive {
     padding-right: 10px;
-    border-right: 1px solid white;
 }
 
 @media screen and (orientation: landscape) {
     .header {
         height: 4.5rem !important;
+
+        .header-bottom {
+            width: 81.2rem;
+        }
+
     }
 
     .header-container {
         height: 4.5rem !important;
     }
+
+    .swiper-slide {
+        .game-divider {
+            height: 4.2rem;
+            background-image: url('/static/images/header/divider-landscape.png');
+        }
+    }
+
 }

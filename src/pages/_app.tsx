@@ -19,35 +19,37 @@ declare global {
     }
 }
 
+export const appDimensionMapping = {
+    portrait: {
+        width: 448,
+        height: 740,
+    },
+    landscape: {
+        width: 812,
+        height: 456,
+    },
+};
+
 const SabaNumberApp = ({ Component, pageProps }: AppProps) => {
     const [scale, setScale] = useState(1);
 
     useEffect(() => {
+        const { portrait, landscape } = appDimensionMapping;
         const handleResize = () => {
-            const isLandscape = window.innerHeight < window.innerWidth;
-
             let scaleValue = Math.min(
-                window.innerWidth / 812,
-                window.innerHeight / 456
-            );
+                window.innerWidth / portrait.width,
+                window.innerHeight / portrait.height
+            );;
 
-            if (!isLandscape) {
+            if (window.innerHeight < window.innerWidth) {
                 scaleValue = Math.min(
-                    window.innerWidth / 448,
-                    window.innerHeight / 740
-                );
+                    window.innerWidth / landscape.width,
+                    window.innerHeight / landscape.height
+                )
+
             }
 
             setScale(scaleValue);
-
-
-            // console.log({
-            //     scaleValue,
-            //     scaleWidth: window.innerWidth / 812,
-            //     scaleHeight: window.innerHeight / 456,
-            //     innerHeight: window.innerHeight,
-            //     innerWidth: window.innerWidth
-            // })
         };
 
         window.addEventListener('resize', handleResize);
@@ -84,9 +86,7 @@ export const AppTittle = () => {
 
     useEffect(() => {
         const checkOrientation = () => {
-            const isLandscape = window.innerHeight < window.innerWidth;
-            window.isLandscape = isLandscape;
-            setIsLandscape(isLandscape);
+            setIsLandscape(window.innerHeight < window.innerWidth);
         };
 
         checkOrientation();

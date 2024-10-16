@@ -298,7 +298,7 @@
     border-radius: 10px;
     border: 2px #C59447 solid;
     width: 430px;
-    height: 34.4rem;
+    height: 32rem;
     left: 9px;
     padding: 0 1rem;
 
@@ -347,6 +347,18 @@
             font-size: 3.2rem !important;
         }
     }
+}
+
+
+.custom-horizontal-scrollbar::-webkit-scrollbar {
+    width: 5px;
+    border-radius: 10px;
+    background-color: #3D3D3D;
+}
+
+.custom-horizontal-scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: linear-gradient(180deg, #053261 0%, #001020 100%);
 }
 
 

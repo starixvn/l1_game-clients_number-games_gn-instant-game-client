@@ -144,7 +144,7 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
 
                 </div>
                 <SwitchableScoreboard
-                    className={Styles["scoreboard"]}
+                    className={`${Styles["custom-horizontal-scrollbar"]} ${Styles["scoreboard"]}`}
                     rounds={settlements}
                     type="switch"
                     blockClassName={Styles["scoreboard-popup-block"]}

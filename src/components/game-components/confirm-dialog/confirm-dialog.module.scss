@@ -3,9 +3,13 @@
 .submit-dialog-container {
     @extend .modal;
     left: 50%;
-    bottom: 21.8rem;
+    bottom: 10rem;
     z-index: var(--popup-guide-history-index);
     padding: 2rem;
+    height: 21rem;
+    @media screen and (orientation: landscape) {
+        bottom: 11rem;
+    }
 
     .icon-warning {
         width: 5rem;
@@ -18,24 +22,24 @@
     }
 
     .title {
-        line-height: 2.2rem;
-        height: 3rem;
-        font-size: 1.6rem;
+        line-height: 2.6rem;
+        height: 3.8rem;
+        font-size: 2.2rem;
         color: #fff;
         font-weight: 600;
     }
 
     .content {
-        line-height: 2rem;
-        height: 3rem;
-        font-size: 1.4rem;
+        line-height: 2.6rem;
+        height: 4rem;
+        font-size: 2.2rem;
         font-weight: 500;
     }
 
     .sub-content {
-        height: 3rem;
+        height: 3.8rem;
         line-height: 2rem;
-        font-size: 1.4rem;
+        font-size: 2rem;
         font-weight: 700;
     }
 
@@ -43,5 +47,13 @@
         line-height: 3.4rem;
         display: flex;
         justify-content: space-evenly;
+        button {
+            height: 5rem;
+            width: 13rem;
+            font-size: 2rem;
+            @media screen and (orientation: landscape) {
+                width: 18rem;
+            }
+        }
     }
 }

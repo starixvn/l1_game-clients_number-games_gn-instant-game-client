@@ -75,7 +75,7 @@ html {
     --height-game-container-portrait: 667px;
     --width-game-container-portrait: 448px;
 
-    --height-game-container-landscape: 448px;
+    --height-game-container-landscape: 411px;
     --width-game-container-landscape: 812px;
 }
 
@@ -189,6 +189,9 @@ body {
     padding-left: 0.8rem;
     line-height: 26.82px;
     font-size: 22px;
+    @media screen and (orientation: landscape) {
+        font-size: 1.6rem;
+    }
     font-weight: 400;
     color: #fff;
     opacity: 0;
@@ -277,7 +280,8 @@ body {
     top: 1.5rem;
 }
 
-@media screen and (orientation: portrait) {}
+@media screen and (orientation: portrait) {
+}
 
 @media screen and (orientation: landscape) {
     #__next {
@@ -291,7 +295,7 @@ body {
 
     .game-container {
         width: 812px;
-        height: 410px;
+        height: 411px;
     }
 
     .countdown-timer {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Styles from "./styles.module.scss";
+import Styles from "./game-loading.module.scss";
 import { TimeOutConstants } from "../../../_shared/constants";
 
 export const LoadingSpinner = ({ removeSpinner = false, timeOut = TimeOutConstants.OverlayMask }) => {

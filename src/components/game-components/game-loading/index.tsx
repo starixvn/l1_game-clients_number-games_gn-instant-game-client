@@ -1,40 +1,50 @@
 import React from "react";
 
-import Styles from "./styles.module.scss";
+import Styles from "./game-loading.module.scss";
+import { useScreenOrientation } from "../../../_shared/react-hooks";
 
 const GameLoading: React.FC<{}> = () => {
-    const classBorder = "border-radius-7";
-    const classSkeletonItem = "skeleton-item";
+    const classSkeletonItemStyle = Styles["skeleton-item"];
 
+    const isPortrait = useScreenOrientation();
     return (
-        <></>
-        // <div className={Styles.container} data-testid="game-loading">
-        //     <div className={Styles.header}>
-        //         <div className={Styles["header-left"]}>
-        //             <div className={`${Styles[classBorder]} ${Styles[classSkeletonItem]} ${Styles["round-id"]}`} />
-        //         </div>
-        //         <div className={`${Styles[classSkeletonItem]} ${Styles["countdown-timer"]}`} />
-        //         <div className={Styles["header-right"]}>
-        //             <span className={`${Styles[classSkeletonItem]} ${Styles["pf"]}`} />
-        //             <span className={`${Styles[classBorder]} ${Styles[classSkeletonItem]} ${Styles["home"]}`} />
-        //             <span className={`${Styles[classBorder]} ${Styles[classSkeletonItem]} ${Styles["menu"]}`} />
-        //         </div>
-        //     </div>
-        //     <div className={Styles["result-container"]}>
-        //         <div className={`${Styles[classSkeletonItem]} ${Styles["full-size"]}`} />
-        //     </div>
-
-        //     <div className={Styles["bet-container"]}>
-        //         <div className={`${Styles[classSkeletonItem]} ${Styles["full-size"]}`} />
-        //     </div>
-
-        //     <div className={Styles["statistic"]}>
-        //         <div className={`${Styles[classSkeletonItem]} ${Styles["border-radius-5"]}`} />
-        //     </div>
-        //     <div className={Styles.scoreboard}>
-        //         <div className={`${Styles[classSkeletonItem]} ${Styles["border-radius-5"]}`} />
-        //     </div>
-        // </div>
+        <div className={`${Styles["container"]}`} data-testid="game-loading">
+            <div className={`${Styles["header"]}`}>
+                <div className={`${Styles["round-id"]} ${Styles["border-radius-5"]} ${classSkeletonItemStyle} `} />
+                {isPortrait ? (
+                    <>
+                        <div className={`${Styles["countdown-timer"]} ${classSkeletonItemStyle}`} />
+                        <div className={`${Styles["header-right"]}`}>
+                            <div className={`${Styles["game-guide"]} ${classSkeletonItemStyle}`} />
+                            <div className={`${Styles["sound"]} ${classSkeletonItemStyle}`} />
+                        </div>
+                    </>
+                ) : (
+                    <></>
+                )}
+            </div>
+            {isPortrait ? (
+                <>
+                    <div className={Styles["result-container"]}>
+                        <div className={`${classSkeletonItemStyle} ${Styles["full-size"]}`} />
+                    </div>
+                    <div className={Styles["bet-container"]}>
+                        <div className={`${classSkeletonItemStyle} ${Styles["full-size"]}`} />
+                    </div>
+                </>
+            ) : (
+                <div className={`${Styles["play-game-container"]}`}>
+                    <div className={`${classSkeletonItemStyle} ${Styles["full-size"]}`} />
+                </div>
+            )}
+            <div className={`${Styles["statistic-container"]}`}>
+                <div className={`${Styles["statistic"]} ${classSkeletonItemStyle} `} />
+                <div className={`${Styles["statistic-icon"]} ${classSkeletonItemStyle}`} />
+            </div>
+            <div className={`${Styles["chip-container"]}`}>
+                <div className={`${classSkeletonItemStyle} ${Styles["full-size"]}`} />
+            </div>
+        </div>
     );
 };
 

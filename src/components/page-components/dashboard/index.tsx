@@ -286,28 +286,29 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
 
                             // backgroundImage: 'url("/static/images/next-ball/mockup/landscape-scoreboard-popup.png")',
                             backgroundImage: isLandscape
-                                ? 'url("/static/images/next-ball/mockup/landscape.jpg")'
-                                : 'url("/static/images/next-ball/mockup/portrait.jpg")',
+                                ? 'url("/static/images/next-ball/mockup/instantgame-landscape-lucky-next-notify.png")'
+                                : 'url("/static/images/next-ball/mockup/instantgame-potrait-lucky-next-notify.png")',
 
                             backgroundSize: "cover",
                             backgroundPosition: "center",
                             backgroundRepeat: "no-repeat",
                             top: "0",
-                            // left: isLandscape ? "0px" : "-115px",
+                            left: isLandscape ? "0px" : "0px",
                             position: "absolute",
                             zIndex: "1",
-                            opacity: "0.5",
+                            opacity: "0.9",
                             display: "none",
                         }}
                     ></div>
                     <div
-                        className={`${Styles["dashboard"]} ${changeGameStyle} ${!isRenderGames ? "no-scroll" : ""} ${isMobileOnly ? Styles["hidden-scrollbar"] : ""
-                            }`}
+                        className={`${Styles["dashboard"]} ${changeGameStyle} ${!isRenderGames ? "no-scroll" : ""} ${
+                            isMobileOnly ? Styles["hidden-scrollbar"] : ""
+                        }`}
                         id={"dashboard"}
                         style={{
                             ...this.setDashBoardStyle(isRenderGames),
                             zIndex: "2",
-                            // opacity: "0.8",
+                            opacity: "1",
                         }}
                     >
                         <Header lobbyGamesIds={this.dashboardHandler.getLobbyGamesIds()} />

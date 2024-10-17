@@ -6,7 +6,7 @@
     // margin: 1rem auto auto;
     z-index: 2;
     padding: 0 0.5rem 0 0.5rem;
-    top: 0.5rem // margin-top: 1rem;
+    top: 0.5rem; // margin-top: 1rem;
 }
 
 .result-container {
@@ -45,9 +45,35 @@
     .disable-layer {
         position: absolute;
         top: 0;
-        background: url("/static/images/next-ball/lockbet.png?v=#{$version-image}") no-repeat;
+        background: url("/static/images/next-ball/portrait/lockbet.png?v=#{$version-image}") no-repeat;
         width: 20.7rem;
         height: 21.4rem;
+        opacity: 0;
+        animation: show-disabled-layer 0.3s ease-in forwards;
+    }
+}
+
+%main-option-landscape {
+    --font-bet-name: 2.4rem;
+
+    position: relative;
+    overflow: hidden;
+    width: 23.6rem;
+    height: 22.7rem;
+    border: none;
+
+    .btn-ripple {
+        border-radius: var(--border-radius);
+        z-index: 1;
+    }
+
+    .disable-layer {
+        position: absolute;
+        top: 0;
+        background: url("/static/images/next-ball/landscape/lockbet.png?v=#{$version-image}") no-repeat;
+        width: 23.7rem;
+        height: 22.8rem;
+
         opacity: 0;
         animation: show-disabled-layer 0.3s ease-in forwards;
     }
@@ -59,7 +85,14 @@
     --color: white;
 }
 
-.over {
+.under-landscape,
+.over-landscape {
+    @extend %main-option-landscape;
+    --color: white;
+}
+
+.over,
+.over-landscape {
     --border-radius: 3rem 1.2rem 1.2rem 1.2rem;
     --borderTopLeft: 3rem;
     --borderTopRight: 1.2rem;
@@ -86,6 +119,9 @@
 
     .own-bet {
         bottom: 2.4rem;
+        @media screen and (orientation: landscape) {
+            bottom: 1.8rem;
+        }
     }
 }
 
@@ -94,6 +130,10 @@
     top: -1px;
     left: 1px;
     transform: scale(0.98);
+    @media screen and (orientation: landscape) {
+        top: -3px;
+        left: 1px;
+    }
 }
 
 .winning-light-anim {
@@ -110,7 +150,14 @@
 .highlight-winning-bg-under {
     width: 20.7rem;
     height: 21.4rem;
-    background: url("/static/images/next-ball/highlight-winning-bg.png?v=#{$version-image}") no-repeat;
+    background: url("/static/images/next-ball/portrait/highlight-winning-bg.png?v=#{$version-image}") no-repeat;
+}
+
+.highlight-winning-bg-over-landscape,
+.highlight-winning-bg-under-landscape {
+    width: 23.7rem;
+    height: 22.8rem;
+    background: url("/static/images/next-ball/landscape/highlight-winning-bg.png?v=#{$version-image}") no-repeat;
 }
 
 .highlight-winning-bg-over {
@@ -118,6 +165,10 @@
     left: -0.1rem;
 }
 
+.highlight-winning-bg-over-landscape {
+    transform: scaleX(-1);
+    left: -0.1rem;
+}
 
 .ball-svg {
     position: absolute;
@@ -132,12 +183,21 @@
     position: absolute;
     left: 0;
     top: 0;
-    background-image: url("/static/images/next-ball/winning-previous.png?v=#{$version-image}");
-    background-image: image-set(url("/static/images/next-ball/1x/winning-previous.png?v=#{$version-image}") 1x,
-        url("/static/images/next-ball/2x/winning-previous.png?v=#{$version-image}") 2x);
+    background-image: url("/static/images/next-ball/portrait/winning-previous.png?v=#{$version-image}");
 }
 
-.highlight-prev-result-under {
+.highlight-prev-result-over-landscape,
+.highlight-prev-result-under-landscape {
+    width: 23.7rem;
+    height: 22.7rem;
+    position: absolute;
+    left: 0;
+    top: -1px;
+    background-image: url("/static/images/next-ball/landscape/winning-previous.png?v=#{$version-image}");
+}
+
+.highlight-prev-result-under,
+.highlight-prev-result-under-landscape {
     transform: scaleX(-1);
 }
 
@@ -145,7 +205,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: 0.6rem;
+    padding-top: 1.8rem;
     padding-left: 1rem;
     padding-right: 1rem;
     height: 3.8rem;
@@ -161,7 +221,7 @@
 
 .choice-odds-area {
     width: 20rem;
-    height: 21rem;
+    height: 22rem;
     padding: 0 rem 0 1rem;
     left: 0px;
     top: 0px;
@@ -171,6 +231,10 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    @media screen and (orientation: landscape) {
+        height: 23rem;
+    }
 
     .bet-option {
         width: 18rem;
@@ -186,7 +250,6 @@
         align-items: center;
         gap: 2px;
         display: flex;
-
     }
 
     .odds {
@@ -207,9 +270,7 @@
         letter-spacing: 0.96px;
         word-wrap: break-word;
         text-align: left !important;
-
     }
-
 
     .bet-info-wrapper {
         width: 100%;
@@ -226,8 +287,6 @@
         word-wrap: break-word;
         font-size: 1.8rem;
         color: var(--color);
-
-
     }
 }
 
@@ -251,7 +310,6 @@
     margin: 4rem 5rem 1.5rem 0;
     position: relative;
 }
-
 
 %icon {
     position: absolute;
@@ -296,7 +354,7 @@
     z-index: 999;
     background: linear-gradient(180deg, #053261 0%, #001020 100%);
     border-radius: 10px;
-    border: 2px #C59447 solid;
+    border: 2px #c59447 solid;
     width: 430px;
     height: 32rem;
     left: 9px;
@@ -310,7 +368,7 @@
 }
 
 .scoreboard {
-    background: rgba(0, 0, 0, 0.80) !important;
+    background: rgba(0, 0, 0, 0.8) !important;
     height: 25rem;
     width: 41rem;
     overflow-x: scroll;
@@ -349,7 +407,6 @@
     }
 }
 
-
 .custom-horizontal-scrollbar::-webkit-scrollbar {
     width: 5px;
     border-radius: 10px;
@@ -361,12 +418,11 @@
     background: linear-gradient(180deg, #053261 0%, #001020 100%);
 }
 
-
 @media screen and (orientation: portrait) {}
 
 @media screen and (orientation: landscape) {
     .round-id-wrapper {
-        top: .7rem;
+        top: 0.7rem;
     }
 
     .result-zone-wrapper {
@@ -377,11 +433,11 @@
     }
 
     .betting-zone {
-        top: -22rem !important;
+        top: -22.5rem !important;
     }
 
     .bet-option-row {
-        height: 234px;
+        height: 227px;
     }
 
     .statistic {
@@ -404,7 +460,6 @@
         width: 77rem;
         overflow-x: scroll;
         overflow-y: hidden;
-
     }
 
     .scoreboard-wrapper {
@@ -412,7 +467,7 @@
     }
 
     .betting-zone {
-        padding: 0 2.5rem 0 2.5rem;
+        padding: 0 1rem 0 1rem;
     }
 
     .icon-statistic {

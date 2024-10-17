@@ -1,0 +1,101 @@
+/*
+-------------------------------------------------------------------
+Created with TexturePacker https://www.codeandweb.com/texturepacker
+-------------------------------------------------------------------
+Inline:     <i class="yourspritesname"></i>
+Responsive: <div class="yourspritesname"></div>
+*/
+
+
+.vfx-border-landscape-00 {max-width:246px; max-height:237px; }
+.vfx-border-landscape-00::after {content: '\00a0';display: inline-block; width:246px; height:237px; background-position: 0% 0%;background-size: 600% 500%;background-image: url(highlight-winning-landscape.png);padding: 0; }
+div.vfx-border-landscape-00::after {max-width:246px; width:100%;height:0;padding: 0 0 96.34146341463415% 0;}
+.vfx-border-landscape-01 {max-width:246px; max-height:237px; }
+.vfx-border-landscape-01::after {content: '\00a0';display: inline-block; width:246px; height:237px; background-position: 20% 0%;background-size: 600% 500%;background-image: url(highlight-winning-landscape.png);padding: 0; }
+div.vfx-border-landscape-01::after {max-width:246px; width:100%;height:0;padding: 0 0 96.34146341463415% 0;}
+.vfx-border-landscape-02 {max-width:246px; max-height:237px; }
+.vfx-border-landscape-02::after {content: '\00a0';display: inline-block; width:246px; height:237px; background-position: 40% 0%;background-size: 600% 500%;background-image: url(highlight-winning-landscape.png);padding: 0; }
+div.vfx-border-landscape-02::after {max-width:246px; width:100%;height:0;padding: 0 0 96.34146341463415% 0;}
+.vfx-border-landscape-03 {max-width:246px; max-height:237px; }
+.vfx-border-landscape-03::after {content: '\00a0';display: inline-block; width:246px; height:237px; background-position: 60% 0%;background-size: 600% 500%;background-image: url(highlight-winning-landscape.png);padding: 0; }
+div.vfx-border-landscape-03::after {max-width:246px; width:100%;height:0;padding: 0 0 96.34146341463415% 0;}
+.vfx-border-landscape-04 {max-width:246px; max-height:237px; }
+.vfx-border-landscape-04::after {content: '\00a0';display: inline-block; width:246px; height:237px; background-position: 80% 0%;background-size: 600% 500%;background-image: url(highlight-winning-landscape.png);padding: 0; }
+div.vfx-border-landscape-04::after {max-width:246px; width:100%;height:0;padding: 0 0 96.34146341463415% 0;}
+.vfx-border-landscape-05 {max-width:246px; max-height:237px; }
+.vfx-border-landscape-05::after {content: '\00a0';display: inline-block; width:246px; height:237px; background-position: 100% 0%;background-size: 600% 500%;background-image: url(highlight-winning-landscape.png);padding: 0; }
+div.vfx-border-landscape-05::after {max-width:246px; width:100%;height:0;padding: 0 0 96.34146341463415% 0;}
+.vfx-border-landscape-06 {max-width:246px; max-height:237px; }
+.vfx-border-landscape-06::after {content: '\00a0';display: inline-block; width:246px; height:237px; background-position: 0% 25%;background-size: 600% 500%;background-image: url(highlight-winning-landscape.png);padding: 0; }
+div.vfx-border-landscape-06::after {max-width:246px; width:100%;height:0;padding: 0 0 96.34146341463415% 0;}
+.vfx-border-landscape-07 {max-width:246px; max-height:237px; }
+.vfx-border-landscape-07::after {content: '\00a0';display: inline-block; width:246px; height:237px; background-position: 20% 25%;background-size: 600% 500%;background-image: url(highlight-winning-landscape.png);padding: 0; }
+div.vfx-border-landscape-07::after {max-width:246px; width:100%;height:0;padding: 0 0 96.34146341463415% 0;}
+.vfx-border-landscape-08 {max-width:246px; max-height:237px; }
+.vfx-border-landscape-08::after {content: '\00a0';display: inline-block; width:246px; height:237px; background-position: 40% 25%;background-size: 600% 500%;background-image: url(highlight-winning-landscape.png);padding: 0; }
+div.vfx-border-landscape-08::after {max-width:246px; width:100%;height:0;padding: 0 0 96.34146341463415% 0;}
+.vfx-border-landscape-09 {max-width:246px; max-height:237px; }
+.vfx-border-landscape-09::after {content: '\00a0';display: inline-block; width:246px; height:237px; background-position: 60% 25%;background-size: 600% 500%;background-image: url(highlight-winning-landscape.png);padding: 0; }
+div.vfx-border-landscape-09::after {max-width:246px; width:100%;height:0;padding: 0 0 96.34146341463415% 0;}
+.vfx-border-landscape-10 {max-width:246px; max-height:237px; }
+.vfx-border-landscape-10::after {content: '\00a0';display: inline-block; width:246px; height:237px; background-position: 80% 25%;background-size: 600% 500%;background-image: url(highlight-winning-landscape.png);padding: 0; }
+div.vfx-border-landscape-10::after {max-width:246px; width:100%;height:0;padding: 0 0 96.34146341463415% 0;}
+.vfx-border-landscape-11 {max-width:246px; max-height:237px; }
+.vfx-border-landscape-11::after {content: '\00a0';display: inline-block; width:246px; height:237px; background-position: 100% 25%;background-size: 600% 500%;background-image: url(highlight-winning-landscape.png);padding: 0; }
+div.vfx-border-landscape-11::after {max-width:246px; width:100%;height:0;padding: 0 0 96.34146341463415% 0;}
+.vfx-border-landscape-12 {max-width:246px; max-height:237px; }
+.vfx-border-landscape-12::after {content: '\00a0';display: inline-block; width:246px; height:237px; background-position: 0% 50%;background-size: 600% 500%;background-image: url(highlight-winning-landscape.png);padding: 0; }
+div.vfx-border-landscape-12::after {max-width:246px; width:100%;height:0;padding: 0 0 96.34146341463415% 0;}
+.vfx-border-landscape-13 {max-width:246px; max-height:237px; }
+.vfx-border-landscape-13::after {content: '\00a0';display: inline-block; width:246px; height:237px; background-position: 20% 50%;background-size: 600% 500%;background-image: url(highlight-winning-landscape.png);padding: 0; }
+div.vfx-border-landscape-13::after {max-width:246px; width:100%;height:0;padding: 0 0 96.34146341463415% 0;}
+.vfx-border-landscape-14 {max-width:246px; max-height:237px; }
+.vfx-border-landscape-14::after {content: '\00a0';display: inline-block; width:246px; height:237px; background-position: 40% 50%;background-size: 600% 500%;background-image: url(highlight-winning-landscape.png);padding: 0; }
+div.vfx-border-landscape-14::after {max-width:246px; width:100%;height:0;padding: 0 0 96.34146341463415% 0;}
+.vfx-border-landscape-15 {max-width:246px; max-height:237px; }
+.vfx-border-landscape-15::after {content: '\00a0';display: inline-block; width:246px; height:237px; background-position: 60% 50%;background-size: 600% 500%;background-image: url(highlight-winning-landscape.png);padding: 0; }
+div.vfx-border-landscape-15::after {max-width:246px; width:100%;height:0;padding: 0 0 96.34146341463415% 0;}
+.vfx-border-landscape-16 {max-width:246px; max-height:237px; }
+.vfx-border-landscape-16::after {content: '\00a0';display: inline-block; width:246px; height:237px; background-position: 80% 50%;background-size: 600% 500%;background-image: url(highlight-winning-landscape.png);padding: 0; }
+div.vfx-border-landscape-16::after {max-width:246px; width:100%;height:0;padding: 0 0 96.34146341463415% 0;}
+.vfx-border-landscape-17 {max-width:246px; max-height:237px; }
+.vfx-border-landscape-17::after {content: '\00a0';display: inline-block; width:246px; height:237px; background-position: 100% 50%;background-size: 600% 500%;background-image: url(highlight-winning-landscape.png);padding: 0; }
+div.vfx-border-landscape-17::after {max-width:246px; width:100%;height:0;padding: 0 0 96.34146341463415% 0;}
+.vfx-border-landscape-18 {max-width:246px; max-height:237px; }
+.vfx-border-landscape-18::after {content: '\00a0';display: inline-block; width:246px; height:237px; background-position: 0% 75%;background-size: 600% 500%;background-image: url(highlight-winning-landscape.png);padding: 0; }
+div.vfx-border-landscape-18::after {max-width:246px; width:100%;height:0;padding: 0 0 96.34146341463415% 0;}
+.vfx-border-landscape-19 {max-width:246px; max-height:237px; }
+.vfx-border-landscape-19::after {content: '\00a0';display: inline-block; width:246px; height:237px; background-position: 20% 75%;background-size: 600% 500%;background-image: url(highlight-winning-landscape.png);padding: 0; }
+div.vfx-border-landscape-19::after {max-width:246px; width:100%;height:0;padding: 0 0 96.34146341463415% 0;}
+.vfx-border-landscape-20 {max-width:246px; max-height:237px; }
+.vfx-border-landscape-20::after {content: '\00a0';display: inline-block; width:246px; height:237px; background-position: 40% 75%;background-size: 600% 500%;background-image: url(highlight-winning-landscape.png);padding: 0; }
+div.vfx-border-landscape-20::after {max-width:246px; width:100%;height:0;padding: 0 0 96.34146341463415% 0;}
+.vfx-border-landscape-21 {max-width:246px; max-height:237px; }
+.vfx-border-landscape-21::after {content: '\00a0';display: inline-block; width:246px; height:237px; background-position: 60% 75%;background-size: 600% 500%;background-image: url(highlight-winning-landscape.png);padding: 0; }
+div.vfx-border-landscape-21::after {max-width:246px; width:100%;height:0;padding: 0 0 96.34146341463415% 0;}
+.vfx-border-landscape-22 {max-width:246px; max-height:237px; }
+.vfx-border-landscape-22::after {content: '\00a0';display: inline-block; width:246px; height:237px; background-position: 80% 75%;background-size: 600% 500%;background-image: url(highlight-winning-landscape.png);padding: 0; }
+div.vfx-border-landscape-22::after {max-width:246px; width:100%;height:0;padding: 0 0 96.34146341463415% 0;}
+.vfx-border-landscape-23 {max-width:246px; max-height:237px; }
+.vfx-border-landscape-23::after {content: '\00a0';display: inline-block; width:246px; height:237px; background-position: 100% 75%;background-size: 600% 500%;background-image: url(highlight-winning-landscape.png);padding: 0; }
+div.vfx-border-landscape-23::after {max-width:246px; width:100%;height:0;padding: 0 0 96.34146341463415% 0;}
+.vfx-border-landscape-24 {max-width:246px; max-height:237px; }
+.vfx-border-landscape-24::after {content: '\00a0';display: inline-block; width:246px; height:237px; background-position: 0% 100%;background-size: 600% 500%;background-image: url(highlight-winning-landscape.png);padding: 0; }
+div.vfx-border-landscape-24::after {max-width:246px; width:100%;height:0;padding: 0 0 96.34146341463415% 0;}
+.vfx-border-landscape-25 {max-width:246px; max-height:237px; }
+.vfx-border-landscape-25::after {content: '\00a0';display: inline-block; width:246px; height:237px; background-position: 20% 100%;background-size: 600% 500%;background-image: url(highlight-winning-landscape.png);padding: 0; }
+div.vfx-border-landscape-25::after {max-width:246px; width:100%;height:0;padding: 0 0 96.34146341463415% 0;}
+.vfx-border-landscape-26 {max-width:246px; max-height:237px; }
+.vfx-border-landscape-26::after {content: '\00a0';display: inline-block; width:246px; height:237px; background-position: 40% 100%;background-size: 600% 500%;background-image: url(highlight-winning-landscape.png);padding: 0; }
+div.vfx-border-landscape-26::after {max-width:246px; width:100%;height:0;padding: 0 0 96.34146341463415% 0;}
+.vfx-border-landscape-27 {max-width:246px; max-height:237px; }
+.vfx-border-landscape-27::after {content: '\00a0';display: inline-block; width:246px; height:237px; background-position: 60% 100%;background-size: 600% 500%;background-image: url(highlight-winning-landscape.png);padding: 0; }
+div.vfx-border-landscape-27::after {max-width:246px; width:100%;height:0;padding: 0 0 96.34146341463415% 0;}
+.vfx-border-landscape-28 {max-width:246px; max-height:237px; }
+.vfx-border-landscape-28::after {content: '\00a0';display: inline-block; width:246px; height:237px; background-position: 80% 100%;background-size: 600% 500%;background-image: url(highlight-winning-landscape.png);padding: 0; }
+div.vfx-border-landscape-28::after {max-width:246px; width:100%;height:0;padding: 0 0 96.34146341463415% 0;}
+.vfx-border-landscape-29 {max-width:246px; max-height:237px; }
+.vfx-border-landscape-29::after {content: '\00a0';display: inline-block; width:246px; height:237px; background-position: 100% 100%;background-size: 600% 500%;background-image: url(highlight-winning-landscape.png);padding: 0; }
+div.vfx-border-landscape-29::after {max-width:246px; width:100%;height:0;padding: 0 0 96.34146341463415% 0;}
+
+/* $TexturePacker:SmartUpdate:7ab153c1de9cf24e4ba862e2270b1ef4:30ec555b98c895ed41d8a996baa819a8:80cce2ce1be88b2b9830a18ba1ab711d$ */

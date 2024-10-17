@@ -55,7 +55,6 @@
     color: var(--color);
     position: relative;
     text-align: center;
-
 }
 
 .own-bet {
@@ -90,6 +89,11 @@
             background: url("/static/images/coin-outline.svg?v=#{$version-image}") no-repeat 50%;
             background-size: contain;
             vertical-align: middle;
+
+            @media screen and (orientation: landscape) {
+                width: 2rem;
+                height: 2rem;
+            }
         }
     }
 

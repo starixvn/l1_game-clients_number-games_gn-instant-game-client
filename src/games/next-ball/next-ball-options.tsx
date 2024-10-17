@@ -9,6 +9,7 @@ import { isShowHighlightPrevResult } from "../../_shared/react-hooks/use-high-li
 import { RoundState } from "../../components/game-base/type";
 import { BetChoiceImagesData, NextBallBetOptions } from "./next-ball-constants";
 import Style from "./next-ball.module.scss";
+import { useScreenOrientation } from "../../_shared/react-hooks";
 
 const BetChoice = dynamic(() => import("../../components/game-components/bet-option/bet-choice"));
 const RippleButton = dynamic(() => import("../../components/game-components/bet-option/ripple-button"));
@@ -22,6 +23,7 @@ const NextBallBetOptionsComponent = () => {
     const { tolgeeNamespace } = useGameContext();
 
     const isShowDisabledLayer = roundState === RoundState.LockingBet;
+    const isPortrait = useScreenOrientation();
 
     const [loadingComplete, setLoadingComplete] = useState({
         [NextBallBetOptions.OVER]: false,
@@ -38,7 +40,15 @@ const NextBallBetOptionsComponent = () => {
     };
 
     const renderOdds = (choice: string) => {
-        return <Odds className={Style["odds"]} turnCounter={turnCounter} choice={choice} tolgeeNamespace={tolgeeNamespace} animationDuration={6} />;
+        return (
+            <Odds
+                className={Style["odds"]}
+                turnCounter={turnCounter}
+                choice={choice}
+                tolgeeNamespace={tolgeeNamespace}
+                animationDuration={6}
+            />
+        );
     };
 
     const renderOwnBet = (choice: string) => {
@@ -67,28 +77,25 @@ const NextBallBetOptionsComponent = () => {
                 roundState={roundState}
                 settlementResult={settlementResult}
                 choice={choice}
-                resourceName={NextBallBetOptions.OVER}
             />
         );
         const choiceClassName = Style[`choice-${choice}`];
         const oddsClassName = Style[`choice-${choice}`];
-
+        const imagePath = BetChoiceImagesData[choice][`${isPortrait ? "portrait" : "landscape"}`];
         return (
-            <div className={`${Style[choice]} text-white relative`}>
+            <div className={`${Style[`${choice}${isPortrait ? "" : "-landscape"}`]} text-white relative`}>
                 <Image
                     key={uuidv4}
                     className={Style["bg-bet-option"]}
-                    width={207}
-                    height={210}
-                    src={loadingComplete[choice] ? BetChoiceImagesData[choice]?.src : BetChoiceImagesData[choice]?.blur}
+                    width={isPortrait ? 207 : 235}
+                    height={isPortrait ? 210 : 224}
+                    src={loadingComplete[choice] ? imagePath?.src : imagePath?.blur}
                     onLoad={() => setLoadingComplete((prevState) => ({ ...prevState, [choice]: true }))}
                     alt={choice}
                     priority={true}
                 />
                 <div className={`${Style["choice-info"]} ${choiceClassName}`}>
-                    <div className={Style.stake}>
-                        {renderTotalBet(choice, Style["stake-style"])}
-                    </div>
+                    <div className={Style.stake}>{renderTotalBet(choice, Style["stake-style"])}</div>
                 </div>
                 <div className={`${Style["choice-odds-area"]} ${oddsClassName}`}>
                     <div className={Style["choice-odds-wrapper"]}>
@@ -96,9 +103,7 @@ const NextBallBetOptionsComponent = () => {
                         {renderOdds(choice)}
                     </div>
 
-                    <div className={Style["bet-info-wrapper"]}>
-                        {renderBetInfo(choice)}
-                    </div>
+                    <div className={Style["bet-info-wrapper"]}>{renderBetInfo(choice)}</div>
                 </div>
 
                 {renderOwnBet(choice)}
@@ -108,22 +113,17 @@ const NextBallBetOptionsComponent = () => {
 
                 {isShowDisabledLayer && <div className={Style["disable-layer"]}></div>}
 
-                {
-                    isShowHighlightPrevResult({ betChoice: choice, roundState, roundHistory }) &&
-                    <div className={`${Style[`highlight-prev-result-${choice}`]} fade-in`}></div>
-                }
+                {isShowHighlightPrevResult({ betChoice: choice, roundState, roundHistory }) && (
+                    <div className={`${Style[`highlight-prev-result-${choice}${isPortrait ? "" : "-landscape"}`]} fade-in`}></div>
+                )}
             </div>
         );
     };
 
     return (
         <>
-            <div className={Style["bet-option-row"]}>
-                {renderMainOption(NextBallBetOptions.OVER)}
-            </div>
-            <div className={Style["bet-option-row"]}>
-                {renderMainOption(NextBallBetOptions.UNDER)}
-            </div>
+            <div className={Style["bet-option-row"]}>{renderMainOption(NextBallBetOptions.OVER)}</div>
+            <div className={Style["bet-option-row"]}>{renderMainOption(NextBallBetOptions.UNDER)}</div>
         </>
     );
 };

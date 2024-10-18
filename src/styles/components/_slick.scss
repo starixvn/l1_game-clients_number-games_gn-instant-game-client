@@ -3,7 +3,10 @@
     align-items: center;
     justify-content: center;
     height: 11rem;
-    width: 11rem !important;
+    width: 10rem !important;
+    @media screen and (orientation: landscape) {
+        width: 9.5rem !important;
+    }
 }
 
 .slick-slider {
@@ -14,8 +17,14 @@
 
 .slick-list {
     margin: 0 0.8rem;
+    @media screen and (orientation: landscape) {
+        margin: 0 2.5rem;
+    }
 }
 
 .slick-current {
-    margin: 0 0.5rem;
+    margin: 0 0.1rem;
+    @media screen and (orientation: landscape) {
+        margin: 0 0.2rem;
+    }
 }

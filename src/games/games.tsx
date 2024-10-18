@@ -25,7 +25,6 @@ import { GlobalTransmitterEvent, registerGlobalMessageEvent, unsubscribeGlobalMe
 
 const BacBall = dynamic(() => import("./bac-ball"));
 const NextBall = dynamic(() => import("./next-ball/page"));
-const SwitchGamesGuide = dynamic(() => import("../components/page-components/switch-games-guide"));
 const SeBall = dynamic(() => import("./se-ball/page"));
 const LuckyThree = dynamic(() => import("./lucky-three/page"));
 const SicBall = dynamic(() => import("./sic-ball/page"));
@@ -113,7 +112,7 @@ export const Games: React.FC<Props> = ({
             <SystemContextProvider>
                 <div className={`${styles["game-list"]} ${isMobileOnly ? styles[isIOS ? "ios-device" : "android-device"] : ""}`}>
                     {getGameComponentById(openingGameId)}
-                    {!isDirectMode && isMobileOnly && <SwitchGamesGuide />}
+                    
                 </div>
             </SystemContextProvider>
         </div>

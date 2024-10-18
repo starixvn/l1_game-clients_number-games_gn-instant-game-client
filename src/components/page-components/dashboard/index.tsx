@@ -36,7 +36,6 @@ import Header from "../header";
 const SoundSettings = dynamic(() => import("../../../components/page-components/setting"));
 const Games = dynamic(() => import("../../../games/games"));
 const BaseDialog = dynamic(() => import("../../game-components/base-dialog"));
-const LandscapeMode = dynamic(() => import("./landscape-mode/landscape-mode"));
 
 class Dashboard extends React.Component<DashboardProps, DashboardState> {
     private readonly dashboardHandler: DashboardHandler;
@@ -286,8 +285,8 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
 
                             // backgroundImage: 'url("/static/images/next-ball/mockup/landscape-scoreboard-popup.png")',
                             backgroundImage: isLandscape
-                                ? 'url("/static/images/next-ball/mockup/instantgame-landscape-lucky-next-notify.png")'
-                                : 'url("/static/images/next-ball/mockup/instantgame-potrait-lucky-next-notify.png")',
+                                ? 'url("/static/images/next-ball/mockup/landscape.jpg")'
+                                : 'url("/static/images/next-ball/mockup/portrait.jpg")',
 
                             backgroundSize: "cover",
                             backgroundPosition: "center",
@@ -349,10 +348,6 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
     }
 
     render() {
-        if (this.state.isLandscapeMode && isMobileOnly) {
-            return <LandscapeMode />;
-        }
-
         return this.renderDashBoard();
     }
 }

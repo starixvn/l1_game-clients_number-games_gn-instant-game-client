@@ -2,12 +2,17 @@
     --border-scoreboard-color: #172d41;
     --border-item-color: #0e1d26;
     --background-color: #021520;
-
+    height: 4rem;
+    align-items: center;
     display: grid;
     position: relative;
     border-radius: 1rem;
-    background: var(--background-color);
-
+    background: #012237;
+    padding: 0 0.5rem;
+    @media screen and (orientation: landscape) {
+        padding: 0 0.75rem;
+        height: 3.5rem;
+    }
     &::before {
         content: "";
         display: block;
@@ -55,7 +60,6 @@
         font-size: 3rem;
     }
 }
-
 
 @media screen and (orientation: landscape) {
     .scoreboard-block {

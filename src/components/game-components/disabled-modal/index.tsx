@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
 import { buildVersion } from "../../../_shared/constants";
-import { URLContext } from "../../../_shared/react-contexts";
 import { useCommonTranslate } from "../../../_shared/react-hooks";
 import BaseDialog from "../base-dialog";
 import { ModalType } from "../base-dialog/type";
@@ -8,7 +7,6 @@ import Styles from "./disabled-modal.module.scss";
 
 const DisabledModal: React.FC<{ disableMessage: string }> = ({ disableMessage }) => {
     const { t } = useCommonTranslate();
-    const { backToRedirectUrl, redirectUrl, isDirectMode } = useContext(URLContext);
 
     return (
         <BaseDialog type={ModalType.Center} isOpen={true} enableBackdrop={true}>
@@ -26,13 +24,6 @@ const DisabledModal: React.FC<{ disableMessage: string }> = ({ disableMessage })
                     />
                 </div>
                 <div className={Styles.message}>{disableMessage || t({ key: "message_disabled_game" })}</div>
-                <div className={Styles["list-action"]}>
-                    {(!isDirectMode || (isDirectMode && redirectUrl)) && (
-                        <button onClick={() => backToRedirectUrl(redirectUrl)} className={`btn-yellow ${Styles["ok"]}`}>
-                            {t({ key: "ok" })}
-                        </button>
-                    )}
-                </div>
             </div>
         </BaseDialog>
     );

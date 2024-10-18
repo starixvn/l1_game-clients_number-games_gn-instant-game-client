@@ -16,7 +16,7 @@
     -ms-user-select: none;
     user-select: none;
     height: var(--height-game-container-portrait);
-    width: var(--width-game-container-portrait);
+    width: var(--width-game-layout-portrait);
 
     .round-id {
         width: 12rem;
@@ -30,7 +30,7 @@
         padding: 0 1.5rem;
 
         height: var(--height-game-container-landscape);
-        width: var(--width-game-container-landscape);
+        width: var(--width-game-layout-landscape);
     }
 }
 

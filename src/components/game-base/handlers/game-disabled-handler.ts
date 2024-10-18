@@ -42,10 +42,6 @@ export class GameDisableHandler {
                     um_message,
                 },
             });
-
-            if (!getURLContext().isDirectMode) {
-                updateURLContext({ gameId: 0 });
-            }
         }
     }
 }

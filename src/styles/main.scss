@@ -72,11 +72,13 @@ html {
     --color-copyright: rgba(161, 161, 161, 0.6);
 
     //layout
+    --height-game-layout-portrait: 740px;
+    --width-game-layout-portrait: 448px;
     --height-game-container-portrait: 667px;
-    --width-game-container-portrait: 448px;
 
+    --height-game-layout-landscape: 456px;
+    --width-game-layout-landscape: 812px;
     --height-game-container-landscape: 411px;
-    --width-game-container-landscape: 812px;
 }
 
 [data-theme="light"] {
@@ -269,8 +271,14 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    width: var(--width-game-layout-portrait);
+    height: var(--height-game-layout-portrait);
+
+    @media screen and (orientation: landscape) {
+        width: var(--width-game-layout-landscape);
+        height: var(--height-game-layout-landscape);
+    }
+
     background-color: rgba(0, 0, 0, 0.5);
     z-index: var(--modal-index);
 }

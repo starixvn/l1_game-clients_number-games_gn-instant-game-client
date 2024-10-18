@@ -6,11 +6,11 @@
     display: flex;
     flex-direction: column;
     height: var(--height-game-container-portrait);
-    width: var(--width-game-container-portrait);
+    width: var(--width-game-layout-portrait);
 
     @media screen and (orientation: landscape) {
         height: var(--height-game-container-landscape);
-        width: var(--width-game-container-landscape);
+        width: var(--width-game-layout-landscape);
     }
 
     .title {

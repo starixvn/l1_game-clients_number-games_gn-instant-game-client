@@ -328,7 +328,11 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                                     onCloseModal={this.closeDialog}
                                     isBlockUI={isBlockUI}
                                 >
-                                    <div className={`modal-center red-color ${isBlockUI ? Styles["block-ui-message"] : ""}`}>
+                                    <div
+                                        className={`modal-center red-color ${isBlockUI ? Styles["block-ui-message"] : ""} ${
+                                            isNoGameOffer ? "no-game-offer" : ""
+                                        }`}
+                                    >
                                         {!isBlockUI && <div className={`icon-close modal-icon-close`} onClick={this.closeDialog}></div>}
                                         <ErrorApiText
                                             errorMessage={this.state.apiError?.message}

@@ -81,6 +81,14 @@
 
         opacity: 0.7;
     }
+    &.no-game-offer {
+        bottom: 32rem;
+        @media screen and (orientation: landscape) {
+            bottom: 18rem;
+            min-width: 78rem;
+
+        }
+    }
 }
 
 .modal-open {

@@ -12,13 +12,16 @@ export const ConnectFailedMessage: React.FC<{
 }> = ({ tolgeeNamespace, id, onReconnect, reason }) => {
     const { t } = useTranslator([tolgeeNamespace]);
 
-    const renderLostConnectionButtons = () => {
-        return (
+    const isLostConnection = reason === ConnectFailedReasonKey.lostConnection;
+    const renderButton = () => {
+        return isLostConnection ? (
             <div className="d-flex">
                 <button onClick={() => onReconnect()} className={`${Styles["btn-reconnect"]} btn-yellow`}>
                     {t(`${ResourceTypes.SABA_NUMBER}.button_reconnect`)}
                 </button>
             </div>
+        ) : (
+            <></>
         );
     };
 
@@ -30,11 +33,7 @@ export const ConnectFailedMessage: React.FC<{
                     <div className={Styles[`content`]}>
                         {t(reason, { gameName: tolgeeNamespace }).replaceTolgeeFormat().replace(tolgeeNamespace, "")}
                     </div>
-                    {reason === ConnectFailedReasonKey.lostConnection ? (
-                        <div className={Styles[`action`]}>{renderLostConnectionButtons()}</div>
-                    ) : (
-                        <></>
-                    )}
+                    {<div className={Styles[`action`]}>{renderButton()}</div>}
                 </div>
             </div>
         </>

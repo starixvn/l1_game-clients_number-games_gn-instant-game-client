@@ -4,14 +4,16 @@ import { GameSettings } from "../../components/game-base/type";
 import { IBanner, ILobbyConfigs } from "../../components/page-components/dashboard/type";
 import { getAppSettings } from "../app-settings";
 import { buildUrlWithPath } from "./url-helper";
-
+const defaultGameId = 1003;
 export const getBanners = (lobbyConfigs: ILobbyConfigs): IBanner[] => {
     return lobbyConfigs?.banners;
 };
 
 export const getOfferGamesIds = (authorizeInfo: AuthorizeResponse): number[] => {
     const displayMenuGameIds = getAppSettings().displayMenuGameIds;
-    return authorizeInfo?.user?.offerGames?.map((game: any) => +game?.gameId).filter((gameId) => displayMenuGameIds.includes(gameId)) || [];
+    const offerGamesIds =
+        authorizeInfo?.user?.offerGames?.map((game: any) => +game?.gameId).filter((gameId) => displayMenuGameIds.includes(gameId)) || [];
+    return offerGamesIds.length > 0 ? offerGamesIds : [defaultGameId];
 };
 
 export const getLobbyGameIds = (lobbyConfigs: ILobbyConfigs): number[] => {

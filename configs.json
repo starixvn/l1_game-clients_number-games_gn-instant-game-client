@@ -22,8 +22,5 @@
     "useTolgeeStatic": false,
     "enableDebugLogs": true,
     "socketGatewayPath": "gateway",
-    "displayMenuGameIds": [
-        1003,
-        1004
-    ]
+    "displayMenuGameIds": [1003]
 }

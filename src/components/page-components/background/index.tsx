@@ -2,7 +2,7 @@ import Image from "next/image";
 import { FC, memo } from "react";
 
 import { buildVersion, GameIds } from "../../../_shared/constants";
-import { useLowPerformanceDevice } from "../../../_shared/react-hooks";
+import { useLowPerformanceDevice, useScreenOrientation } from "../../../_shared/react-hooks";
 
 type Props = {
     gameId: number;
@@ -40,16 +40,17 @@ const StarField: FC<{ gameId: number }> = ({ gameId }) => {
 };
 
 export const BackgroundGalaxy: React.FC<Props> = ({ gameId }) => {
+    const isPortrait = useScreenOrientation();
     const gameName = getGameName(gameId);
-    const imageUrls = `/static/images/bg-galaxy/bg-${gameName.toLowerCase()}.webp?v=${buildVersion}`;
+    const imageUrls = `/static/images/bg-galaxy/bg-${gameName.toLowerCase()}${isPortrait ? "" : "-landscape"}.webp?v=${buildVersion}`;
 
     return (
         <>
             <div className="background-galaxy">
-                <Image className="galaxy-2" width={580} height={850} src={imageUrls} alt="galaxy" />
+                <Image className="galaxy-2" width={isPortrait ? 580 : 812} height={isPortrait ? 850 : 412} src={imageUrls} alt="galaxy" />
 
                 <div className="galaxy-1-container">
-                    <Image className="galaxy-1" width={580} height={850} src={imageUrls} alt="galaxy" />
+                    <Image className="galaxy-1" width={isPortrait ? 580 : 812} height={isPortrait ? 850 : 412} src={imageUrls} alt="galaxy" />
                 </div>
             </div>
             <StarField gameId={gameId} />

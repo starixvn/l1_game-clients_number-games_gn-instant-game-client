@@ -17,6 +17,9 @@ $delay3: $duration + $delay2 - 1;
         width: 100%;
         position: absolute;
         height: 664px;
+        @media screen and (orientation:landscape) {
+            height: 412px;
+        }
     }
 
     .galaxy-1-container {

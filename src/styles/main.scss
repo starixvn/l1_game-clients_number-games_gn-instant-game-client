@@ -112,7 +112,7 @@ body {
     height: 100%;
     width: 100%;
     scrollbar-width: none;
-    // overflow: hidden;
+    overflow: hidden;
 }
 
 body {
@@ -191,9 +191,11 @@ body {
     padding-left: 0.8rem;
     line-height: 26.82px;
     font-size: 22px;
+
     @media screen and (orientation: landscape) {
         font-size: 1.6rem;
     }
+
     font-weight: 400;
     color: #fff;
     opacity: 0;
@@ -288,8 +290,7 @@ body {
     top: 1.5rem;
 }
 
-@media screen and (orientation: portrait) {
-}
+@media screen and (orientation: portrait) {}
 
 @media screen and (orientation: landscape) {
     #__next {

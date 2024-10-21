@@ -30,7 +30,6 @@ import { NotificationHandler } from "./handlers/notification-handler";
 import { DashboardProps, DashboardState } from "./type";
 import Header from "../header";
 
-const SoundSettings = dynamic(() => import("../../../components/page-components/setting"));
 const Games = dynamic(() => import("../../../games/games"));
 const BaseDialog = dynamic(() => import("../../game-components/base-dialog"));
 
@@ -286,8 +285,6 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                         }}
                     >
                         <Header lobbyGamesIds={this.dashboardHandler.getLobbyGamesIds()} />
-
-                        <SoundSettings />
 
                         {isNoGameOffer ? <></> : renderOfferGameContainer()}
 

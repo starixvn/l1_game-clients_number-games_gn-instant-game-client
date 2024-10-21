@@ -212,6 +212,16 @@
     line-height: 2.6rem;
     padding-left: 2rem;
     padding-right: 2rem;
+    &.timeout-msg {
+        margin-top: 2rem;
+
+        @media screen and (orientation: landscape) {
+            margin-top: -5rem;
+        }
+    }
+    @media screen and (orientation: landscape) {
+        font-size: 2rem;
+    }
 }
 
 @keyframes spin {

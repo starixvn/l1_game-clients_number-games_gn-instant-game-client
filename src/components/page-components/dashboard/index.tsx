@@ -23,7 +23,6 @@ import {
 import { UserStakeLevel } from "../../game-base/type";
 import { ModalType } from "../../game-components/base-dialog/type";
 import { ErrorApiText } from "../../game-components/error-api-text";
-import Footer from "../../game-components/footer";
 import Styles from "./dashboard.module.scss";
 import { DashboardHandler } from "./handlers/dash-board-handler";
 import { NotificationHandler } from "./handlers/notification-handler";
@@ -288,7 +287,6 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
 
                         {isNoGameOffer ? <></> : renderOfferGameContainer()}
 
-                        {isNoGameOffer ? <></> : !isRenderGames && <Footer />}
 
                         {isShowErrorModal && (
                             <div className={Styles["container-modal"]}>

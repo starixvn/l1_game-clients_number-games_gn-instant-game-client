@@ -25,7 +25,6 @@ import { BeadRoadElement, BigRoadElement } from "../../components/game-component
 import { SwitchableScoreboard } from "../../components/game-components/round-history/scoreboard";
 
 const DrawIdBlock = dynamic(() => import("../../components/game-components/draw-id"));
-const NextBallBetHistoryModal = dynamic(() => import("./history"));
 
 class NextBall extends GameBase<GameBaseProps, GameBaseState> {
 
@@ -103,10 +102,6 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
 
     renderBettingBlock() {
         return <NextBallBettingBlock />;
-    }
-
-    renderBetHistoryModal() {
-        return <NextBallBetHistoryModal />;
     }
 
     handleSwitchScoreboard() {

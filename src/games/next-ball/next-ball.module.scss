@@ -2,11 +2,9 @@
     position: relative;
     display: flex;
     justify-content: space-between;
-    // width: 35.8rem;
-    // margin: 1rem auto auto;
     z-index: 2;
     padding: 0 0.5rem 0 0.5rem;
-    top: 0.5rem; // margin-top: 1rem;
+    top: 0.5rem;
 }
 
 .result-container {
@@ -360,9 +358,7 @@
         top: 0;
         right: 0.5rem;
     }
-
 }
-
 
 .scoreboard-and-statistic {
     position: absolute;

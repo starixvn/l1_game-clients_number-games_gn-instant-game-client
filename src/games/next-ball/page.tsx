@@ -163,7 +163,7 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
         const rounds = isShowBlink ? [{}, ...roundHistory] : roundHistory;
 
         return (
-            <div className={Styles["statistic-wrapper"]} onClick={() => this.handleSwitchScoreboard()}>
+            <div className={Styles["statistic-wrapper"]} >
                 <div className={Styles["statistic"]} id="bead-road" >
                     <SwitchableScoreboard
                         className={Styles["scoreboard-wrapper"]}
@@ -182,6 +182,7 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
                     <span
                         id="icon-statistic"
                         className={`${Styles["icon-statistic"]} `}
+                        onClick={() => this.handleSwitchScoreboard()}
                     ></span>
                 </div>
             </div>

@@ -26,7 +26,6 @@ import { LoadingSpinner } from "../game-components/game-loading/loading-spinner"
 import { NewRoundTransitionWithoutExtraSeconds } from "../game-components/new-round-transition";
 import { NoticeDialog } from "../game-components/notice";
 import { OverlayMask } from "../game-components/overlay-mask";
-import { PFSettingModal } from "../game-components/provably-fair";
 import { Settings } from "../game-components/settings";
 import BackgroundGalaxy from "../page-components/background";
 import BetSettings from "../page-components/bet-settings";
@@ -487,20 +486,8 @@ abstract class GameBase<P extends GameBaseProps, S> extends React.PureComponent<
         );
     }
 
-    renderPFSettingModal() {
-        return createPortal(<PFSettingModal />, document.getElementById("dashboard"));
-    }
-
-    renderBetHistoryModal() {
-        return <></>;
-    }
-
     renderGameGuideModal() {
         return createPortal(<GameGuideModal />, document.getElementById("dashboard"));
-    }
-
-    renderMenuButtons() {
-        return <></>;
     }
 
     renderResultBlock() {
@@ -518,10 +505,6 @@ abstract class GameBase<P extends GameBaseProps, S> extends React.PureComponent<
     renderSlidingChips() {
         const { gameConfigs, userStakeLevel } = this.props.gameStateContextModel;
         return <BetSettings gameConfigs={gameConfigs} userStakeLevel={userStakeLevel} />;
-    }
-
-    renderConfirmBet() {
-        return <ConfirmBet />;
     }
 
     renderConfirmDialog() {
@@ -553,8 +536,6 @@ abstract class GameBase<P extends GameBaseProps, S> extends React.PureComponent<
                         <PFProvider gameId={this.props.id} uid={uid}>
                             <PFWrapper socket={this.socket} gameMessageHandler={this.gameMessageHandler} gameId={this.props.id} uid={uid}>
                                 {this.renderHeaderBlock()}
-                                {this.renderPFSettingModal()}
-                                {this.renderBetHistoryModal()}
                             </PFWrapper>
                         </PFProvider>
                         <div>{availableInGameData && this.renderResultBlock()}</div>
@@ -562,7 +543,6 @@ abstract class GameBase<P extends GameBaseProps, S> extends React.PureComponent<
                             <PlaceBetHandlerWrapper handler={this.placeBetHandler} signOut={(this.context as PlayerContextModel)?.signOut}>
                                 {this.renderBettingBlock()}
                                 {this.renderConfirmDialog()}
-                                {this.renderConfirmBet()}
                             </PlaceBetHandlerWrapper>
                         </PlaceBetProvider>
                         {this.renderStatistic()}
@@ -572,7 +552,6 @@ abstract class GameBase<P extends GameBaseProps, S> extends React.PureComponent<
                     </div>
                     {!availableInGameData && <OverlayMask removeOverlay={isDisabledGame} />}
                     {this.renderGameGuideModal()}
-                    {this.renderMenuButtons()}
                     {this.renderNewRoundTransition()}
                     {this.renderNotice()}
                 </>

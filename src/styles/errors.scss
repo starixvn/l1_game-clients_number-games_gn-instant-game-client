@@ -57,6 +57,10 @@
     font-weight: 500;
     line-height: 1.5;
     font-size: 2.4rem;
+    @media screen and (orientation: landscape) {
+        margin-top: -2rem;
+        font-size: 2rem;
+    }
 }
 
 .timeout-spaceman {

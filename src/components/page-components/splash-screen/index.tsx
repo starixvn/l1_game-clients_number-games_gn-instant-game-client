@@ -18,10 +18,10 @@ import { setSentryUser } from "../../../_shared/sentry";
 import { tolgee } from "../../../_shared/tolgee";
 import { authorize, createNickname, getLobbyConfigs, sso, verifySession } from "../../../services/auth-service";
 import { updateSignInSMStatus } from "../../../services/user-setting-service";
-import { MAX_AVATAR_ID } from "../dashboard/register/avatar-gallery";
 import NameGenerator from "../dashboard/register/name-generator";
 import { ILobbyConfigs } from "../dashboard/type";
 
+const MAX_AVATAR_ID = 40;
 export type SplashScreenProps = WithRouterProps;
 export type SplashScreenState = {
     locale: string;

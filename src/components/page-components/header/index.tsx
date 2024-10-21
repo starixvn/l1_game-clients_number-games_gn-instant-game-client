@@ -4,7 +4,7 @@ import "swiper/css/pagination";
 import Styles from "./header.module.scss";
 import { NavBarGameName } from "./header-title";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { FreeMode, Navigation, Thumbs } from "swiper/modules";
+import { FreeMode, Navigation } from "swiper/modules";
 import { useEffect, useRef, useState } from "react";
 import { Settings } from "../../game-components/settings";
 

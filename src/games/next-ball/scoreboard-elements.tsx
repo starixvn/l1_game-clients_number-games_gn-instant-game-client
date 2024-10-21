@@ -8,9 +8,7 @@ import styles from "./scoreboard-elements.module.scss";
 import { NextBallResult, NextBallSettlementResult } from "./types";
 import BeadBoardIcon from "../../components/game-components/statistic/beadboard-icon";
 
-export const ODD_EVEN_AS_DEFAULT_SCOREBOARD = false;
-
-export function createBeadRoadElement(isOddEven: boolean = ODD_EVEN_AS_DEFAULT_SCOREBOARD) {
+export function createBeadRoadElement() {
     class Element extends BeadRoadElement<Round<NextBallResult, NextBallSettlementResult>> {
         renderElement(round: Round<NextBallResult, NextBallSettlementResult>, t?: (key: string) => string): ReactNode {
             const character = (betChoice: string) => <BeadBoardIcon choice={betChoice} />;
@@ -36,25 +34,21 @@ export function createBeadRoadElement(isOddEven: boolean = ODD_EVEN_AS_DEFAULT_S
 
 export class NextBallBigRoadConverter extends Converter<NextBallSettlementResult> {
     static addBlinkNode(rounds: NextBallSettlementResult[]) {
-        const lastRound = rounds.at(0) ?? ({ over: false, odd: false } as NextBallSettlementResult);
+        const lastRound = rounds.at(0) ?? ({ over: false } as NextBallSettlementResult);
         const blinkRound = {
             over: lastRound?.over,
-            odd: lastRound?.odd,
             under: undefined,
-            even: undefined,
             drawId: 0,
         };
 
         rounds.unshift(blinkRound);
     }
 
-    static instance = NextBallBigRoadConverter.getInstance(ODD_EVEN_AS_DEFAULT_SCOREBOARD);
-
-    static getInstance(isOddEven: boolean = ODD_EVEN_AS_DEFAULT_SCOREBOARD) {
-        return new NextBallBigRoadConverter(isOddEven);
+    static getInstance() {
+        return new NextBallBigRoadConverter();
     }
 
-    constructor(private readonly isOddEven: boolean) {
+    constructor() {
         super();
     }
 
@@ -67,11 +61,11 @@ export class NextBallBigRoadConverter extends Converter<NextBallSettlementResult
     }
 }
 
-export function createBigRoadElement(isOddEven: boolean = ODD_EVEN_AS_DEFAULT_SCOREBOARD) {
+export function createBigRoadElement() {
     return class Element extends BigRoadElement<NextBallSettlementResult> {
         renderElement(round: BigRoadRound<NextBallSettlementResult>): ReactNode {
-            const positive = round.data.some((result) => (isOddEven ? result.odd : result.over));
-            const isBlinkNode = round.data.some((result) => result.under === undefined || result.even === undefined);
+            const positive = round.data.some((result) => (result.over));
+            const isBlinkNode = round.data.some((result) => result.under === undefined);
 
             if (isBlinkNode) {
                 return <span className={styles.blink}></span>;

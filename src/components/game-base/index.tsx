@@ -496,7 +496,7 @@ abstract class GameBase<P extends GameBaseProps, S> extends React.PureComponent<
         return <></>;
     }
 
-    renderScoreboards() {
+    renderScoreboardsPopup() {
         return <></>;
     }
 
@@ -540,7 +540,7 @@ abstract class GameBase<P extends GameBaseProps, S> extends React.PureComponent<
                         </PlaceBetProvider>
                         {this.renderStatistic()}
                         <div className={`${SwiperNoSwiping} slide-chip-wrapper`} > {this.renderSlidingChips()}</div>
-                        {this.renderScoreboards()}
+                        {this.renderScoreboardsPopup()}
 
                     </div>
                     {!availableInGameData && <OverlayMask removeOverlay={isDisabledGame} />}

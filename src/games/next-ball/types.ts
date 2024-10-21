@@ -1,8 +1,6 @@
 export type NextBallSettlementResult = {
     over: boolean;
     under: boolean;
-    odd: boolean;
-    even: boolean;
     drawId: number;
 };
 

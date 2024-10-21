@@ -114,7 +114,7 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
         this.setState({ scoreboardColumns: actualColumns });
     }
 
-    renderScoreboards() {
+    renderScoreboardsPopup() {
         if (!this.state.showScoreboard) {
             return <></>;
         }
@@ -127,9 +127,9 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
         return (
             <div className={Styles["scoreboard-and-statistic"]} id="big-road">
                 <div className={Styles["statistic-header"]}>
-                    {this.renderStatistic1()}
+                    {this.renderScoreboardPopupContent()}
                     <div
-                        style={{ width: "300px", display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
+                        className={`${Styles["icon-close-wrapper"]} `}>
                         <span
                             id="icon-close"
                             className={`${Styles["icon-close"]} `}
@@ -145,8 +145,8 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
                     blockClassName={Styles["scoreboard-popup-block"]}
                     scoreboards={[
                         {
-                            element: createBigRoadElement(false),
-                            arrange: BigRoadElement.arrange(NextBallBigRoadConverter.getInstance(false)),
+                            element: createBigRoadElement(),
+                            arrange: BigRoadElement.arrange(NextBallBigRoadConverter.getInstance()),
                             column: this.state.scoreboardColumns,
                             row: 6,
                             updateScoreboardColumns: this.updateScoreboardColumns,
@@ -158,13 +158,12 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
         );
     }
 
-
     renderStatistic() {
         const { roundHistory, isShowBlink } = this.props.gameStateContextModel;
         const rounds = isShowBlink ? [{}, ...roundHistory] : roundHistory;
 
         return (
-            <div className={Styles["statistic-wrapper"]} >
+            <div className={Styles["statistic-wrapper"]} onClick={() => this.handleSwitchScoreboard()}>
                 <div className={Styles["statistic"]} id="bead-road" >
                     <SwitchableScoreboard
                         className={Styles["scoreboard-wrapper"]}
@@ -173,7 +172,7 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
                         type="scale"
                         scoreboards={[
                             {
-                                element: createBeadRoadElement(false),
+                                element: createBeadRoadElement(),
                                 arrange: BeadRoadElement.arrange,
                                 column: this.state.statisticColumns,
                                 row: 1,
@@ -183,7 +182,6 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
                     <span
                         id="icon-statistic"
                         className={`${Styles["icon-statistic"]} `}
-                        onClick={() => this.handleSwitchScoreboard()}
                     ></span>
                 </div>
             </div>
@@ -191,7 +189,7 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
         );
     }
 
-    renderStatistic1() {
+    renderScoreboardPopupContent() {
         const { roundHistory } = this.props.gameStateContextModel;
         const { statisticGroup } = this.state;
 

@@ -5,12 +5,10 @@ import { BeadRoadElement, BigRoadElement } from "../../components/game-component
 import { NextBallBigRoadConverter, createBeadRoadElement, createBigRoadElement } from "./scoreboard-elements";
 import Styles from "./scoreboard.module.scss";
 import { NextBallResult, NextBallSettlementResult } from "./types";
-import { tolgee } from "../../_shared/tolgee";
 
 export type ScoreboardComponentProps = {
     roundHistory: Round<NextBallResult, NextBallSettlementResult>[];
     isShowBlink: boolean;
-    isOddEven: boolean;
 };
 
 export class Scoreboard extends Component<ScoreboardComponentProps> {
@@ -27,8 +25,8 @@ export class Scoreboard extends Component<ScoreboardComponentProps> {
                     type="switch"
                     scoreboards={[
                         {
-                            element: createBigRoadElement(this.props.isOddEven),
-                            arrange: BigRoadElement.arrange(NextBallBigRoadConverter.getInstance(this.props.isOddEven)),
+                            element: createBigRoadElement(),
+                            arrange: BigRoadElement.arrange(NextBallBigRoadConverter.getInstance()),
                             column: 18,
                             row: 6,
                         },
@@ -41,8 +39,6 @@ export class Scoreboard extends Component<ScoreboardComponentProps> {
     renderBeadRoad(): ReactNode {
         const { roundHistory, isShowBlink } = this.props;
         const rounds = isShowBlink ? [{}, ...roundHistory] : roundHistory;
-        const locale = tolgee.getLanguage() ?? "en";
-        const classNameIndo = locale === "id" && this.props.isOddEven ? Styles["bead-road-indo"] : "";
 
         return (
             <div className={Styles["scoreboard-full"]} id="bead-road">
@@ -51,11 +47,11 @@ export class Scoreboard extends Component<ScoreboardComponentProps> {
                     type="switch"
                     scoreboards={[
                         {
-                            element: createBeadRoadElement(this.props.isOddEven),
+                            element: createBeadRoadElement(),
                             arrange: BeadRoadElement.arrange,
                             column: 18,
                             row: 6,
-                            elementClassName: classNameIndo,
+                            elementClassName: "",
                         },
                     ]}
                 />

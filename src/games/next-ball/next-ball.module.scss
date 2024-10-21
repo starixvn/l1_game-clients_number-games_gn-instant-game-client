@@ -306,6 +306,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    &:hover:not(.disabled) {
+        cursor: pointer;
+    }
+
 }
 
 .statistic {
@@ -340,15 +345,24 @@
     right: -6.5rem;
 }
 
-.icon-close {
-    @extend %icon;
-    height: 5.7rem;
-    width: 5.7rem;
+.icon-close-wrapper {
+    width: 300px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 
-    background: url("/static/images/icons/icon-close.svg?v=#{$version-image}") no-repeat center;
-    top: 0;
-    right: 0.5rem;
+    .icon-close {
+        @extend %icon;
+        height: 5.7rem;
+        width: 5.7rem;
+
+        background: url("/static/images/icons/icon-close.svg?v=#{$version-image}") no-repeat center;
+        top: 0;
+        right: 0.5rem;
+    }
+
 }
+
 
 .scoreboard-and-statistic {
     position: absolute;

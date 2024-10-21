@@ -16,7 +16,6 @@ import {
 } from "../../../_shared/helpers/message-transmitter/global-transmitter";
 import {
     loadURLContext,
-    LobbyConnectionContextProvider,
     PlayerContextProvider,
     SettingContextProvider,
     updateURLContext,
@@ -25,8 +24,6 @@ import { UserStakeLevel } from "../../game-base/type";
 import { ModalType } from "../../game-components/base-dialog/type";
 import { ErrorApiText } from "../../game-components/error-api-text";
 import Footer from "../../game-components/footer";
-import Lobby from "../lobby/lobby";
-import { LobbyGameTransmitter } from "../lobby/lobby-socket-connection";
 import Styles from "./dashboard.module.scss";
 import { DashboardHandler } from "./handlers/dash-board-handler";
 import { NotificationHandler } from "./handlers/notification-handler";
@@ -64,7 +61,6 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
             isLandscapeMode: false,
             isChangedGame: false,
             isChangePrevGame: false,
-            gameTransmitters: {},
             dashBoardHeight: 0,
         };
 
@@ -77,7 +73,6 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
         this.openGameFromLobby = this.openGameFromLobby.bind(this);
         this.changeOrientation = this.changeOrientation.bind(this);
         this.resetGameIdDashboardEvent = this.resetGameIdDashboardEvent.bind(this);
-        this.updateGameTransmitters = this.updateGameTransmitters.bind(this);
         this.updateUserBalance = this.updateUserBalance.bind(this);
 
         const buildId = process.env.buildVersion;
@@ -87,7 +82,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
             buildVersion && location.reload();
         }
 
-        this.dashboardHandler = dashboardHandler ?? new DashboardHandler(this.props, this.updateGameTransmitters);
+        this.dashboardHandler = dashboardHandler ?? new DashboardHandler(this.props);
 
         this.notificationHandler =
             notificationHandler ??
@@ -124,9 +119,6 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
         this.forceUpdate();
     }
 
-    updateGameTransmitters(gameTransmitters: Record<number, LobbyGameTransmitter>) {
-        this.setState({ gameTransmitters });
-    }
 
     shouldComponentUpdate(nextProps: Readonly<DashboardProps>, nextState: Readonly<DashboardState>, nextContext: any): boolean {
         if (this.state.openGameId > 0 && this.isUpdatingBalance) {
@@ -176,7 +168,6 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
         document.removeEventListener("visibilitychange", this.onVisibilityChange);
 
         this.notificationHandler.reset();
-        this.dashboardHandler.reset();
     }
 
     signOut() {
@@ -223,25 +214,10 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
         updateURLContext({ backToLobby: true, gameId: gameId });
         window.scrollTo(0, 0);
         if (this.state.openGameId !== gameId) {
-            this.dashboardHandler.removeGameTransmitter(gameId);
             this.setState({ openGameId: gameId });
         } else {
             this.forceUpdate();
         }
-    }
-
-    renderLobby() {
-        updateURLContext({ backToLobby: true });
-
-        return (
-            <LobbyConnectionContextProvider value={this.dashboardHandler.buildLobbyConnectionContextValue()}>
-                <Lobby
-                    openGame={(gameId: number) => this.openGameFromLobby(gameId)}
-                    lobbyConfigs={this.props.lobbyConfigs}
-                    gameTransmitters={this.state.gameTransmitters}
-                />
-            </LobbyConnectionContextProvider>
-        );
     }
 
     setDashBoardStyle(isRenderGames: boolean) {
@@ -259,7 +235,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
         const allowSwipeGameOndDesktopStyle = isChangePrevGame ? Styles["slide-left"] : Styles["slide-right"];
         const changeGameStyle = isChangedGame && allowSwipeGameOndDesktop ? allowSwipeGameOndDesktopStyle : "";
         const isNoGameOffer = this.state.apiError?.message === ErrorCodeDictionary[NoticeErrorCode.noGameOffer];
-        const renderOfferGameContainer = () => (isRenderGames ? this.renderGames() : this.renderLobby());
+        const renderOfferGameContainer = () => (this.renderGames());
 
         const authContextValue = {
             authorizeInfo: authorizeInfo,
@@ -300,9 +276,8 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                         }}
                     ></div>
                     <div
-                        className={`${Styles["dashboard"]} ${changeGameStyle} ${!isRenderGames ? "no-scroll" : ""} ${
-                            isMobileOnly ? Styles["hidden-scrollbar"] : ""
-                        }`}
+                        className={`${Styles["dashboard"]} ${changeGameStyle} ${!isRenderGames ? "no-scroll" : ""} ${isMobileOnly ? Styles["hidden-scrollbar"] : ""
+                            }`}
                         id={"dashboard"}
                         style={{
                             ...this.setDashBoardStyle(isRenderGames),
@@ -328,9 +303,8 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                                     isBlockUI={isBlockUI}
                                 >
                                     <div
-                                        className={`modal-center red-color ${isBlockUI ? Styles["block-ui-message"] : ""} ${
-                                            isNoGameOffer ? "no-game-offer" : ""
-                                        }`}
+                                        className={`modal-center red-color ${isBlockUI ? Styles["block-ui-message"] : ""} ${isNoGameOffer ? "no-game-offer" : ""
+                                            }`}
                                     >
                                         {!isBlockUI && <div className={`icon-close modal-icon-close`} onClick={this.closeDialog}></div>}
                                         <ErrorApiText

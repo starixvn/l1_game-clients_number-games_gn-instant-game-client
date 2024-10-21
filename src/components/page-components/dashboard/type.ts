@@ -3,7 +3,6 @@ import { WithRouterProps } from "next/dist/client/with-router";
 import { AuthorizeResponse, SSOResponse } from "sc-user-service-client/dist/auth";
 
 import { UserStakeLevel } from "../../game-base/type";
-import { LobbyGameTransmitter } from "../lobby/lobby-socket-connection";
 
 export type DashboardProps = {
     session: SSOResponse;
@@ -32,7 +31,6 @@ export type DashboardState = {
     isLandscapeMode: boolean;
     isChangedGame: boolean;
     isChangePrevGame: boolean;
-    gameTransmitters: Record<number, LobbyGameTransmitter>;
     dashBoardHeight: number;
 };
 

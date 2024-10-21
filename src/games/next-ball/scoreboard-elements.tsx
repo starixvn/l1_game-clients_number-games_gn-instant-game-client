@@ -2,7 +2,6 @@ import { ReactNode } from "react";
 import { Converter } from "sc-scoreboards";
 import { Round } from "../../components/game-base/type";
 import { BeadRoadElement, BigRoadElement, BigRoadRound } from "../../components/game-components/round-history/scoreboard/elements";
-import { registerBigRoadElement } from "../../components/page-components/lobby/games/components/scoreboard";
 import { withTranslator } from "../../components/page-components/translator";
 import { NextBallBetOptions } from "./next-ball-constants";
 import styles from "./scoreboard-elements.module.scss";
@@ -85,4 +84,3 @@ export function createBigRoadElement(isOddEven: boolean = ODD_EVEN_AS_DEFAULT_SC
     };
 }
 
-registerBigRoadElement(createBigRoadElement(ODD_EVEN_AS_DEFAULT_SCOREBOARD), NextBallBigRoadConverter, 1003, 1004);

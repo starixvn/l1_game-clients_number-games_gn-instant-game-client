@@ -11,7 +11,6 @@ import { AnalyticsHelper, StorageHelper, localStorageKeys, randomInteger } from 
 import PreloadResources, {
     DURATION_HOLD_SPLASH_SCREEN,
     getAndHandleGameOfferIds,
-    getAndHandleBannerOffer as handleBannerOffer,
     updateProgressBar,
 } from "../../../_shared/helpers/preload-resources";
 import { PlayerContextModel, URLContext, usePlayerContext } from "../../../_shared/react-contexts";
@@ -160,7 +159,6 @@ const SplashScreen: React.FC = () => {
 
             if (lobby?.lobbyConfigs) {
                 setLobbyConfigs(lobby?.lobbyConfigs);
-                handleBannerOffer(authorizeInfo, lobby.lobbyConfigs, setBannerId);
                 getAndHandleGameOfferIds(authorizeInfo, lobby.lobbyConfigs, setGameOfferIds);
             }
 

@@ -119,6 +119,7 @@
 
     .own-bet {
         bottom: 2.4rem;
+
         @media screen and (orientation: landscape) {
             bottom: 1.8rem;
         }
@@ -130,6 +131,7 @@
     top: -1px;
     left: 1px;
     transform: scale(0.98);
+
     @media screen and (orientation: landscape) {
         top: -3px;
         left: 1px;

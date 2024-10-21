@@ -1,6 +1,6 @@
 import { useTheme } from "next-themes";
 import dynamic from "next/dynamic";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { isIOS, isMobileOnly } from "react-device-detect";
 import { getAppSettings } from "../_shared/app-settings";
 import { GameIds } from "../_shared/constants";
@@ -8,7 +8,6 @@ import { GameIds } from "../_shared/constants";
 import {
     SettingEventActionType,
     SystemContextProvider,
-    URLContext,
     usePlayerContext,
     useSettingDispatch,
 } from "../_shared/react-contexts";
@@ -22,15 +21,11 @@ import { GlobalTransmitterEvent, registerGlobalMessageEvent, unsubscribeGlobalMe
 const NextBall = dynamic(() => import("./next-ball/page"));
 
 export const Games: React.FC<Props> = ({
-    swiperRef,
     setApiErrorMessage,
     userStakeLevel,
     updateUserStakeLevel,
-    openGameId,
-    directMode,
-    lobbyGamesIds,
+    openGameId
 }) => {
-    const { isDirectMode } = useContext(URLContext);
     const { theme } = useTheme();
     const { session } = usePlayerContext();
     const settingDispatch = useSettingDispatch();

@@ -85,15 +85,12 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
         this.notificationHandler =
             notificationHandler ??
             new NotificationHandler(this.props.session, this.props.setIsUm, this.updateUserBalance, this.showApiErrorMessage, this.signOut);
-
-        GlobalMessageTransmitter.broadcast({ [GlobalTransmitterEvent.USER_INFO_RED]: this.props.authorizeResponse.user.red });
     }
 
     updateUserBalance = (balance: number, setBalanceByPlaceBet = true) => {
         const authorizeInfo = { ...this.state.authorizeInfo };
         if (authorizeInfo.user.red !== balance) {
             authorizeInfo.user.red = balance;
-            GlobalMessageTransmitter.broadcast({ [GlobalTransmitterEvent.USER_INFO_RED]: authorizeInfo.user.red });
             this.isUpdatingBalance = setBalanceByPlaceBet;
             this.setState({ authorizeInfo });
         }

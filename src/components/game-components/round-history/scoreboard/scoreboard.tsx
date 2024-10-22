@@ -21,26 +21,22 @@ export type ScoreboardItemProps<Round> = {
     scoreboard?: Scoreboard<Round>;
 };
 
-export type ScoreboardState = {
-    actualColumns: number;
-}
-export class Scoreboard<Round> extends Component<ScoreboardProps<Round>, ScoreboardState> {
+export class Scoreboard<Round> extends Component<ScoreboardProps<Round>> {
     private scrollableDivRef: React.RefObject<HTMLDivElement>;
     private actualColumns: number;
-    state = {
-        actualColumns: 17
-    }
+
     constructor(props) {
         super(props);
         this.scrollableDivRef = React.createRef();
     }
+
     static defaultProps: Partial<ScoreboardProps<unknown>> = {
         column: 17,
         row: 6,
         className: "",
         elementClassName: "",
         block: 1,
-        blockClassName: "",
+        blockClassName: ""
     };
 
     private renderElement(round: Round, props: Attributes | HTMLAttributes<unknown>): ReactNode {
@@ -81,13 +77,14 @@ export class Scoreboard<Round> extends Component<ScoreboardProps<Round>, Scorebo
             this.scrollableDivRef.current.scrollLeft = this.scrollableDivRef.current.scrollWidth;
         }
 
+
         if (this.props.updateScoreboardColumns) {
             this.props.updateScoreboardColumns(this.actualColumns);
         }
     }
 
     getHTMLAttributes() {
-        const { rounds, className, elementClassName, block, row: originalRow, element, arrange, blockClassName, ...htmlProps } = this.props;
+        const { rounds, className, elementClassName, block, row: originalRow, element, arrange, blockClassName, updateScoreboardColumns, ...htmlProps } = this.props;
 
         return htmlProps;
     }
@@ -109,8 +106,9 @@ export class Scoreboard<Round> extends Component<ScoreboardProps<Round>, Scorebo
                         gridRowStart: row,
                     };
 
+                    const classNames = `scoreboard-block ${styles["scoreboard-block"]} ${blockClassName}`;
                     return (
-                        <div className={`scoreboard-block ${styles["scoreboard-block"]} ${blockClassName}`} key={index} style={style}>
+                        <div className={classNames} key={index} style={style}>
                             {items.map((round, index) => {
                                 const column = (index / block + 1) >> 0;
                                 const row = (index % block) + 1;

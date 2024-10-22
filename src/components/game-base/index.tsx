@@ -2,7 +2,7 @@ import React from "react";
 import { createPortal } from "react-dom";
 import { Socket } from "socket.io-client";
 
-import { SwiperNoSwiping } from "../../_shared/constants";
+import { DefaultStatisticColumns, SwiperNoSwiping } from "../../_shared/constants";
 import { InitSocketIO, writeDebugLog } from "../../_shared/helpers";
 import { AnalyticsHelper } from "../../_shared/helpers/analytic-helper";
 import { GlobalMessageTransmitter, GlobalTransmitterEvent } from "../../_shared/helpers/message-transmitter/global-transmitter";
@@ -43,15 +43,15 @@ import { GameRoundDataHandler } from "./handlers/game-round-data-handler";
 import { GameStateHandler, IGameStateHandler } from "./handlers/game-state-handler";
 import { PFWrapper } from "./handlers/pf-wrapper/pf-wrapper";
 import { PlaceBetHandlerWrapper } from "./handlers/place-bet-wrapper/place-bet-handler-wrapper";
-import { GameBaseHandlers, GameBaseProps, RoundState } from "./type";
+import { GameBaseHandlers, GameBaseProps, GameBaseState, RoundState } from "./type";
 
-abstract class GameBase<P extends GameBaseProps, S> extends React.PureComponent<P, S> {
+abstract class GameBase<P extends GameBaseProps, S extends GameBaseState> extends React.PureComponent<P, S> {
     protected socket: Socket;
     protected gameCronInterval: NodeJS.Timeout;
     protected roundTimeCounter: number;
     protected timeCounter: number;
     private disconnectTimeout: NodeJS.Timeout;
-    private readonly gameMessageHandler: GameMessageHandler;
+    protected readonly gameMessageHandler: GameMessageHandler;
     private readonly roundStateHandler: IRoundStateHandler;
     private readonly gameStateHandler: IGameStateHandler;
     private readonly gameErrorHandler: GameErrorHandler;
@@ -65,6 +65,12 @@ abstract class GameBase<P extends GameBaseProps, S> extends React.PureComponent<
 
     constructor(props: P, handlers: GameBaseHandlers) {
         super(props);
+        this.state = {
+            statisticGroup: 0,
+            showScoreboard: false,
+            scoreboardColumns: 100,
+            statisticColumns: this.getStatisticColumns()
+        } as S;
 
         const { dispatch } = this.props;
         const gamName = this.props.translate(`${GameResourceKeys.GAME_NAME}_${this.props.id}`);
@@ -154,9 +160,25 @@ abstract class GameBase<P extends GameBaseProps, S> extends React.PureComponent<
         this.placeBet = this.placeBet.bind(this);
         this.updateUserBalance = this.updateUserBalance.bind(this);
         this.renderHeaderBlock = this.renderHeaderBlock.bind(this);
+        this.changeOrientation = this.changeOrientation.bind(this);
+        this.updateScoreboardColumns = this.updateScoreboardColumns.bind(this);
 
         AnalyticsHelper.trackPage({ page_title: this.props.gameName });
         GlobalMessageTransmitter.broadcast({ [GlobalTransmitterEvent.OPEN_GAME_ID]: props.id });
+    }
+
+    getStatisticColumns() {
+        const isLandscapeMode = window.innerHeight < window.innerWidth;
+        const { Portrait, Landscape } = DefaultStatisticColumns;
+        return isLandscapeMode ? Landscape : Portrait;
+    }
+
+    changeOrientation() {
+        this.setState({ statisticColumns: this.getStatisticColumns() });
+    }
+
+    updateScoreboardColumns(actualColumns: number) {
+        this.setState({ scoreboardColumns: actualColumns });
     }
 
     getGameStateContext = () => {
@@ -169,6 +191,7 @@ abstract class GameBase<P extends GameBaseProps, S> extends React.PureComponent<
 
     componentDidMount() {
         document.addEventListener("visibilitychange", this.onVisibilityChange);
+        window.addEventListener("resize", this.changeOrientation);
         this.onStart();
     }
 
@@ -539,9 +562,8 @@ abstract class GameBase<P extends GameBaseProps, S> extends React.PureComponent<
                             </PlaceBetHandlerWrapper>
                         </PlaceBetProvider>
                         {this.renderStatistic()}
-                        <div className={`${SwiperNoSwiping} slide-chip-wrapper`} > {this.renderSlidingChips()}</div>
                         {this.renderScoreboardsPopup()}
-
+                        <div className={`${SwiperNoSwiping} slide-chip-wrapper`} > {this.renderSlidingChips()}</div>
                     </div>
                     {!availableInGameData && <OverlayMask removeOverlay={isDisabledGame} />}
                     {this.renderGameGuideModal()}

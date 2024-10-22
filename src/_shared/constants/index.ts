@@ -124,3 +124,9 @@ export const TimeOutConstants = {
     LoadingSpinner: 3000,
     OverlayMask: 3000
 }
+
+export const DefaultStatisticColumns = {
+    Portrait: 10,
+    Landscape: 20
+}
+

@@ -47,36 +47,12 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
             totalTurns: props.totalTurns,
             durations: props.durations,
         });
-
-        this.state = {
-            statisticGroup: 0,
-            showScoreboard: false,
-            scoreboardColumns: 100,
-            statisticColumns: this.getStatisticColumns()
-        };
-
-        this.changeOrientation = this.changeOrientation.bind(this);
-        this.updateScoreboardColumns = this.updateScoreboardColumns.bind(this);
     }
 
     override registerHandlers(): void {
         super.registerHandlers();
 
         this.turnIdHandler?.registerEvents();
-    }
-
-    componentDidMount() {
-        super.componentDidMount();
-        window.addEventListener("resize", this.changeOrientation);
-    }
-
-    getStatisticColumns() {
-        const isLandscapeMode = window.innerHeight < window.innerWidth;
-        return isLandscapeMode ? 20 : 10;
-    }
-
-    changeOrientation() {
-        this.setState({ statisticColumns: this.getStatisticColumns() });
     }
 
 
@@ -110,8 +86,21 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
         }));
     }
 
-    updateScoreboardColumns(actualColumns: number) {
-        this.setState({ scoreboardColumns: actualColumns });
+    renderScoreboardPopupStatistic() {
+        const { roundHistory } = this.props.gameStateContextModel;
+        const { statisticGroup } = this.state;
+
+        return (
+            <PercentageStatistic
+                roundHistory={roundHistory}
+                mainChoices={[NextBallBetOptions.OVER, NextBallBetOptions.UNDER]}
+                choicesInGroups={[
+                    [NextBallBetOptions.OVER, NextBallBetOptions.UNDER]
+                ]}
+                selectedGroup={statisticGroup}
+                onSelectGroup={(index: number) => this.setState({ statisticGroup: index })}
+            />
+        );
     }
 
     renderScoreboardsPopup() {
@@ -127,7 +116,7 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
         return (
             <div className={Styles["scoreboard-and-statistic"]} id="big-road">
                 <div className={Styles["statistic-header"]}>
-                    {this.renderScoreboardPopupContent()}
+                    {this.renderScoreboardPopupStatistic()}
                     <div
                         className={`${Styles["icon-close-wrapper"]} `}>
                         <span
@@ -142,7 +131,6 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
                     className={`${Styles["custom-horizontal-scrollbar"]} ${Styles["scoreboard"]}`}
                     rounds={settlements}
                     type="switch"
-                    blockClassName={Styles["scoreboard-popup-block"]}
                     scoreboards={[
                         {
                             element: createBigRoadElement(),
@@ -151,6 +139,7 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
                             row: 6,
                             updateScoreboardColumns: this.updateScoreboardColumns,
                             elementClassName: Styles["scoreboard-popup-element"],
+                            blockClassName: Styles["scoreboard-popup-block"],
                         },
                     ]}
                 />
@@ -168,7 +157,6 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
                     <SwitchableScoreboard
                         className={Styles["scoreboard-wrapper"]}
                         rounds={rounds}
-                        blockClassName={Styles["scoreboard-block"]}
                         type="scale"
                         scoreboards={[
                             {
@@ -176,6 +164,7 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
                                 arrange: BeadRoadElement.arrange,
                                 column: this.state.statisticColumns,
                                 row: 1,
+                                blockClassName: Styles["scoreboard-block"],
                             },
                         ]}
                     />
@@ -189,24 +178,6 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
 
         );
     }
-
-    renderScoreboardPopupContent() {
-        const { roundHistory } = this.props.gameStateContextModel;
-        const { statisticGroup } = this.state;
-
-        return (
-            <PercentageStatistic
-                roundHistory={roundHistory}
-                mainChoices={[NextBallBetOptions.OVER, NextBallBetOptions.UNDER]}
-                choicesInGroups={[
-                    [NextBallBetOptions.OVER, NextBallBetOptions.UNDER]
-                ]}
-                selectedGroup={statisticGroup}
-                onSelectGroup={(index: number) => this.setState({ statisticGroup: index })}
-            />
-        );
-    }
-
     renderRoundIdSection(): JSX.Element {
         return <div className={Styles["round-id-wrapper"]}><DrawIdBlock /></div>;
     }

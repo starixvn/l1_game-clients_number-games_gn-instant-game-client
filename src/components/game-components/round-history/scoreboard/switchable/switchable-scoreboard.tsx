@@ -10,7 +10,6 @@ export type SwitchableScoreboardProps<T> = {
     type: "switch" | "scale";
     onSwitch?: (props: Partial<ScoreboardProps<T>>) => Partial<ScoreboardProps<T>>;
     className?: string;
-    blockClassName?: string;
 } & HTMLAttributes<unknown>;
 
 export type SwitchableScoreboardState = {
@@ -33,7 +32,7 @@ export class SwitchableScoreboard<Round> extends Component<SwitchableScoreboardP
     }
 
     renderSwitchBoards(): ReactNode {
-        const { scoreboards, rounds, onSwitch, className, blockClassName } = this.props;
+        const { scoreboards, rounds, onSwitch, className } = this.props;
         const { selected } = this.state;
         const board = scoreboards.at(selected);
         const nextBoard = (selected + 1) % scoreboards.length;
@@ -41,8 +40,7 @@ export class SwitchableScoreboard<Round> extends Component<SwitchableScoreboardP
         const defaultProps = {
             onClick: () => this.selectBoard(nextBoard),
             rounds: board.rounds ?? rounds,
-            className: className,
-            blockClassName: blockClassName,
+            className,
             ...html,
             ...board,
         };
@@ -52,7 +50,7 @@ export class SwitchableScoreboard<Round> extends Component<SwitchableScoreboardP
     }
 
     renderScaleBoards(): ReactNode {
-        const { scoreboards, rounds, onSwitch, className, blockClassName } = this.props;
+        const { scoreboards, rounds, onSwitch, className } = this.props;
         const { selected } = this.state;
         const htmlProps = this.getHTMLAttributes();
         const selectBoard = (index: number) => this.selectBoard(index === selected ? 0 : index);
@@ -64,8 +62,7 @@ export class SwitchableScoreboard<Round> extends Component<SwitchableScoreboardP
                         key: index,
                         onClick: () => selectBoard(index + 1),
                         rounds: board.rounds ?? rounds,
-                        className: className,
-                        blockClassName: blockClassName,
+                        className,
                         ...board,
                     };
                     const props = onSwitch && index + 1 === selected ? onSwitch(defaultProps) : defaultProps;

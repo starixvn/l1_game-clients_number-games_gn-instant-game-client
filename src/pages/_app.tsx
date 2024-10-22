@@ -74,7 +74,6 @@ const SabaNumberApp = ({ Component, pageProps }: AppProps) => {
 };
 
 export const AppTittle = () => {
-    const { isThirdParty } = useURLContext();
     const [isLandscape, setIsLandscape] = useState(false);
 
     useEffect(() => {
@@ -96,7 +95,7 @@ export const AppTittle = () => {
                 name="screen-orientation"
                 content={isLandscape ? 'landscape' : 'portrait'}
             />
-            <title>{isThirdParty ? "SABA Play" : "SABA xD"}</title>
+            <title>SABA xD</title>
             <link rel="shortcut icon" type="image/x-icon" href={`/favicons/favicon.ico?v=${buildVersion}`} sizes="any" />
             <link rel="icon" type="image/png" href={`/favicons/favicon2.png?v=${buildVersion}`} sizes="16x16" />
             <link rel="apple-touch-icon" type="image/png" href={`/favicons/favicon2.png?v=${buildVersion}`} sizes="any" />

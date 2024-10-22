@@ -1,19 +1,11 @@
-import isEmpty from "lodash/isEmpty";
+
 import { createContext, useContext } from "react";
 import { AnalyticsHelper, StorageHelper, localStorageKeys } from "../helpers";
-import { GameUtils } from "../helpers/base-64-helper";
-import { GlobalMessageTransmitter, GlobalTransmitterEvent } from "../helpers/message-transmitter/global-transmitter";
 
 export type URLContextModel = {
     token?: string;
     language?: string;
     gameId?: number;
-    isDirectMode?: boolean;
-    redirectUrl?: string;
-    isThirdParty?: boolean;
-    backToLobby?: boolean;
-    backToRedirectUrl?: Function;
-    firstSSOToLobby?: boolean;
 };
 
 export function parseContextFromURL(): URLContextModel | undefined {
@@ -26,10 +18,7 @@ export function parseContextFromURL(): URLContextModel | undefined {
     const token = params.get("token");
     const language = params.get("lang");
     const gameId = Number(params.get("gameId")) || 1003;
-    const isDirectMode = !!params.get("ref");
-    const redirectUrl = isDirectMode ? params.get("rurl") : "";
-    const isThirdParty = isDirectMode && !!redirectUrl;
-    return { token, language, gameId, isDirectMode, redirectUrl, isThirdParty, firstSSOToLobby: true };
+    return { token, language, gameId };
 }
 
 export function loadURLContext(): URLContextModel {
@@ -48,14 +37,7 @@ export function loadURLContext(): URLContextModel {
 }
 
 export const initialURLContextData = {
-    ...loadURLContext(),
-    backToRedirectUrl: (redirectUrl: string) => {
-        if (!isEmpty(redirectUrl)) {
-            globalThis.location.href = GameUtils.base64Decode(redirectUrl);
-        } else {
-            updateURLContext({ backToLobby: true, gameId: 0 });
-        }
-    },
+    ...loadURLContext()
 };
 
 export const URLContext = createContext<URLContextModel>(initialURLContextData);
@@ -66,7 +48,7 @@ export function updateURLContext(context: Partial<URLContextModel>) {
     const contextFromLocalStorage = StorageHelper.get<URLContextModel>(localStorageKeys.url) || {};
 
     StorageHelper.set(localStorageKeys.latestGameId, context.gameId);
-    StorageHelper.set(localStorageKeys.url, { ...contextFromLocalStorage, ...context, firstSSOToLobby: false });
+    StorageHelper.set(localStorageKeys.url, { ...contextFromLocalStorage, ...context });
 }
 
 export function getURLContext() {

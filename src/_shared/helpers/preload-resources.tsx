@@ -31,10 +31,7 @@ export const updateProgressBar = (percentage: number, progressBarId = DEFAULT_PR
 const PreloadResources: React.FC<{
     setIsDonePreload: Function;
     gameId: number;
-    isDirectMode?: boolean;
-    bannerId?: number;
     locale?: string;
-    gameIdsIcon?: number[];
     cancelPreload?: boolean;
     durationDelayDonePreload?: number;
     enablePreload: boolean;
@@ -42,8 +39,6 @@ const PreloadResources: React.FC<{
 }> = ({
     setIsDonePreload,
     gameId,
-    bannerId,
-    gameIdsIcon,
     locale = "en",
     cancelPreload,
     durationDelayDonePreload = 0,
@@ -60,9 +55,7 @@ const PreloadResources: React.FC<{
             try {
                 const response = await axios.post("/api/preload-images", {
                     gameId,
-                    locale,
-                    gameIdsIcon,
-                    bannerId,
+                    locale
                 });
 
                 const imagesPath = response?.data || [];

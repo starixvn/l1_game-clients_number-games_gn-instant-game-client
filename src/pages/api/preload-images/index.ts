@@ -2,7 +2,7 @@ import fs from "fs";
 import { NextApiRequest, NextApiResponse } from "next";
 import path from "path";
 
-import { buildVersion, GameIds, LobbyGameId } from "../../../_shared/constants";
+import { buildVersion, GameIds } from "../../../_shared/constants";
 import { getPathImageGameId, pathImageMapping } from "../../../_shared/constants/resource-image-mapping";
 
 const cacheImages = new Map();
@@ -13,13 +13,11 @@ const DEFAULT_IMG_PATH = "/static/images/";
 interface RequestBody {
     gameId: number;
     locale: string;
-    gameIdsIcon: number[];
-    bannerId: number;
 }
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<any[]>) {
-    const { gameId, locale, gameIdsIcon, bannerId } = req.body as RequestBody;
-    const pathsImg = getPathsImg(gameId, locale, bannerId, gameIdsIcon);
+    const { gameId, locale } = req.body as RequestBody;
+    const pathsImg = getPathsImg(gameId, locale);
     const cacheKey = `${gameId}-${buildVersion}`;
 
     if (!Array.isArray(pathsImg)) {
@@ -64,7 +62,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<any[]>
     return res.status(200).json(imageFiles);
 }
 
-const getPathsImg = (gameId: number, currentLocale: string, bannerId: number, gameIdsIcon: number[]) => {
+const getPathsImg = (gameId: number, currentLocale: string) => {
     if (gameId > 0) {
         if (gameId === GameIds.SicBall) {
             return [...getPathImageGameId(gameId), ...pathImageMapping[GameIds.SicBall]];

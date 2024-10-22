@@ -7,7 +7,6 @@ import { UserStakeLevel } from "../../game-base/type";
 export type DashboardProps = {
     session: SSOResponse;
     setIsUm: Function;
-    directMode: boolean;
     tolgee: TolgeeInstance;
     authorizeResponse: AuthorizeResponse;
     lobbyConfigs: ILobbyConfigs;

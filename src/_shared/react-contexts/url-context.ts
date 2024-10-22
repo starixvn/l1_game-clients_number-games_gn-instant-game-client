@@ -47,7 +47,6 @@ export const useURLContext = () => useContext(URLContext);
 export function updateURLContext(context: Partial<URLContextModel>) {
     const contextFromLocalStorage = StorageHelper.get<URLContextModel>(localStorageKeys.url) || {};
 
-    StorageHelper.set(localStorageKeys.latestGameId, context.gameId);
     StorageHelper.set(localStorageKeys.url, { ...contextFromLocalStorage, ...context });
 }
 

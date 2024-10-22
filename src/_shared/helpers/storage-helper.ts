@@ -115,20 +115,10 @@ export const localStorageKeys = {
     umInfo: buildLocalStorageKey("um_info"),
     loginStatus: buildLocalStorageKey("login-status"),
     enableSound: buildLocalStorageKey("enable-sound"),
-    enableMusic: buildLocalStorageKey("enable-music"),
     buildVersion: buildLocalStorageKey("build-version"),
     pfSetting: buildLocalStorageKey("pf-setting"),
     debug: buildLocalStorageKey("debug"),
     url: buildLocalStorageKey("url"),
-    hideToolbarGuide: buildLocalStorageKey("hideToolbarGuide"),
-    currentSessionHideToolbarGuide: buildLocalStorageKey("currentSessionHideToolbarGuide"),
-    hideSwitchGameGuide: buildLocalStorageKey("hideSwitchGameGuide"),
-    currentSessionSwitchGameGuide: buildLocalStorageKey("currentSessionSwitchGameGuide"),
-    showPFSetting: buildLocalStorageKey("show-pf-setting"),
-    isSleepMode: buildLocalStorageKey("is-sleep-mode"),
-    volumeMusic: buildLocalStorageKey("volume-music"),
-    volumeSFX: buildLocalStorageKey("volume-SFX"),
-    latestGameId: buildLocalStorageKey("latest-game-id"),
 };
 
 export function buildLocalStorageKey(key: string) {

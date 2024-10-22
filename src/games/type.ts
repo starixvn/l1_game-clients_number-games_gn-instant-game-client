@@ -5,8 +5,4 @@ export type Props = {
     userStakeLevel: UserStakeLevel;
     updateUserStakeLevel: Function;
     openGameId: number;
-    openGameName: string;
-    directMode: boolean;
-    lobbyGamesIds: Array<number>;
-    swiperRef: any;
 };

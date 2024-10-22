@@ -13,12 +13,6 @@ import { LoadingSpinner } from "../components/game-components/game-loading/loadi
 import { GoogleAnalytic } from "../components/page-components/google-analytics";
 import { useEffect, useState } from "react";
 
-declare global {
-    interface Window {
-        isLandscape: boolean;
-    }
-}
-
 export const appDimensionMapping = {
     portrait: {
         width: 448,

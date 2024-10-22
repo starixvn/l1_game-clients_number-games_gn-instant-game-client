@@ -87,7 +87,6 @@ export const Games: React.FC<Props> = ({
             <SystemContextProvider>
                 <div className={`${styles["game-list"]} ${isMobileOnly ? styles[isIOS ? "ios-device" : "android-device"] : ""}`}>
                     {getGameComponentById(openingGameId)}
-
                 </div>
             </SystemContextProvider>
         </div>

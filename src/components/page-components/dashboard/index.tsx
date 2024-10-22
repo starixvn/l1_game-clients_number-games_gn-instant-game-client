@@ -35,7 +35,6 @@ const BaseDialog = dynamic(() => import("../../game-components/base-dialog"));
 class Dashboard extends React.Component<DashboardProps, DashboardState> {
     private readonly dashboardHandler: DashboardHandler;
     private readonly notificationHandler: NotificationHandler;
-    private readonly swiperRef = React.createRef<SwiperCore>();
     private backToLobbyEventId = null;
     private isUpdatingBalance = false;
 
@@ -197,10 +196,6 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                 userStakeLevel={userStakeLevel}
                 updateUserStakeLevel={this.handleUpdateUserStakeLevel}
                 openGameId={urlContext.gameId}
-                openGameName={openGameName}
-                directMode={this.props.directMode}
-                lobbyGamesIds={this.dashboardHandler.getLobbyGamesIds()}
-                swiperRef={this.swiperRef}
             />
         );
     }

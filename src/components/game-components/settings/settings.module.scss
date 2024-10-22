@@ -11,7 +11,7 @@
 .setting-right {
     display: flex;
     justify-content: end;
-    gap: 1rem;
+    gap: 0rem;
     flex: 1 1;
 }
 
@@ -21,8 +21,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(33, 45, 61, 0.4);
-    border-radius: 1rem;
+    background: url("/static/images/icons/setting-button-border.png?v=#{$version-image}") no-repeat center;
     border: none;
     cursor: pointer;
 }
@@ -31,12 +30,13 @@
 .icon-sound-on,
 .icon-sound-off {
     &::before {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
     }
 }
 
 @media screen and (orientation: landscape) {
     .setting-right {
+        gap: 1rem;
         flex-direction: row-reverse;
     }
 

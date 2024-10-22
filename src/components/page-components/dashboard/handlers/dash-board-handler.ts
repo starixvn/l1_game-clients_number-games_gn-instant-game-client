@@ -1,5 +1,4 @@
-import { getLobbyGameIds, getOfferGamesIds, localStorageKeys, StorageHelper } from "../../../../_shared/helpers";
-import { URLContextModel } from "../../../../_shared/react-contexts";
+import { getLobbyGameIds, getOfferGamesIds } from "../../../../_shared/helpers";
 import { DashboardProps } from "../type";
 
 export class DashboardHandler {
@@ -10,14 +9,6 @@ export class DashboardHandler {
 
     checkIsNotOfferGame = () => {
         return this.props.authorizeResponse?.user?.offerGames && this.props.authorizeResponse?.user?.offerGames.length === 0;
-    };
-
-    shouldRenderGames = (offerGames: number[], openGameId: number) => {
-        const urlContextModel = StorageHelper.get<URLContextModel>(localStorageKeys.url);
-        const backToLobby = urlContextModel?.backToLobby || false;
-        const ssoRedirectGameId = urlContextModel?.gameId || 0;
-
-        return (offerGames.includes(openGameId) && !backToLobby) || ssoRedirectGameId > 0;
     };
 
     getLobbyGamesIds = () => {

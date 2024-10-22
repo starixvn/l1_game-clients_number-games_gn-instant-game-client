@@ -3,7 +3,7 @@ import "../../../games/scoreboards";
 import dynamic from "next/dynamic";
 import { withRouter } from "next/router";
 import React from "react";
-import { isMobile, isMobileOnly } from "react-device-detect";
+import { isMobile } from "react-device-detect";
 
 import ErrorCodeDictionary, { NoticeErrorCode } from "../../../_shared/constants/error-code-dictionary";
 import { GetLocalizedErrorMessage, localStorageKeys, StorageHelper } from "../../../_shared/helpers";
@@ -44,7 +44,6 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
             apiError: null,
             isBlockUI: false,
             queryGame: this.props.queryGame,
-            openGameId: null
         };
 
         this.closeDialog = this.closeDialog.bind(this);
@@ -53,8 +52,6 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
         this.signOut = this.signOut.bind(this);
         this.openGame = this.openGame.bind(this);
         this.onVisibilityChange = this.onVisibilityChange.bind(this);
-        this.openGameFromLobby = this.openGameFromLobby.bind(this);
-        this.resetGameIdDashboardEvent = this.resetGameIdDashboardEvent.bind(this);
         this.updateUserBalance = this.updateUserBalance.bind(this);
 
         const buildId = process.env.buildVersion;
@@ -83,11 +80,6 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
         if (!document["hidden"]) {
             this.notificationHandler.handleReCheckIn();
         }
-    }
-
-    resetGameIdDashboardEvent() {
-        this.setState({ openGameId: 0 });
-        this.forceUpdate();
     }
 
     async componentDidMount() {
@@ -142,7 +134,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
     }
 
     openGame(gameId: number) {
-        this.setState({ queryGame: gameId, openGameId: gameId });
+        this.setState({ queryGame: gameId });
         updateURLContext({ gameId });
     }
 
@@ -160,22 +152,10 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
         );
     }
 
-    openGameFromLobby(gameId: number) {
-        updateURLContext({ backToLobby: true, gameId: gameId });
-        window.scrollTo(0, 0);
-        if (this.state.openGameId !== gameId) {
-            this.setState({ openGameId: gameId });
-        } else {
-            this.forceUpdate();
-        }
-    }
-
     renderDashBoard() {
         window.history.pushState(null, null, "/");
 
-        const { isShowErrorModal, authorizeInfo, isBlockUI, openGameId } = this.state;
-        const offerGames = this.dashboardHandler.getOfferGamesIds();
-        const isRenderGames = this.dashboardHandler.shouldRenderGames(offerGames, openGameId);
+        const { isShowErrorModal, authorizeInfo, isBlockUI } = this.state;
         const isNoGameOffer = this.state.apiError?.message === ErrorCodeDictionary[NoticeErrorCode.noGameOffer];
 
         const authContextValue = {
@@ -217,8 +197,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                         }}
                     ></div>
                     <div
-                        className={`${Styles["dashboard"]} ${!isRenderGames ? "no-scroll" : ""} ${isMobileOnly ? Styles["hidden-scrollbar"] : ""
-                            }`}
+                        className={`${Styles["dashboard"]} no-scroll ${Styles["hidden-scrollbar"]}`}
                         id={"dashboard"}
                         style={{
                             zIndex: "2",

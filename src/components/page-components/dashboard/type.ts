@@ -26,7 +26,6 @@ export type DashboardState = {
     apiError: APIErrorProp;
     isBlockUI: boolean;
     queryGame: number;
-    openGameId: number;
 };
 
 export type GameOffer = {

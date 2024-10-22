@@ -1,6 +1,6 @@
 
 import { createContext, useContext } from "react";
-import { AnalyticsHelper, StorageHelper, localStorageKeys } from "../helpers";
+import { AnalyticsHelper, StorageHelper, defaultGameId, localStorageKeys } from "../helpers";
 
 export type URLContextModel = {
     token?: string;
@@ -17,7 +17,7 @@ export function parseContextFromURL(): URLContextModel | undefined {
 
     const token = params.get("token");
     const language = params.get("lang");
-    const gameId = Number(params.get("gameId")) || 1003;
+    const gameId = Number(params.get("gameId")) || defaultGameId;
     return { token, language, gameId };
 }
 

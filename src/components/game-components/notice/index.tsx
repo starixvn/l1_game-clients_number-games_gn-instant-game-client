@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { createOptionForHedgeBetGroup, getExtendMessageByErrorCode } from "../../../_shared/helpers";
 import { numberWithCommas } from "../../../_shared/helpers/number-helper";
 import { useGameContext } from "../../../_shared/react-contexts";
-import { useClickSound, useTranslator } from "../../../_shared/react-hooks";
+import { useTranslator } from "../../../_shared/react-hooks";
 import BaseDialog from "../base-dialog";
 import { ModalType } from "../base-dialog/type";
 import Styles from "./notice.module.scss";
@@ -33,8 +33,6 @@ const BaseNotice: React.FC<{
             unsubscribeGlobalMessageEvent(onCloseHandlerId as any);
         };
     }, []);
-
-    const clickSound = useClickSound();
 
     return (
         <BaseDialog type={ModalType.Center} isOpen={true} onCloseModal={onClose}>

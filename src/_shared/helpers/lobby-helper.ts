@@ -4,7 +4,9 @@ import { GameSettings } from "../../components/game-base/type";
 import { IBanner, ILobbyConfigs } from "../../components/page-components/dashboard/type";
 import { getAppSettings } from "../app-settings";
 import { buildUrlWithPath } from "./url-helper";
-const defaultGameId = 1003;
+
+export const defaultGameId = 1003;
+
 export const getBanners = (lobbyConfigs: ILobbyConfigs): IBanner[] => {
     return lobbyConfigs?.banners;
 };
@@ -18,12 +20,6 @@ export const getOfferGamesIds = (authorizeInfo: AuthorizeResponse): number[] => 
 
 export const getLobbyGameIds = (lobbyConfigs: ILobbyConfigs): number[] => {
     return lobbyConfigs?.categories?.[0]?.gameSettings?.map((setting) => setting.gameId);
-};
-
-export const getBannerIds = (lobbyConfigs: ILobbyConfigs) => {
-    const banners = lobbyConfigs?.banners;
-
-    return banners?.map((banner) => banner.gameId) ?? [];
 };
 
 export const getLobbyGamesIds = (lobbyConfigs: ILobbyConfigs, authorizeInfo: AuthorizeResponse) => {

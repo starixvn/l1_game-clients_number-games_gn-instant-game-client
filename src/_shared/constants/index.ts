@@ -4,8 +4,6 @@ export interface BetOptionData {
     betChoice: string;
     odds: number;
     totalStakes?: number;
-    players?: number;
-    percent?: number;
 }
 
 export interface RoundResultData {
@@ -96,13 +94,7 @@ export const Themes = {
     numberGame: "number-game",
 };
 
-export const sabaNumberName = "Saba.numbers";
-export const sabaClubName = "Saba.games";
-
 export const buildVersion = process?.env?.buildVersion || 111;
-export const AppTypes = {
-    mobile: 1,
-};
 
 export const confirmBet = "confirmBet";
 
@@ -115,8 +107,6 @@ export const GameIds = {
     LuckyThree: 1006,
     SicBall: 1007,
 };
-
-export const LobbyGameId = 0;
 
 export const SwiperNoSwiping = "swiper-no-swiping";
 

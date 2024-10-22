@@ -30,11 +30,6 @@ function pfReducer(state: PFContextModel, action: PFEventAction) {
     const { type, payload } = action;
     const {
         pfClientSeedSetting,
-        isShowPFVerify,
-        isShowPFSetting,
-        pfVerifyModalData,
-        isShowPFClientSeedInfo,
-        isShowPFVerification,
         ownBets
     } = payload;
 
@@ -48,27 +43,6 @@ function pfReducer(state: PFContextModel, action: PFEventAction) {
 
             StorageHelper.set(`${localStorageKeys.pfSetting}-${state.uid}-${state.gameId}`, newPfClientSeedSetting);
             newState = { pfClientSeedSetting: newPfClientSeedSetting };
-            break;
-
-        case PFEventActionType.TOGGLE_PF_VERIFY:
-            newState = { isShowPFVerify };
-            break;
-
-        case PFEventActionType.TOGGLE_PF_SETTING:
-            StorageHelper.set(`${localStorageKeys.showPFSetting}`, isShowPFSetting ? `${state.uid}-${state.gameId}` : "");
-            newState = { isShowPFSetting };
-            break;
-
-        case PFEventActionType.UPDATE_PF_VERIFY:
-            newState = { pfVerifyModalData };
-            break;
-
-        case PFEventActionType.TOGGLE_PF_CLIENT_SEED_INFO:
-            newState = { isShowPFClientSeedInfo };
-            break;
-
-        case PFEventActionType.TOGGLE_PF_VERIFICATION:
-            newState = { isShowPFVerification };
             break;
 
         case PFEventActionType.OWN_BETS:

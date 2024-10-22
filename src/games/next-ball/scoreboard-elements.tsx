@@ -6,13 +6,14 @@ import { withTranslator } from "../../components/page-components/translator";
 import { NextBallBetOptions } from "./next-ball-constants";
 import styles from "./scoreboard-elements.module.scss";
 import { NextBallResult, NextBallSettlementResult } from "./types";
-import BeadBoardIcon from "../../components/game-components/statistic/beadboard-icon";
+import HoverableBeadBoardIcon from "../../components/game-components/statistic/hoverable-beadboard-icon";
 
 export function createBeadRoadElement() {
     class Element extends BeadRoadElement<Round<NextBallResult, NextBallSettlementResult>> {
         renderElement(round: Round<NextBallResult, NextBallSettlementResult>, t?: (key: string) => string): ReactNode {
-            const character = (betChoice: string) => <BeadBoardIcon choice={betChoice} />;
-
+            const character = (betChoice: string) => (
+                <HoverableBeadBoardIcon choice={betChoice} drawId={round.result.drawId} result={round.result.ball} />
+            );
             if (!round.settlementResult) {
                 return <span className={`${styles.blink}`}></span>;
             }
@@ -64,7 +65,7 @@ export class NextBallBigRoadConverter extends Converter<NextBallSettlementResult
 export function createBigRoadElement() {
     return class Element extends BigRoadElement<NextBallSettlementResult> {
         renderElement(round: BigRoadRound<NextBallSettlementResult>): ReactNode {
-            const positive = round.data.some((result) => (result.over));
+            const positive = round.data.some((result) => result.over);
             const isBlinkNode = round.data.some((result) => result.under === undefined);
 
             if (isBlinkNode) {
@@ -77,4 +78,3 @@ export function createBigRoadElement() {
         }
     };
 }
-

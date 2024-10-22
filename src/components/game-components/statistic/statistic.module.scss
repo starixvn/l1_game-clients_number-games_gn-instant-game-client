@@ -239,3 +239,43 @@ $green_choices: tie;
         }
     }
 }
+
+.statistic-detail-container {
+    left: -3.5rem;
+    top: -0.5rem;
+    position: relative;
+
+    .items {
+        background-color: #012237;
+        color: #fff;
+        border-radius: 0.5rem;
+        border: #c5a62c 1px solid;
+        min-width: 10rem;
+        position: absolute;
+        top: -7rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 2;
+        font-size: 1.8rem;
+        .bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            padding: 0.3rem 0.5rem;
+        }
+        .arrow {
+            width: 2rem;
+            height: 1rem;
+            background-image: url("/static/images/icons/arrow-triangle.png");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            position: absolute;
+            bottom: -1rem;
+            transform: rotate(180deg);
+        }
+    }
+}

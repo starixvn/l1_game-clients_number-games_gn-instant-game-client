@@ -22,6 +22,10 @@ export type BeadBoardIconProps = {
     choice: string;
 };
 
+export type HoverableBeadBoardIconProps = BeadBoardIconProps & {
+    drawId: number;
+    result: number;
+};
 export type SideBetScoreboardProps = {
     roundHistory: Round<any, any>[];
     getDotDetails: Function;

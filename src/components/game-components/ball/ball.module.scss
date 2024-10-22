@@ -46,8 +46,14 @@ $ball-size: 5.4rem;
     text-align: center;
 }
 
+.ball-number-small {
+    @extend .ball-number;
+    font-size: 16px;
+    line-height: 22px;
+}
+
 .red {
-    --bg:url("/static/images/ball/ball-red.png?v=#{$version-image}") no-repeat;
+    --bg: url("/static/images/ball/ball-red.png?v=#{$version-image}") no-repeat;
 }
 
 .blue {
@@ -103,4 +109,10 @@ $ball-size: 5.4rem;
         width: $ball-size;
         height: $ball-size;
     }
+}
+
+.ball-small {
+    @extend .ball;
+    width: 3rem;
+    height: 3rem;
 }

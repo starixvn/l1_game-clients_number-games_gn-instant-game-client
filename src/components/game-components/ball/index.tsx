@@ -9,6 +9,11 @@ export enum BallStatus {
     LOADING,
     SHOW,
 }
+export enum BallSize {
+    SMALL = "small",
+    LARGE = "large",
+}
+
 export interface IBall {
     number: number;
     status?: BallStatus;
@@ -18,10 +23,11 @@ export interface IBall {
     roundState?: RoundState;
     incrementTotalPoint?: Function;
     delayClassName?: string;
+    size?: BallSize;
 }
 
 const Ball: FC<IBall> = (props) => {
-    const { number, delayTime, status, index, isRoundBase, roundState, incrementTotalPoint, delayClassName } = props;
+    const { number, delayTime, status, index, isRoundBase, roundState, incrementTotalPoint, delayClassName, size } = props;
 
     const color = getBallColor(number);
     const ballStyleName = `${Styles["ball-bg"]} ${Styles[color]} ${status === BallStatus.SHOW ? Styles["display-right-now"] : ""}`;
@@ -29,6 +35,8 @@ const Ball: FC<IBall> = (props) => {
     const delayStyle = delayTime > 0 ? Styles["delay"] : "";
     const blurStyle = status === BallStatus.NONE ? Styles.blur : Styles.active;
 
+    const sizeStyle = !size || size === BallSize.LARGE ? Styles[`ball`] : Styles[`ball-${size}`];
+    const numberStyle = !size || size === BallSize.LARGE ? Styles[`ball-number`] : Styles[`ball-number-${size}`];
     const [isDelayShowResult, setIsDelayShowResult] = useState<boolean>(false);
 
     useEffect(() => {
@@ -47,10 +55,10 @@ const Ball: FC<IBall> = (props) => {
     }, [delayTime, isDelayShowResult]);
 
     return (
-        <div className={`${Styles.ball} ${blurStyle} ${isRoundBase ? "" : delayStyle}`}>
+        <div className={`${sizeStyle} ${blurStyle} ${isRoundBase ? "" : delayStyle}`}>
             {isDelayShowResult && number > 0 && (
                 <div className={`${ballStyleName} ${delayClassName}`}>
-                    {<span className={`${Styles["ball-number"]} ball-index-${index + 1}`}>{number}</span>}
+                    {<span className={`${numberStyle} ball-index-${index + 1}`}>{number}</span>}
                 </div>
             )}
         </div>

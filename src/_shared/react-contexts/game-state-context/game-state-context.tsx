@@ -58,11 +58,7 @@ function gameStateReducer(state: GameStateContextModel, action: GameEventAction)
         isShowBlink,
         turnCounter,
         isUMInFirstLoad,
-        isShowBetHistory,
-        isShowBetDetail,
-        betDetailModalData,
         isPlayStartRoundAnimation,
-        isScoreboardTab
     } = payload;
 
     switch (type) {
@@ -256,27 +252,6 @@ function gameStateReducer(state: GameStateContextModel, action: GameEventAction)
             };
         }
 
-        case GameEventActionType.TOGGLE_BET_HISTORY: {
-            return {
-                ...state,
-                isShowBetHistory,
-            };
-        }
-
-        case GameEventActionType.TOGGLE_BET_DETAIL: {
-            return {
-                ...state,
-                isShowBetDetail,
-            };
-        }
-
-        case GameEventActionType.UPDATE_BET_DETAIL: {
-            return {
-                ...state,
-                betDetailModalData,
-            };
-        }
-
         case GameEventActionType.START_NEW_ROUND_ANIM: {
             return {
                 ...state,
@@ -288,13 +263,6 @@ function gameStateReducer(state: GameStateContextModel, action: GameEventAction)
             return {
                 ...state,
                 roundId,
-            };
-        }
-
-        case GameEventActionType.ACTIVE_SCORE_BOARD_TAB: {
-            return {
-                ...state,
-                isScoreboardTab,
             };
         }
 

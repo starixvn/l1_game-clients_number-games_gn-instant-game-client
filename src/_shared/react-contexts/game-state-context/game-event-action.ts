@@ -24,13 +24,8 @@ export enum GameEventActionType {
     PLAY_RESULT_ANIMATION = "PLAY_RESULT_ANIMATION",
     SHOW_RESULT_INFO_TIME_OUT = "SHOW_RESULT_INFO_TIME_OUT",
     SET_UM_FIRST_LOADING = "SET_UM_FIRST_LOADING",
-    TOGGLE_BET_HISTORY = "TOGGLE_BET_HISTORY",
-    TOGGLE_BET_DETAIL = "TOGGLE_BET_DETAIL",
-    UPDATE_BET_DETAIL = "UPDATE_BET_DETAIL",
-    TOGGLE_GAME_GUIDE = "TOGGLE_GAME_GUIDE",
     START_NEW_ROUND_ANIM = "START_NEW_ROUND_ANIM",
     ROUND_ID = "ROUND_ID",
-    ACTIVE_SCORE_BOARD_TAB = "ACTIVE_SCORE_BOARD_TAB",
 }
 
 export interface GameEventPayload {
@@ -72,14 +67,7 @@ export interface GameEventPayload {
     roundState?: RoundState;
     turnCounter?: number;
     isUMInFirstLoad?: boolean;
-    isShowBetHistory?: boolean;
-    isShowBetDetail?: boolean;
-    betDetailModalData?: {
-        drawInfo: DrawInfo;
-        betLogDetails: any[];
-    };
     isPlayStartRoundAnimation?: boolean;
-    isScoreboardTab?: boolean;
 }
 
 export interface GameEventAction {

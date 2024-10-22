@@ -27,11 +27,6 @@ export type DashboardState = {
     isBlockUI: boolean;
     queryGame: number;
     openGameId: number;
-    openGameName: string;
-    isLandscapeMode: boolean;
-    isChangedGame: boolean;
-    isChangePrevGame: boolean;
-    dashBoardHeight: number;
 };
 
 export type GameOffer = {

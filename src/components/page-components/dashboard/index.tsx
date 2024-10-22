@@ -3,7 +3,7 @@ import "../../../games/scoreboards";
 import dynamic from "next/dynamic";
 import { withRouter } from "next/router";
 import React from "react";
-import { isDesktop, isMobile, isMobileOnly } from "react-device-detect";
+import { isMobile, isMobileOnly } from "react-device-detect";
 
 import ErrorCodeDictionary, { NoticeErrorCode } from "../../../_shared/constants/error-code-dictionary";
 import { GetLocalizedErrorMessage, localStorageKeys, StorageHelper } from "../../../_shared/helpers";
@@ -44,12 +44,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
             apiError: null,
             isBlockUI: false,
             queryGame: this.props.queryGame,
-            openGameId: null,
-            openGameName: "",
-            isLandscapeMode: false,
-            isChangedGame: false,
-            isChangePrevGame: false,
-            dashBoardHeight: 0,
+            openGameId: null
         };
 
         this.closeDialog = this.closeDialog.bind(this);
@@ -59,7 +54,6 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
         this.openGame = this.openGame.bind(this);
         this.onVisibilityChange = this.onVisibilityChange.bind(this);
         this.openGameFromLobby = this.openGameFromLobby.bind(this);
-        this.changeOrientation = this.changeOrientation.bind(this);
         this.resetGameIdDashboardEvent = this.resetGameIdDashboardEvent.bind(this);
         this.updateUserBalance = this.updateUserBalance.bind(this);
 
@@ -91,13 +85,6 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
         }
     }
 
-    changeOrientation() {
-        setTimeout(() => {
-            const isLandscapeMode = window.innerHeight < window.innerWidth;
-            this.setState({ isLandscapeMode });
-        }, 100);
-    }
-
     resetGameIdDashboardEvent() {
         this.setState({ openGameId: 0 });
         this.forceUpdate();
@@ -118,8 +105,6 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
         }
 
         if (isMobile) {
-            this.changeOrientation();
-            window.addEventListener("resize", this.changeOrientation);
             window.addEventListener("touchmove", this.preventZoomBehavior, { passive: false });
         }
 
@@ -162,7 +147,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
     }
 
     renderGames() {
-        const { userStakeLevel, openGameName } = this.state;
+        const { userStakeLevel } = this.state;
         const urlContext = loadURLContext();
 
         return (
@@ -185,22 +170,13 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
         }
     }
 
-    setDashBoardStyle(isRenderGames: boolean) {
-        return isDesktop && isRenderGames ? { height: this.state.dashBoardHeight } : {};
-    }
-
     renderDashBoard() {
         window.history.pushState(null, null, "/");
 
-        const { isShowErrorModal, authorizeInfo, isBlockUI, isChangedGame, isChangePrevGame, openGameId } = this.state;
+        const { isShowErrorModal, authorizeInfo, isBlockUI, openGameId } = this.state;
         const offerGames = this.dashboardHandler.getOfferGamesIds();
         const isRenderGames = this.dashboardHandler.shouldRenderGames(offerGames, openGameId);
-        const allowSwipeGameOndDesktop = !this.props.directMode && !isMobileOnly && isRenderGames;
-
-        const allowSwipeGameOndDesktopStyle = isChangePrevGame ? Styles["slide-left"] : Styles["slide-right"];
-        const changeGameStyle = isChangedGame && allowSwipeGameOndDesktop ? allowSwipeGameOndDesktopStyle : "";
         const isNoGameOffer = this.state.apiError?.message === ErrorCodeDictionary[NoticeErrorCode.noGameOffer];
-        const renderOfferGameContainer = () => (this.renderGames());
 
         const authContextValue = {
             authorizeInfo: authorizeInfo,
@@ -241,19 +217,17 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                         }}
                     ></div>
                     <div
-                        className={`${Styles["dashboard"]} ${changeGameStyle} ${!isRenderGames ? "no-scroll" : ""} ${isMobileOnly ? Styles["hidden-scrollbar"] : ""
+                        className={`${Styles["dashboard"]} ${!isRenderGames ? "no-scroll" : ""} ${isMobileOnly ? Styles["hidden-scrollbar"] : ""
                             }`}
                         id={"dashboard"}
                         style={{
-                            ...this.setDashBoardStyle(isRenderGames),
                             zIndex: "2",
                             opacity: "1",
                         }}
                     >
                         <Header lobbyGamesIds={this.dashboardHandler.getLobbyGamesIds()} />
 
-                        {isNoGameOffer ? <></> : renderOfferGameContainer()}
-
+                        {isNoGameOffer ? <></> : this.renderGames()}
 
                         {isShowErrorModal && (
                             <div className={Styles["container-modal"]}>

@@ -199,7 +199,6 @@ const SplashScreen: React.FC = () => {
         return (
             <Dashboard
                 session={player?.session}
-                queryGame={gameId}
                 setIsUm={setIsUm}
                 directMode={isDirectMode}
                 tolgee={tolgee}

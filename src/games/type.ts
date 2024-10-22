@@ -4,5 +4,4 @@ export type Props = {
     setApiErrorMessage: Function;
     userStakeLevel: UserStakeLevel;
     updateUserStakeLevel: Function;
-    openGameId: number;
 };

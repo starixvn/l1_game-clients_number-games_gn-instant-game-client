@@ -6,6 +6,7 @@ import { getAppSettings } from "../_shared/app-settings";
 import { GameIds } from "../_shared/constants";
 
 import {
+    loadURLContext,
     SettingEventActionType,
     SystemContextProvider,
     usePlayerContext,
@@ -23,13 +24,12 @@ const NextBall = dynamic(() => import("./next-ball/page"));
 export const Games: React.FC<Props> = ({
     setApiErrorMessage,
     userStakeLevel,
-    updateUserStakeLevel,
-    openGameId
+    updateUserStakeLevel
 }) => {
     const { theme } = useTheme();
     const { session } = usePlayerContext();
     const settingDispatch = useSettingDispatch();
-    const [openingGameId, setOpeningGameId] = useState(openGameId);
+    const [openingGameId, setOpeningGameId] = useState(0);
 
     useEffect(() => {
         (async () => {
@@ -44,6 +44,9 @@ export const Games: React.FC<Props> = ({
     }, []);
 
     useEffect(() => {
+        const urlContext = loadURLContext();
+        setOpeningGameId(urlContext.gameId);
+
         const gameScriberId = registerGlobalMessageEvent(GlobalTransmitterEvent.OPEN_GAME_ID, ({ openingGameId }) => {
             setOpeningGameId(openingGameId);
         });

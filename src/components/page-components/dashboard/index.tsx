@@ -8,7 +8,6 @@ import { isMobile } from "react-device-detect";
 import ErrorCodeDictionary, { NoticeErrorCode } from "../../../_shared/constants/error-code-dictionary";
 import { GetLocalizedErrorMessage, localStorageKeys, StorageHelper } from "../../../_shared/helpers";
 import {
-    loadURLContext,
     PlayerContextProvider,
     SettingContextProvider,
     updateURLContext,
@@ -29,6 +28,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
     private readonly dashboardHandler: DashboardHandler;
     private readonly notificationHandler: NotificationHandler;
 
+
     constructor(
         props: DashboardProps,
         state: DashboardState,
@@ -43,14 +43,12 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
             isShowErrorModal: false,
             apiError: null,
             isBlockUI: false,
-            queryGame: this.props.queryGame,
         };
 
         this.closeDialog = this.closeDialog.bind(this);
         this.showApiErrorMessage = this.showApiErrorMessage.bind(this);
         this.handleUpdateUserStakeLevel = this.handleUpdateUserStakeLevel.bind(this);
         this.signOut = this.signOut.bind(this);
-        this.openGame = this.openGame.bind(this);
         this.onVisibilityChange = this.onVisibilityChange.bind(this);
         this.updateUserBalance = this.updateUserBalance.bind(this);
 
@@ -99,9 +97,6 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
         if (isMobile) {
             window.addEventListener("touchmove", this.preventZoomBehavior, { passive: false });
         }
-
-        const { queryGame } = this.props;
-        queryGame && this.openGame(queryGame);
     }
 
     private preventZoomBehavior(event: TouchEvent) {
@@ -133,29 +128,10 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
         this.notificationHandler.isKickOut && this.signOut();
     }
 
-    openGame(gameId: number) {
-        this.setState({ queryGame: gameId });
-        updateURLContext({ gameId });
-    }
-
-    renderGames() {
-        const { userStakeLevel } = this.state;
-        const urlContext = loadURLContext();
-
-        return (
-            <Games
-                setApiErrorMessage={this.notificationHandler.handleShowApiErrorMessage}
-                userStakeLevel={userStakeLevel}
-                updateUserStakeLevel={this.handleUpdateUserStakeLevel}
-                openGameId={urlContext.gameId}
-            />
-        );
-    }
-
-    renderDashBoard() {
+    render() {
         window.history.pushState(null, null, "/");
 
-        const { isShowErrorModal, authorizeInfo, isBlockUI } = this.state;
+        const { isShowErrorModal, authorizeInfo, isBlockUI, userStakeLevel } = this.state;
         const isNoGameOffer = this.state.apiError?.message === ErrorCodeDictionary[NoticeErrorCode.noGameOffer];
 
         const authContextValue = {
@@ -167,8 +143,10 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
             enableQuickBet: true,
             locale: this.props.tolgee.getLanguage(),
         };
+
         const orientation = document.querySelector('meta[name="screen-orientation"]')["content"];
         const isLandscape = orientation == "landscape";
+
         return (
             <PlayerContextProvider value={authContextValue}>
                 <SettingContextProvider>
@@ -206,7 +184,11 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                     >
                         <Header lobbyGamesIds={this.dashboardHandler.getLobbyGamesIds()} />
 
-                        {isNoGameOffer ? <></> : this.renderGames()}
+                        {isNoGameOffer ? <></> : <Games
+                            setApiErrorMessage={this.notificationHandler.handleShowApiErrorMessage}
+                            userStakeLevel={userStakeLevel}
+                            updateUserStakeLevel={this.handleUpdateUserStakeLevel}
+                        />}
 
                         {isShowErrorModal && (
                             <div className={Styles["container-modal"]}>
@@ -234,10 +216,6 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                 </SettingContextProvider>
             </PlayerContextProvider>
         );
-    }
-
-    render() {
-        return this.renderDashBoard();
     }
 }
 

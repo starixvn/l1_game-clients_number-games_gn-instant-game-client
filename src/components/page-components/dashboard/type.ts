@@ -6,7 +6,6 @@ import { UserStakeLevel } from "../../game-base/type";
 
 export type DashboardProps = {
     session: SSOResponse;
-    queryGame: number;
     setIsUm: Function;
     directMode: boolean;
     tolgee: TolgeeInstance;
@@ -25,7 +24,6 @@ export type DashboardState = {
     isShowErrorModal: boolean;
     apiError: APIErrorProp;
     isBlockUI: boolean;
-    queryGame: number;
 };
 
 export type GameOffer = {

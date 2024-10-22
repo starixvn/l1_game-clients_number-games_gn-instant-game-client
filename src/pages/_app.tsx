@@ -7,7 +7,6 @@ import { ThemeProvider } from "next-themes";
 import App, { AppContext, AppProps } from "next/app";
 import Head from "next/head";
 import { buildVersion, Themes } from "../_shared/constants";
-import { useURLContext } from "../_shared/react-contexts";
 import { tolgee } from "../_shared/tolgee";
 import { LoadingSpinner } from "../components/game-components/game-loading/loading-spinner";
 import { GoogleAnalytic } from "../components/page-components/google-analytics";

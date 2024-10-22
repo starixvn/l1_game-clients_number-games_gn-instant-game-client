@@ -66,7 +66,6 @@ export type GamePropsContext = {
     setApiErrorMessage?: Function;
     userStakeLevel?: UserStakeLevel;
     updateUserStakeLevel?: Function;
-    isJoinedGame?: boolean;
     dispatch?: (action: GameEventAction) => {};
     gameStateContextModel?: GameStateContextModel;
     systemContextModel?: SystemContextModel;
@@ -145,25 +144,6 @@ export type GameGuide = {
     gameId?: number;
 };
 
-export interface BetLogsBase<Result, SettlementResult, Odd> {
-    betLogDetails?: [];
-    betwin?: number;
-    freeBet?: boolean;
-    name?: string;
-    phien?: number;
-    result?: Result;
-    settlementResult?: SettlementResult;
-    time?: string;
-    odds?: Odd;
-}
-
-export interface WinStreakCollectorModel {
-    [key: string]: {
-        streak: number;
-        isStopStreak: boolean;
-    };
-}
-
 export interface Round<R, S> {
     roundId: number;
     result: R;
@@ -184,18 +164,6 @@ export type SuggestBet = {
     isInsufficientFunds?: boolean;
 };
 
-export type ClientSeed = {
-    name: string;
-    clientSeed: string;
-};
-
-export type ClientSeedInfo = {
-    drawId: number;
-    clientSeed: string;
-    clientSeeds: ClientSeed[];
-    mergeClientSeed: string;
-};
-
 export interface PFClientSeedSetting {
     drawId: number;
     roundId: number;
@@ -203,13 +171,6 @@ export interface PFClientSeedSetting {
     manualClientSeed: string;
     useManualClientSeed: boolean;
 }
-
-export interface PFSeverSeed {
-    drawId: number;
-    roundId: number;
-    serverSeedHash: string;
-}
-
 
 export interface DrawInfo {
     drawId: number;

@@ -1,4 +1,4 @@
-import { PFClientSeedSetting, PFResult } from "../../../../components/game-base/type";
+import { PFClientSeedSetting } from "../../../../components/game-base/type";
 
 export enum PFEventActionType {
     UPDATE_PF_CLIENT_SEED_SETTING = "UPDATE_PF_CLIENT_SEED_SETTING",
@@ -8,7 +8,6 @@ export enum PFEventActionType {
 
 export interface PFEventPayload {
     pfClientSeedSetting?: PFClientSeedSetting;
-    pfVerifyModalData?: PFResult;
     ownBets?: any;
 }
 

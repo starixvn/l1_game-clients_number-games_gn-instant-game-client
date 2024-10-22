@@ -133,15 +133,6 @@ export interface GameDurations {
     startNewRoundAnim?: number;
 }
 
-export interface RebetStorageModel {
-    [gameId: string]: RebetStorageDetail;
-}
-
-export interface RebetStorageDetail {
-    roundId: number;
-    betInfo: object;
-}
-
 export interface UserStakeLevel {
     minBet: number;
     maxBet: number;
@@ -219,26 +210,12 @@ export interface PFSeverSeed {
     serverSeedHash: string;
 }
 
-export interface PFResult {
-    drawId: number;
-    roundId: number;
-    serverSeedHash: string;
-    serverSeed: string;
-    clientSeeds: ClientSeed[];
-    mergeSeed: string;
-    mergeClientSeed: string;
-    roundResult: any[];
-    finalHash: string;
-    clientSeed: string;
-    editedMergeClientSeed: string;
-}
 
 export interface DrawInfo {
     drawId: number;
     result: any;
     settlementResult: any;
     odds: any;
-    pfResult: PFResult;
     clientSeed: string;
 }
 

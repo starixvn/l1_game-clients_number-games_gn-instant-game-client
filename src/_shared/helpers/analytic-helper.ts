@@ -8,31 +8,20 @@ export enum TrackingEvent {
 }
 
 export enum TrackingAction {
-    ToggleOn = "ToggleOn",
-    ToggleOff = "ToggleOff",
     Click = "Click",
     Show = "Show",
     Select = "Select",
     Open = "Open",
     Close = "Close",
     Change = "Change",
-    Swipe = "Swipe",
-    Create = "Create",
-    GenerateRandom = "GenerateRandom",
+    Create = "Create"
 }
 
 export enum TrackingFunction {
-    Music = "Music",
     Sound = "Sound",
     GameGuide = "GameGuide",
     PFClientSeeds = "PFClientSeeds",
     SelectChip = "SelectChip",
-    Banner = "Banner",
-    Avatar = "Avatar",
-    JoinGame = "JoinGame",
-    Nickname = "Nickname",
-    Lobby = "Lobby",
-    SwitchGame = "SwitchGame",
 }
 
 export interface TrackingParameter {
@@ -109,14 +98,6 @@ export class AnalyticsHelper {
         AnalyticsHelper.playerContext.page = params?.page_title;
         AnalyticsHelper.playerContext.language = params?.language;
         params?.page_title && AnalyticsHelper.send(commandNames.event, eventNames.page_view, params);
-
-        if (params.page_title !== TrackingFunction.Lobby) {
-            AnalyticsHelper.trackFunction({ function: TrackingFunction.JoinGame, action: TrackingAction.Show });
-        }
-    }
-
-    static trackLobby() {
-        AnalyticsHelper.trackPage({ page_title: TrackingFunction.Lobby });
     }
 
     static setUser(playerId: string, tagId?: string) {

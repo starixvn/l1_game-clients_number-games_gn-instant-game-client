@@ -4,16 +4,9 @@ import dynamic from "next/dynamic";
 import { withRouter } from "next/router";
 import React from "react";
 import { isDesktop, isMobile, isMobileOnly } from "react-device-detect";
-import SwiperCore from "swiper";
 
 import ErrorCodeDictionary, { NoticeErrorCode } from "../../../_shared/constants/error-code-dictionary";
 import { GetLocalizedErrorMessage, localStorageKeys, StorageHelper } from "../../../_shared/helpers";
-import {
-    GlobalMessageTransmitter,
-    GlobalTransmitterEvent,
-    registerGlobalMessageEvent,
-    unsubscribeGlobalMessageEvent,
-} from "../../../_shared/helpers/message-transmitter/global-transmitter";
 import {
     loadURLContext,
     PlayerContextProvider,
@@ -35,8 +28,6 @@ const BaseDialog = dynamic(() => import("../../game-components/base-dialog"));
 class Dashboard extends React.Component<DashboardProps, DashboardState> {
     private readonly dashboardHandler: DashboardHandler;
     private readonly notificationHandler: NotificationHandler;
-    private backToLobbyEventId = null;
-    private isUpdatingBalance = false;
 
     constructor(
         props: DashboardProps,
@@ -86,11 +77,10 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
             new NotificationHandler(this.props.session, this.props.setIsUm, this.updateUserBalance, this.showApiErrorMessage, this.signOut);
     }
 
-    updateUserBalance = (balance: number, setBalanceByPlaceBet = true) => {
+    updateUserBalance = (balance: number) => {
         const authorizeInfo = { ...this.state.authorizeInfo };
         if (authorizeInfo.user.red !== balance) {
             authorizeInfo.user.red = balance;
-            this.isUpdatingBalance = setBalanceByPlaceBet;
             this.setState({ authorizeInfo });
         }
     };
@@ -113,21 +103,8 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
         this.forceUpdate();
     }
 
-
-    shouldComponentUpdate(nextProps: Readonly<DashboardProps>, nextState: Readonly<DashboardState>, nextContext: any): boolean {
-        if (this.state.openGameId > 0 && this.isUpdatingBalance) {
-            this.isUpdatingBalance = false;
-            return false;
-        }
-
-        return true;
-    }
-
     async componentDidMount() {
         document.addEventListener("visibilitychange", this.onVisibilityChange);
-        this.backToLobbyEventId = registerGlobalMessageEvent(GlobalTransmitterEvent.BACK_TO_LOBBY, async () =>
-            this.resetGameIdDashboardEvent()
-        );
 
         if (this.dashboardHandler.checkIsNotOfferGame()) {
             this.setState({
@@ -158,9 +135,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
     }
 
     componentWillUnmount() {
-        unsubscribeGlobalMessageEvent(this.backToLobbyEventId);
         document.removeEventListener("visibilitychange", this.onVisibilityChange);
-
         this.notificationHandler.reset();
     }
 

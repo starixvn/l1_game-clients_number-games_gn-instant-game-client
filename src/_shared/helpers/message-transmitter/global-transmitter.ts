@@ -3,7 +3,6 @@ import messageTransmitter from ".";
 export const GlobalMessageTransmitter = messageTransmitter();
 
 export enum GlobalTransmitterEvent {
-    BACK_TO_LOBBY = "backToLobby",
     OPEN_GAME_ID = "openingGameId",
     NOTICE = "notice",
     CLOSE_DIALOG = "closeDialog",

@@ -21,14 +21,48 @@ export type ScoreboardItemProps<Round> = {
     scoreboard?: Scoreboard<Round>;
 };
 
-export class Scoreboard<Round> extends Component<ScoreboardProps<Round>> {
+type HorizontalScrollableState = {
+    isDragging: boolean;
+    startX: number;
+    scrollLeft: number;
+};
+
+type ScoreboardState = HorizontalScrollableState;
+export class Scoreboard<Round> extends Component<ScoreboardProps<Round>, ScoreboardState> {
     private scrollableDivRef: React.RefObject<HTMLDivElement>;
     private actualColumns: number;
 
     constructor(props) {
         super(props);
         this.scrollableDivRef = React.createRef();
+        this.state = { isDragging: false, scrollLeft: 0, startX: 0 };
     }
+
+    handleMouseDown = (e: React.MouseEvent) => {
+        this.setState({ isDragging: true });
+        if (this.scrollableDivRef.current) {
+            this.setState({
+                startX: e.pageX - this.scrollableDivRef.current.offsetLeft,
+                scrollLeft: this.scrollableDivRef.current.scrollLeft,
+            });
+        }
+    };
+
+    handleMouseLeave = () => {
+        this.setState({ isDragging: false });
+    };
+
+    handleMouseUp = () => {
+        this.setState({ isDragging: false });
+    };
+
+    handleMouseMove = (e: React.MouseEvent) => {
+        if (!this.state.isDragging || !this.scrollableDivRef.current) return;
+        e.preventDefault();
+        const x = e.pageX - this.scrollableDivRef.current.offsetLeft;
+        const walk = (x - this.state.startX) * 2;
+        this.scrollableDivRef.current.scrollLeft = this.state.scrollLeft - walk;
+    };
 
     static defaultProps: Partial<ScoreboardProps<unknown>> = {
         column: 17,
@@ -36,7 +70,7 @@ export class Scoreboard<Round> extends Component<ScoreboardProps<Round>> {
         className: "",
         elementClassName: "",
         block: 1,
-        blockClassName: ""
+        blockClassName: "",
     };
 
     private renderElement(round: Round, props: Attributes | HTMLAttributes<unknown>): ReactNode {
@@ -77,14 +111,24 @@ export class Scoreboard<Round> extends Component<ScoreboardProps<Round>> {
             this.scrollableDivRef.current.scrollLeft = this.scrollableDivRef.current.scrollWidth;
         }
 
-
         if (this.props.updateScoreboardColumns) {
             this.props.updateScoreboardColumns(this.actualColumns);
         }
     }
 
     getHTMLAttributes() {
-        const { rounds, className, elementClassName, block, row: originalRow, element, arrange, blockClassName, updateScoreboardColumns, ...htmlProps } = this.props;
+        const {
+            rounds,
+            className,
+            elementClassName,
+            block,
+            row: originalRow,
+            element,
+            arrange,
+            blockClassName,
+            updateScoreboardColumns,
+            ...htmlProps
+        } = this.props;
 
         return htmlProps;
     }
@@ -96,7 +140,17 @@ export class Scoreboard<Round> extends Component<ScoreboardProps<Round>> {
         const groupItems = this.createGroup(arranged);
 
         return (
-            <div ref={this.scrollableDivRef} className={`${styles.scoreboard} ${className}`} {...htmlProps} data-testid="scoreboard">
+            <div
+                ref={this.scrollableDivRef}
+                className={`${styles.scoreboard} ${className}`}
+                {...htmlProps}
+                data-testid="scoreboard"
+                onMouseDown={this.handleMouseDown}
+                onMouseLeave={this.handleMouseLeave}
+                onMouseUp={this.handleMouseUp}
+                onMouseMove={this.handleMouseMove}
+                style={{ cursor: this.state.isDragging ? "grabbing" : "grab" }}
+            >
                 {groupItems.map((items: Round[], index: number) => {
                     const rowByGroup = (originalRow / block) >> 0;
                     const parentColumn = (index / rowByGroup + 1) >> 0;

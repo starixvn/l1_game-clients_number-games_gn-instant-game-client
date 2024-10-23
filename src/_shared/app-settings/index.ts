@@ -36,5 +36,5 @@ export const getGamesPath = () => {
 export const getGameIdsSetting = () => {
     const { gameSettings } = getAppSettings();
 
-    return Object.keys(gameSettings);
+    return Object.keys(gameSettings).map((gameId) => +gameId);
 };

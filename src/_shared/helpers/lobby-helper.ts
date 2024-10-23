@@ -1,11 +1,11 @@
 import { AuthorizeResponse } from "sc-user-service-client/dist/auth";
 import { ILobbyConfigs } from "../../components/page-components/dashboard/type";
-import { getAppSettings } from "../app-settings";
+import { getGameIdsSetting } from "../app-settings";
 
 export const defaultGameId = 1003;
 
 export const getOfferGamesIds = (authorizeInfo: AuthorizeResponse): number[] => {
-    const displayMenuGameIds = getAppSettings().displayMenuGameIds;
+    const displayMenuGameIds = getGameIdsSetting();
     const offerGamesIds =
         authorizeInfo?.user?.offerGames?.map((game: any) => +game?.gameId).filter((gameId) => displayMenuGameIds.includes(gameId)) || [];
     return offerGamesIds.length > 0 ? offerGamesIds : [defaultGameId];

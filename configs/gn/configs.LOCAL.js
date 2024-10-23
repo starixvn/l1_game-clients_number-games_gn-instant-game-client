@@ -14,7 +14,6 @@ window.envConfig = {
     system: "GN",
     appType: 3,
     enableDebugLogs: true,
-    displayMenuGameIds: [1003],
     socketGatewayPath: "gateway",
     useTolgeeStatic: false,
 };

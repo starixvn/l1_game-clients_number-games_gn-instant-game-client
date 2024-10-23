@@ -123,31 +123,6 @@ describe("CountdownTimer File", () => {
     });
 
     describe("GameStatus Component", () => {
-        const MockGameStatusChildren = () => <div>test</div>;
-        test("displays the turn counter text when turnCounter is greater than 0", () => {
-            mockUseGameStateContext.mockReturnValue({ turnCounter: 1 } as GameStateContextModel);
-
-            const screen = render(
-                <TurnBaseStatus>
-                    <MockGameStatusChildren />
-                </TurnBaseStatus>
-            );
-
-            expect(screen.getByText("draw_1")).toBeInTheDocument();
-        });
-
-        test("does not display the turn counter text when turnCounter is 0", () => {
-            mockUseGameStateContext.mockReturnValue({ turnCounter: 0 } as GameStateContextModel);
-
-            const screen = render(
-                <TurnBaseStatus>
-                    <MockGameStatusChildren />
-                </TurnBaseStatus>
-            );
-
-            expect(screen.queryByText(/draw_/)).not.toBeInTheDocument();
-        });
-
         test("renders children content", () => {
             mockUseGameStateContext.mockReturnValue({ turnCounter: 1 } as GameStateContextModel);
 

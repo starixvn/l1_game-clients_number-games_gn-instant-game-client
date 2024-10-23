@@ -157,7 +157,7 @@ describe("placeBet", () => {
             const broadcastNoticeSpy = jest.spyOn(placeBetHandler, "broadcastNotice");
             const notice = {
                 gameName: "test",
-                message: "Common.not_enough_money",
+                message: "InstantGame.message_insufficient_fund",
                 duration: 2,
                 errorCode: "SB1907",
                 betChoice1: "",
@@ -187,7 +187,7 @@ describe("placeBet", () => {
             const broadcastNoticeSpy = jest.spyOn(placeBetHandler, "broadcastNotice");
             const notice = {
                 gameName: "test",
-                message: "Common.not_enough_money",
+                message: "InstantGame.message_insufficient_fund",
                 duration: 2,
                 errorCode: "SB1907",
                 betChoice1: "",
@@ -226,7 +226,7 @@ describe("placeBet", () => {
             const broadcastNoticeSpy = jest.spyOn(placeBetHandler, "broadcastNotice");
             const notice = {
                 gameName: "test",
-                message: "Common.not_enough_money",
+                message: "InstantGame.message_insufficient_fund",
                 duration: 2,
                 errorCode: "SB1907",
                 betChoice1: "",
@@ -261,7 +261,7 @@ describe("placeBet", () => {
             const broadcastNoticeSpy = jest.spyOn(placeBetHandler, "broadcastNotice");
             const notice = {
                 gameName: "test",
-                message: "Common.not_enough_money",
+                message: "InstantGame.message_insufficient_fund",
                 duration: 2,
                 errorCode: "SB1907",
                 betChoice1: "",
@@ -334,7 +334,7 @@ describe("placeBet", () => {
             const broadcastNoticeSpy = jest.spyOn(placeBetHandler, "broadcastNotice");
             const notice = {
                 gameName: "test",
-                message: "Common.message_hedge_bet",
+                message: "InstantGame.message_hedge_bet",
                 duration: 2,
                 errorCode: "SB1939",
                 betChoice1: undefined,
@@ -375,7 +375,7 @@ describe("placeBet", () => {
             const broadcastNoticeSpy = jest.spyOn(placeBetHandler, "broadcastNotice");
             const notice = {
                 gameName: "test",
-                message: "Common.message_hedge_bet",
+                message: "InstantGame.message_hedge_bet",
                 duration: 2,
                 errorCode: "SB1939",
                 betChoice1: undefined,
@@ -515,7 +515,7 @@ describe("placeBet", () => {
             const broadcastNoticeSpy = jest.spyOn(placeBetHandler, "broadcastNotice");
             const notice = {
                 gameName: "test",
-                message: "Common.message_option_maxbet",
+                message: "InstantGame.message_option_maxbet",
                 duration: 2,
                 errorCode: "SB1910",
                 betChoice1: undefined,
@@ -552,7 +552,7 @@ describe("placeBet", () => {
             const broadcastNoticeSpy = jest.spyOn(placeBetHandler, "broadcastNotice");
             const notice = {
                 gameName: "test",
-                message: "Common.message_option_maxbet",
+                message: "InstantGame.message_option_maxbet",
                 duration: 2,
                 errorCode: "SB1910",
                 betChoice1: undefined,
@@ -591,7 +591,7 @@ describe("placeBet", () => {
             const broadcastNoticeSpy = jest.spyOn(placeBetHandler, "broadcastNotice");
             const notice = {
                 gameName: "test",
-                message: "Common.message_option_maxbet",
+                message: "InstantGame.message_option_maxbet",
                 duration: 2,
                 errorCode: "SB1910",
                 betChoice1: undefined,
@@ -911,7 +911,7 @@ describe("placeBet", () => {
                 const broadcastNoticeSpy = jest.spyOn(placeBetHandler, "broadcastNotice");
                 const notice = {
                     gameName: "test",
-                    message: "Common.not_enough_money",
+                    message: "InstantGame.message_insufficient_fund",
                     duration: 2,
                     errorCode: "SB1907",
                     betChoice1: "",
@@ -950,7 +950,7 @@ describe("placeBet", () => {
                 const broadcastNoticeSpy = jest.spyOn(placeBetHandler, "broadcastNotice");
                 const notice = {
                     gameName: "test",
-                    message: "Common.not_enough_money",
+                    message: "InstantGame.message_insufficient_fund",
                     duration: 2,
                     errorCode: "SB1907",
                     betChoice1: "",

@@ -77,19 +77,14 @@
 }
 
 .over {
-    --border-radius: 3rem 1.2rem 1.2rem 1.2rem;
-    --borderTopLeft: 3rem;
-    --borderTopRight: 1.2rem;
-    --borderBottomLeft: 1.2rem;
-    --borderBottomRight: 1.2rem;
-
+    --border-radius: 4rem 4rem 1.2rem 4rem;
     .disable-layer {
         transform: scaleX(-1);
     }
 }
 
 .under {
-    --border-radius: 1.2rem 3rem 1.2rem 1.2rem;
+    --border-radius: 4rem 4rem 4rem 1.2rem;
 }
 
 .bet-option-row {

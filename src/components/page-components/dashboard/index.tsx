@@ -10,7 +10,6 @@ import { GetLocalizedErrorMessage, localStorageKeys, StorageHelper } from "../..
 import {
     PlayerContextProvider,
     SettingContextProvider,
-    updateURLContext,
 } from "../../../_shared/react-contexts";
 import { UserStakeLevel } from "../../game-base/type";
 import { ModalType } from "../../game-components/base-dialog/type";
@@ -27,7 +26,6 @@ const BaseDialog = dynamic(() => import("../../game-components/base-dialog"));
 class Dashboard extends React.Component<DashboardProps, DashboardState> {
     private readonly dashboardHandler: DashboardHandler;
     private readonly notificationHandler: NotificationHandler;
-
 
     constructor(
         props: DashboardProps,
@@ -144,43 +142,12 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
             locale: this.props.tolgee.getLanguage(),
         };
 
-        const orientation = document.querySelector('meta[name="screen-orientation"]')["content"];
-        const isLandscape = orientation == "landscape";
-
         return (
             <PlayerContextProvider value={authContextValue}>
                 <SettingContextProvider>
                     <div
-                        style={{
-                            // width: "812px",
-                            // height: "456px",
-
-                            width: `${isLandscape ? "812px" : "448px"}`,
-                            height: `${isLandscape ? "456px" : "740px"}`,
-
-                            // backgroundImage: 'url("/static/images/next-ball/mockup/landscape-scoreboard-popup.png")',
-                            backgroundImage: isLandscape
-                                ? 'url("/static/images/next-ball/mockup/landscape.jpg")'
-                                : 'url("/static/images/next-ball/mockup/portrait.jpg")',
-
-                            backgroundSize: "cover",
-                            backgroundPosition: "center",
-                            backgroundRepeat: "no-repeat",
-                            top: "0",
-                            left: "0px",
-                            position: "absolute",
-                            zIndex: "1",
-                            opacity: "0.9",
-                            display: "none",
-                        }}
-                    ></div>
-                    <div
                         className={`${Styles["dashboard"]} no-scroll ${Styles["hidden-scrollbar"]}`}
                         id={"dashboard"}
-                        style={{
-                            zIndex: "2",
-                            opacity: "1",
-                        }}
                     >
                         <Header lobbyGamesIds={this.dashboardHandler.getLobbyGamesIds()} />
 

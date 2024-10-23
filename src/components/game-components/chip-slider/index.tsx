@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Slider from "react-slick";
 import {
     PlayerContextModel,
@@ -28,7 +28,6 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
     const [slidesToShow, setSlidesToShow] = useState(3);
     const settingContext = useSettingContext();
     const chipSettings = settingContext.chipSettings;
-    const sliderRef1 = useRef(null);
 
     const [isSliding, setIsSliding] = useState(false);
     let sliderRef = null;
@@ -137,7 +136,6 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
             const chipIndex = chipValues.indexOf(selectedChip);
             sliderRef.slickGoTo(chipIndex);
             updateArrowsByChipValue(selectedChip);
-            adjustTrackWidth();
         }
 
 
@@ -145,15 +143,6 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
 
     const findChipSetting = (value) => {
         return chipSettings?.find((c) => c.value === value);
-    };
-
-    const adjustTrackWidth = () => {
-        if (sliderRef1) {
-            const track = sliderRef1.current?.querySelector('.slick-track');
-            if (track) {
-                // track.style.width = '1530px';
-            }
-        }
     };
 
     const SliderSetting = {
@@ -172,12 +161,11 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
                 oldIndex > newIndex && handleSelectChip(chipValues[newIndex + slidesToShow - 1]);
                 oldIndex < newIndex && handleSelectChip(chipValues[newIndex]);
             }
-        },
-        afterChange: () => adjustTrackWidth(),
+        }
     };
 
     return (
-        <div ref={sliderRef1} >
+        <div >
             <span
                 id="icon-chip-slider-pre"
                 className={`${Styles["icon-prev"]} ${!enabledPrevBtn && Styles["disabled"]} ${enabledQuickBet ? Styles["quick-bet"] : ""}`}

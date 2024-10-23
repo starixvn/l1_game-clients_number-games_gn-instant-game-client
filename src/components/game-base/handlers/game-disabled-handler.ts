@@ -1,4 +1,3 @@
-import { getURLContext, updateURLContext } from "../../../_shared/react-contexts";
 import { GameEventActionType } from "../../../_shared/react-contexts/game-state-context/game-event-action";
 import { GameStateContextModel } from "../../../_shared/react-contexts/game-state-context/game-state-context-model";
 import { IRoundStateHandler } from "../../round-base/round-state-handler";
@@ -14,7 +13,7 @@ export type GameDisabledHandlerProps = {
 };
 
 export class GameDisableHandler {
-    constructor(private readonly props: GameDisabledHandlerProps) {}
+    constructor(private readonly props: GameDisabledHandlerProps) { }
 
     handleUM({ um, um_message, remainingTime }, timeCounter: number) {
         const { durations, gameStateContextModel } = this.props;

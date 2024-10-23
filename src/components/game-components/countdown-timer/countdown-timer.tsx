@@ -87,7 +87,6 @@ export const SimpleTimer = ({ clientRemainingTime }) => {
 
 export const TurnBaseStatus = ({ children }) => {
     const { turnCounter } = useGameStateContext();
-    const { t } = useSNTranslate();
 
     if (turnCounter <= 0) {
         return <></>;

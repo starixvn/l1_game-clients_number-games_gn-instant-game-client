@@ -1,4 +1,4 @@
-import { DrawInfo, GameConfigs, GameDurations, RoundState } from "../../../components/game-base/type";
+import { GameConfigs, GameDurations, RoundState } from "../../../components/game-base/type";
 
 export enum GameEventActionType {
     CONNECT = "CONNECT",

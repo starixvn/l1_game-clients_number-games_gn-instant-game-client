@@ -67,7 +67,7 @@ export class AnalyticsHelper {
 
     static login(urlContext: URLContextModel) {
         try {
-            let ssoMethod = "SSO_To_Game";
+            const ssoMethod = "SSO_To_Game";
             AnalyticsHelper.ssoContext = {
                 ssoMethod,
                 gameId: urlContext.gameId,

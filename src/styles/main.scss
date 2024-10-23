@@ -85,7 +85,6 @@ html {
     --page-background-color: #061827;
     --game-background-image: url("/static/images/bg-galaxy.webp?v=#{$version-image}");
     --game-small-background-image: url("/static/images/bg-galaxy-small.webp?v=#{$version-image}");
-    --background-image: url("/static/images/bg.webp?v=#{$version-image}");
     --text-color: #2c2f3e;
 
     --border-color: #c5cbdb;
@@ -123,20 +122,6 @@ body {
 }
 
 // end
-
-.galaxy-bg {
-    background: var(--page-background-color) var(--background-image);
-    background-position: top center;
-    background-attachment: fixed;
-    background-size: cover;
-    background-repeat: no-repeat;
-
-    @media screen and (max-width: 500px) and (orientation: portrait) {
-        &:not(.register) {
-            background: var(--page-background-color);
-        }
-    }
-}
 
 body {
     padding: 0;

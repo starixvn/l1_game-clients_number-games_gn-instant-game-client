@@ -195,7 +195,6 @@ const SplashScreen: React.FC = () => {
     }
 
     if (isRenderDashboard) {
-        // document.body.classList.add("galaxy-bg");
         return (
             <Dashboard
                 session={player?.session}

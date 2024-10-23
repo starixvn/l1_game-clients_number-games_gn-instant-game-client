@@ -20,8 +20,8 @@ import { DashboardHandler } from "./handlers/dash-board-handler";
 import { NotificationHandler } from "./handlers/notification-handler";
 import { DashboardProps, DashboardState } from "./type";
 import Header from "../header";
+import Games from "../../../games/games";
 
-const Games = dynamic(() => import("../../../games/games"));
 const BaseDialog = dynamic(() => import("../../game-components/base-dialog"));
 
 class Dashboard extends React.Component<DashboardProps, DashboardState> {

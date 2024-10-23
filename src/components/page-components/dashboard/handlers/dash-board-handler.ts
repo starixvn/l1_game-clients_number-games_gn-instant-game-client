@@ -15,8 +15,4 @@ export class DashboardHandler {
         const offerGamesIds = getOfferGamesIds(this.props.authorizeResponse);
         return getLobbyGameIds(this.props.lobbyConfigs)?.filter((gameId) => offerGamesIds.includes(gameId));
     };
-
-    getOfferGamesIds = () => {
-        return getOfferGamesIds(this.props.authorizeResponse);
-    };
 }

@@ -38,14 +38,8 @@ export interface ILobbyConfigs {
     currencyGroupIds: string[];
     miniPanelGameIds: number[];
     categories: IGameCategory[];
-    banners: IBanner[];
 }
 
-export interface IBanner {
-    gameId: number;
-    displayTime: number;
-    path?: string;
-}
 
 export interface IGameCategory {
     name: any;

@@ -30,8 +30,6 @@ export const messageEventType = {
     PLAYER_BET_COUNT: "playerBetCount",
     GAME_DESTROY: "gameDestroy",
     SEND_SOCKET_MESSAGE: "sendSocketMessage",
-    TOGGLE_BETHISTORY: "toggleBetHistory",
-    BET_HISTORY: "history",
     UPDATE_PLAYER_BALANCE: "updatePlayerBalance",
     CLEAR_GAME_TIMEOUT_AND_INTERVAL: "clearGameTimeoutAndInterval",
     SEND_SOCKET_MESSAGE_WITH_CLIENT_SEED: "sendSocketMessageWithClientSeed",

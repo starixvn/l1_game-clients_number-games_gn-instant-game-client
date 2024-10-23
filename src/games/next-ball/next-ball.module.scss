@@ -24,6 +24,7 @@
     position: absolute;
     top: 2px;
 }
+
 .under:has(> .bg-bet-option) {
     @media screen and (orientation: landscape) {
         .bg-bet-option {
@@ -66,6 +67,7 @@
     @media screen and (orientation: landscape) {
         width: 23.6rem;
         height: 23rem;
+
         .disable-layer {
             background: url("/static/images/next-ball/landscape/lockbet.png?v=#{$version-image}") no-repeat;
             width: 23.6rem;
@@ -83,17 +85,11 @@
 
     .disable-layer {
         transform: scaleX(-1);
-        @media screen and (orientation: landscape) {
-        }
     }
 }
 
 .under {
     --border-radius: 1.2rem 3rem 1.2rem 1.2rem;
-    .disable-layer {
-        @media screen and (orientation: landscape) {
-        }
-    }
 }
 
 .bet-option-row {
@@ -151,6 +147,7 @@
 .highlight-winning-bg-over {
     transform: scaleX(-1);
     left: 1px;
+
     @media screen and (orientation: landscape) {
         left: 0px;
     }
@@ -180,6 +177,7 @@
 .highlight-prev-result-over {
     @extend %highlight-prev-result;
 }
+
 .highlight-prev-result-under {
     @extend %highlight-prev-result;
     transform: scaleX(-1);
@@ -210,7 +208,6 @@
     padding: 0 rem 0 1rem;
     left: 0px;
     top: 0px;
-    position: absolute;
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -250,7 +247,6 @@
         width: 102px;
         color: white;
         font-size: 2.4rem;
-        font-family: Montserrat;
         font-weight: 600;
         letter-spacing: 0.96px;
         word-wrap: break-word;
@@ -414,9 +410,6 @@
     background: linear-gradient(180deg, #84c0ff 0%, #064f9b 100%);
 }
 
-@media screen and (orientation: portrait) {
-}
-
 @media screen and (orientation: landscape) {
     .round-id-wrapper {
         top: 0.2rem;
@@ -427,10 +420,6 @@
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
-    }
-
-    .betting-zone {
-        top: -22.5rem !important;
     }
 
     .bet-option-row {
@@ -464,6 +453,7 @@
     }
 
     .betting-zone {
+        top: -22.5rem !important;
         padding: 0 1rem 0 1rem;
     }
 

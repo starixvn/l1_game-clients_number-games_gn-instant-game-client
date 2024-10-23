@@ -167,7 +167,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                             backgroundPosition: "center",
                             backgroundRepeat: "no-repeat",
                             top: "0",
-                            left: isLandscape ? "0px" : "0px",
+                            left: "0px",
                             position: "absolute",
                             zIndex: "1",
                             opacity: "0.9",

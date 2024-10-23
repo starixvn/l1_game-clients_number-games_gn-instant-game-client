@@ -22,8 +22,15 @@
 
 .bg-bet-option {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 2px;
+}
+.under:has(> .bg-bet-option) {
+    @media screen and (orientation: landscape) {
+        .bg-bet-option {
+            left: -1px;
+            width: 234px;
+        }
+    }
 }
 
 %main-option {
@@ -31,8 +38,8 @@
 
     position: relative;
     overflow: hidden;
-    width: 20.7rem;
-    height: 21.4rem;
+    width: 20.6rem;
+    height: 21.7rem;
     border: none;
 
     .btn-ripple {
@@ -42,36 +49,10 @@
 
     .disable-layer {
         position: absolute;
-        top: 0;
+        top: 2px;
         background: url("/static/images/next-ball/portrait/lockbet.png?v=#{$version-image}") no-repeat;
-        width: 20.7rem;
+        width: 20.6rem;
         height: 21.4rem;
-        opacity: 0;
-        animation: show-disabled-layer 0.3s ease-in forwards;
-    }
-}
-
-%main-option-landscape {
-    --font-bet-name: 2.4rem;
-
-    position: relative;
-    overflow: hidden;
-    width: 23.6rem;
-    height: 22.7rem;
-    border: none;
-
-    .btn-ripple {
-        border-radius: var(--border-radius);
-        z-index: 1;
-    }
-
-    .disable-layer {
-        position: absolute;
-        top: 0;
-        background: url("/static/images/next-ball/landscape/lockbet.png?v=#{$version-image}") no-repeat;
-        width: 23.7rem;
-        height: 22.8rem;
-
         opacity: 0;
         animation: show-disabled-layer 0.3s ease-in forwards;
     }
@@ -81,16 +62,19 @@
 .over {
     @extend %main-option;
     --color: white;
+
+    @media screen and (orientation: landscape) {
+        width: 23.6rem;
+        height: 23rem;
+        .disable-layer {
+            background: url("/static/images/next-ball/landscape/lockbet.png?v=#{$version-image}") no-repeat;
+            width: 23.6rem;
+            height: 22.6rem;
+        }
+    }
 }
 
-.under-landscape,
-.over-landscape {
-    @extend %main-option-landscape;
-    --color: white;
-}
-
-.over,
-.over-landscape {
+.over {
     --border-radius: 3rem 1.2rem 1.2rem 1.2rem;
     --borderTopLeft: 3rem;
     --borderTopRight: 1.2rem;
@@ -99,14 +83,16 @@
 
     .disable-layer {
         transform: scaleX(-1);
+        @media screen and (orientation: landscape) {
+        }
     }
 }
 
 .under {
     --border-radius: 1.2rem 3rem 1.2rem 1.2rem;
-
     .disable-layer {
-        // transform: scaleX(-1);
+        @media screen and (orientation: landscape) {
+        }
     }
 }
 
@@ -126,13 +112,13 @@
 
 .winning-effect {
     position: absolute;
-    top: -1px;
-    left: 1px;
+    top: 0px;
     transform: scale(0.98);
+    left: 0px;
 
     @media screen and (orientation: landscape) {
-        top: -3px;
-        left: 1px;
+        transform: scale(0.99);
+        left: 0px;
     }
 }
 
@@ -148,26 +134,26 @@
 
 .highlight-winning-bg-over,
 .highlight-winning-bg-under {
-    width: 20.7rem;
+    width: 20.6rem;
     height: 21.4rem;
     background: url("/static/images/next-ball/portrait/highlight-winning-bg.png?v=#{$version-image}") no-repeat;
-}
+    top: 1px;
 
-.highlight-winning-bg-over-landscape,
-.highlight-winning-bg-under-landscape {
-    width: 23.7rem;
-    height: 22.8rem;
-    background: url("/static/images/next-ball/landscape/highlight-winning-bg.png?v=#{$version-image}") no-repeat;
+    @media screen and (orientation: landscape) {
+        width: 23.6rem;
+        height: 22.6rem;
+        background: url("/static/images/next-ball/landscape/highlight-winning-bg.png?v=#{$version-image}") no-repeat;
+        top: 1px;
+        left: -1.5px;
+    }
 }
 
 .highlight-winning-bg-over {
     transform: scaleX(-1);
-    left: -0.1rem;
-}
-
-.highlight-winning-bg-over-landscape {
-    transform: scaleX(-1);
-    left: -0.1rem;
+    left: 1px;
+    @media screen and (orientation: landscape) {
+        left: 0px;
+    }
 }
 
 .ball-svg {
@@ -176,29 +162,28 @@
     transform: scale(0.65);
 }
 
-.highlight-prev-result-over,
-.highlight-prev-result-under {
-    width: 20.7rem;
-    height: 21rem;
+%highlight-prev-result {
+    width: 20.6rem;
+    height: 21.4rem;
     position: absolute;
     left: 0;
     top: 0;
     background-image: url("/static/images/next-ball/portrait/winning-previous.png?v=#{$version-image}");
+
+    @media screen and (orientation: landscape) {
+        width: 23.6rem;
+        height: 22.6rem;
+        background-image: url("/static/images/next-ball/landscape/winning-previous.png?v=#{$version-image}");
+    }
 }
 
-.highlight-prev-result-over-landscape,
-.highlight-prev-result-under-landscape {
-    width: 23.7rem;
-    height: 22.7rem;
-    position: absolute;
-    left: 0;
-    top: -1px;
-    background-image: url("/static/images/next-ball/landscape/winning-previous.png?v=#{$version-image}");
+.highlight-prev-result-over {
+    @extend %highlight-prev-result;
 }
-
-.highlight-prev-result-under,
-.highlight-prev-result-under-landscape {
+.highlight-prev-result-under {
+    @extend %highlight-prev-result;
     transform: scaleX(-1);
+    top: 1px;
 }
 
 .choice-info {
@@ -221,7 +206,7 @@
 
 .choice-odds-area {
     width: 20rem;
-    height: 22rem;
+    height: 21.4rem;
     padding: 0 rem 0 1rem;
     left: 0px;
     top: 0px;
@@ -308,7 +293,6 @@
     &:hover:not(.disabled) {
         cursor: pointer;
     }
-
 }
 
 .statistic {
@@ -422,23 +406,20 @@
 .custom-horizontal-scrollbar::-webkit-scrollbar {
     width: 5px;
     border-radius: 10px;
-    background-color: #3D3D3D;
+    background-color: #3d3d3d;
 }
 
 .custom-horizontal-scrollbar::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background: linear-gradient(180deg, #84C0FF 0%, #064F9B 100%);
+    background: linear-gradient(180deg, #84c0ff 0%, #064f9b 100%);
 }
 
-@media screen and (orientation: portrait) {}
+@media screen and (orientation: portrait) {
+}
 
 @media screen and (orientation: landscape) {
     .round-id-wrapper {
         top: 0.2rem;
-    }
-
-    .choice-odds-area {
-        width: 100%;
     }
 
     .result-zone-wrapper {
@@ -453,7 +434,7 @@
     }
 
     .bet-option-row {
-        height: 227px;
+        height: 230px;
     }
 
     .statistic {

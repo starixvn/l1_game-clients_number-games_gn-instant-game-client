@@ -83,16 +83,15 @@ const NextBallBetOptionsComponent = () => {
         const oddsClassName = Style[`choice-${choice}`];
         const imagePath = BetChoiceImagesData[choice][`${isPortrait ? "portrait" : "landscape"}`];
         return (
-            <div className={`${Style[`${choice}${isPortrait ? "" : "-landscape"}`]} text-white relative`}>
-                <Image
+            <div className={`${Style[`${choice}`]} text-white relative`}>
+                <img
                     key={uuidv4}
                     className={Style["bg-bet-option"]}
                     width={isPortrait ? 207 : 235}
-                    height={isPortrait ? 210 : 224}
+                    height={isPortrait ? 211 : 226}
                     src={loadingComplete[choice] ? imagePath?.src : imagePath?.blur}
                     onLoad={() => setLoadingComplete((prevState) => ({ ...prevState, [choice]: true }))}
                     alt={choice}
-                    priority={true}
                 />
                 <div className={`${Style["choice-info"]} ${choiceClassName}`}>
                     <div className={Style.stake}>{renderTotalBet(choice, Style["stake-style"])}</div>
@@ -114,7 +113,7 @@ const NextBallBetOptionsComponent = () => {
                 {isShowDisabledLayer && <div className={Style["disable-layer"]}></div>}
 
                 {isShowHighlightPrevResult({ betChoice: choice, roundState, roundHistory }) && (
-                    <div className={`${Style[`highlight-prev-result-${choice}${isPortrait ? "" : "-landscape"}`]} fade-in`}></div>
+                    <div className={`${Style[`highlight-prev-result-${choice}`]} fade-in`}></div>
                 )}
             </div>
         );

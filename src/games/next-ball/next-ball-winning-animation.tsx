@@ -17,7 +17,8 @@ const NextBallWinningAnimation: React.FC<Props> = ({ choice, roundState, settlem
     const winningHighLightResult = isHighLightWinningResult;
     const isPortrait = useScreenOrientation();
     return (
-        winningHighLightResult({ betChoice: choice, roundState, settlementResult, showResultInfo }) && (
+        winningHighLightResult({ betChoice: choice, roundState, settlementResult, showResultInfo }) && 
+        (
             <div className="d-grid">
                 <Spritesheet
                     className={`${Styles[`winning-light-anim`]} ${Styles[`anim-${choice}`]}`}
@@ -32,9 +33,7 @@ const NextBallWinningAnimation: React.FC<Props> = ({ choice, roundState, settlem
                     startAt={0}
                     endAt={29}
                 />
-                <div
-                    className={`highlight-winning-bg-anim ${Styles[`highlight-winning-bg-${choice}${isPortrait ? "" : "-landscape"}`]}`}
-                ></div>
+                <div className={`highlight-winning-bg-anim ${Styles[`highlight-winning-bg-${choice}`]}`}></div>
             </div>
         )
     );

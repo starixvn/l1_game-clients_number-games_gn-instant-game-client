@@ -184,98 +184,36 @@ $green_choices: tie;
     }
 }
 
-.scoreboard-side-bet {
-    position: relative;
-    display: inline-flex;
-    justify-content: left;
-    overflow-y: auto;
-    width: 36.7rem;
-    margin: 0 auto;
-    border-radius: 0.3rem;
-    border: 1px solid #172d41;
-    background-color: #021520;
-    padding: 0.2rem 0.5rem;
-}
-
-.scoreboard-side-bet-icon {
-    --blur: 1.75rem;
-    --box-blur: calc(0.5 * var(--blur));
-    --glow: var(--color);
-    --size: 12rem;
-
+.statistic-tooltip {
+    height: 100%;
+    width: 100%;
     display: flex;
-    flex-direction: column;
-    border-left: 1px solid #0e1d26;
-    border-top: 1px solid #0e1d26;
-
-    [class^="icon-"],
-    [class*=" icon-"] {
-        position: relative;
-        font-size: 2.6rem;
-        border-bottom: 1px solid #0e1d26;
-        width: 3.5rem;
-        height: 3.5rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    &:last-child {
-        border-right: 1px solid #0e1d26;
-
-        [class^="icon-"],
-        [class*=" icon-"] {
-            &::after {
-                content: "";
-                display: block;
-                position: absolute;
-                right: 0.4rem;
-                top: 0.3rem;
-                width: 2.5rem;
-                height: 2.5rem;
-                box-shadow: 0 0 0.7rem #fff;
-                border-radius: 50%;
-            }
-        }
-    }
+    justify-content: center;
+    align-items: center;
+    align-content: center;
 }
 
 .statistic-detail-container {
-    left: -3.7rem;
-    top: -0.5rem;
-    position: relative;
-
     .items {
         background-color: #012237;
         color: #fff;
         border-radius: 0.5rem;
-        border: #c5a62c 1px solid;
+        border: none;
         min-width: 10rem;
-        position: absolute;
-        top: -7rem;
+        position: relative;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         z-index: 2;
         font-size: 1.8rem;
+
         .bottom {
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 0.5rem;
             padding: 0.3rem 0.5rem;
-        }
-        .arrow {
-            width: 2rem;
-            height: 1rem;
-            background-image: url("/static/images/icons/arrow-triangle.png");
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            position: absolute;
-            bottom: -1rem;
-            transform: rotate(180deg);
         }
     }
 }

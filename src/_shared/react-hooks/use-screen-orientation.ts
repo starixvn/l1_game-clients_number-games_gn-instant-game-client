@@ -5,6 +5,7 @@ export function isPortrait(): boolean {
     return isPortrait;
 }
 
+
 export const useScreenOrientation = () => {
     return isPortrait();
 };

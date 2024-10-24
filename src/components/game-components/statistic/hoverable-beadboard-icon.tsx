@@ -1,13 +1,12 @@
-import { useState } from "react";
-import { useGameContext, usePlayerContext } from "../../../_shared/react-contexts";
+import { useGameContext } from "../../../_shared/react-contexts";
 import { HoverableBeadBoardIconProps } from "./types";
 import Styles from "./statistic.module.scss";
 import Ball, { BallSize, BallStatus } from "../ball";
-import { useScreenOrientation, useTranslator } from "../../../_shared/react-hooks";
+import { useTranslator } from "../../../_shared/react-hooks";
 import BeadBoardIcon from "./beadboard-icon";
+import { BeadBoardTooltip } from "./statistic-styles";
+
 const HoverableBeadBoardIcon: React.FC<HoverableBeadBoardIconProps> = ({ choice, drawId, result }) => {
-    const [isHovered, setIsHovered] = useState(false);
-    const isPortrait = useScreenOrientation();
     const { tolgeeNamespace } = useGameContext();
     const { t } = useTranslator([tolgeeNamespace]);
 
@@ -15,9 +14,18 @@ const HoverableBeadBoardIcon: React.FC<HoverableBeadBoardIconProps> = ({ choice,
         return null;
     }
 
+    const arrowColor = ' #c5a62c';
+
     return (
-        <div onMouseOver={() => setIsHovered(true)} onMouseOut={() => setIsHovered(false)}>
-            {isHovered && !isPortrait && (
+        <div data-tooltip-id={`statistic-tooltip-${drawId}`}
+            data-tooltip-offset={6}
+            className={Styles["statistic-tooltip"]}
+        >
+            <BeadBoardIcon choice={choice} />
+            <BeadBoardTooltip
+                id={`statistic-tooltip-${drawId}`}
+                arrowColor={arrowColor}
+            >
                 <div className={Styles["statistic-detail-container"]}>
                     <div className={Styles["items"]}>
                         <div className={Styles["draw"]}>#{drawId}</div>
@@ -27,11 +35,9 @@ const HoverableBeadBoardIcon: React.FC<HoverableBeadBoardIconProps> = ({ choice,
                                 {<Ball number={result} delayTime={0} status={BallStatus.SHOW} size={BallSize.SMALL} />}
                             </div>
                         </div>
-                        <div className={Styles["arrow"]}></div>
                     </div>
                 </div>
-            )}
-            <BeadBoardIcon choice={choice} />
+            </BeadBoardTooltip>
         </div>
     );
 };

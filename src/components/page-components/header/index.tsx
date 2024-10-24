@@ -18,7 +18,6 @@ const Header: React.FC<HeaderProps> = ({
     const [initialSlide, setInitialSlide] = useState(4);
     const swiperContainerRef = useRef(null);
 
-
     useEffect(() => {
         const savedSlideIndex = localStorage.getItem('currentSlide');
         if (savedSlideIndex !== null) {
@@ -56,17 +55,13 @@ const Header: React.FC<HeaderProps> = ({
                     <Swiper
                         initialSlide={initialSlide}
                         onSlideChange={handleSlideChange}
-                        // onSwiper={setThumbsSwiper}
-                        // spaceBetween={10}
-
-                        // slidesPerView={4}
                         slidesPerView="auto"
                         freeMode={true}
                         watchSlidesProgress={true}
                         modules={[FreeMode, Navigation]}
                         className={Styles["swiper"]}
                     >
-                        {lobbyGamesIds.map((gameId) => {
+                        {lobbyGamesIds?.map((gameId) => {
                             const swipeItemId = `SwiperSlide-${gameId}`;
                             return <SwiperSlide style={{ width: 'auto', display: 'flex', justifyContent: 'center' }} className={Styles["swiper-slide"]} key={swipeItemId} id={swipeItemId}>
                                 <NavBarGameName gameId={gameId} />

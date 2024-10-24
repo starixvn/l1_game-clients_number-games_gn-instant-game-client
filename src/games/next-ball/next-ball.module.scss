@@ -78,6 +78,7 @@
 
 .over {
     --border-radius: 4rem 4rem 1.2rem 4rem;
+
     .disable-layer {
         transform: scaleX(-1);
     }
@@ -432,8 +433,8 @@
     }
 
     .scoreboard-block {
-        width: 2.5rem;
-        height: 2.5rem;
+        width: 100%;
+        height: 100%;
     }
 
     .scoreboard {

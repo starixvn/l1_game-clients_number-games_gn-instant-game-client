@@ -56,12 +56,16 @@
     .light {
         position: absolute;
         top: 10.1rem;
+        left: 6%;
         width: 35.9rem;
         height: 6.9rem;
         opacity: 0;
         z-index: 3;
         background: url("/static/images/new-round-transition-light.png?v=#{$version-image}") no-repeat;
         animation: show-light var(--anim-light-duration) var(--anim-light-delay) cubic-bezier(0.8, 0.33, 0.58, 1) forwards;
+        @media screen and (orientation: landscape) {
+            left: 26%;
+        }
     }
 }
 

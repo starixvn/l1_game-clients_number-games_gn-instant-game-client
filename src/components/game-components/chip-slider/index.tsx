@@ -8,7 +8,7 @@ import {
     useSystemContext,
     useSystemDispatch,
 } from "../../../_shared/react-contexts";
-import { useSelectChipSound } from "../../../_shared/react-hooks";
+import { useScreenOrientation, useSelectChipSound } from "../../../_shared/react-hooks";
 import { GameConfigs, UserStakeLevel } from "../../game-base/type";
 import { Chip } from "./chip";
 import Styles from "./chip-slider.module.scss";
@@ -20,7 +20,7 @@ let isSwipe = true;
 export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: UserStakeLevel }> = ({ gameConfigs, userStakeLevel }) => {
     const systemContext = useSystemContext();
     const dispatch = useSystemDispatch();
-    const { authorizeInfo, enableQuickBet } = (usePlayerContext() as PlayerContextModel);
+    const { authorizeInfo, enableQuickBet } = usePlayerContext() as PlayerContextModel;
     const enabledQuickBet = authorizeInfo?.user?.settings.quickBet || enableQuickBet;
     const { selectedChip } = systemContext;
     const [enabledPrevBtn, setEnabledPrevBtn] = useState(false);
@@ -28,7 +28,7 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
     const [slidesToShow, setSlidesToShow] = useState(3);
     const settingContext = useSettingContext();
     const chipSettings = settingContext.chipSettings;
-
+    const isPortrait = useScreenOrientation();
     const [isSliding, setIsSliding] = useState(false);
     let sliderRef = null;
     const playClickChip = useSelectChipSound();
@@ -48,9 +48,9 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
 
         checkOrientation();
 
-        window.addEventListener('resize', checkOrientation);
+        window.addEventListener("resize", checkOrientation);
 
-        return () => window.removeEventListener('resize', checkOrientation);
+        return () => window.removeEventListener("resize", checkOrientation);
     }, []);
 
     const onClickChip = (chipValue: number) => {
@@ -81,6 +81,31 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
                 },
             });
             playClickChip();
+            adjustSlideChipListUI(chipValue);
+        }
+    };
+
+    const adjustSlideChipListUI = (chipValue: number) => {
+        if (chipValues.length < 7) {
+            return;
+        }
+        const chipIndex = chipValues.indexOf(chipValue);
+        const slickTrack = document.getElementsByClassName("slick-track")?.[0] as HTMLElement;
+        const addLastCss = () => {
+            if (!slickTrack.classList.contains("nearly-last")) {
+                slickTrack.classList.add("nearly-last");
+            }
+        };
+        const removeLastCss = () => {
+            if (slickTrack.classList.contains("nearly-last")) {
+                slickTrack.classList.remove("nearly-last");
+            }
+        };
+        const nearlyLastChip = isPortrait ? 3 : 6;
+        if (chipIndex > chipValues.length - nearlyLastChip) {
+            addLastCss();
+        } else {
+            removeLastCss();
         }
     };
 
@@ -137,8 +162,6 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
             sliderRef.slickGoTo(chipIndex);
             updateArrowsByChipValue(selectedChip);
         }
-
-
     }, []);
 
     const findChipSetting = (value) => {
@@ -161,11 +184,11 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
                 oldIndex > newIndex && handleSelectChip(chipValues[newIndex + slidesToShow - 1]);
                 oldIndex < newIndex && handleSelectChip(chipValues[newIndex]);
             }
-        }
+        },
     };
 
     return (
-        <div >
+        <div>
             <span
                 id="icon-chip-slider-pre"
                 className={`${Styles["icon-prev"]} ${!enabledPrevBtn && Styles["disabled"]} ${enabledQuickBet ? Styles["quick-bet"] : ""}`}

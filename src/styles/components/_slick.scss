@@ -15,16 +15,20 @@
     justify-content: center;
 }
 
-.slick-list {
-    margin: 0 0.8rem;
+.slick-track {
+    left: 15px;
     @media screen and (orientation: landscape) {
-        margin: 0 2.5rem;
+        left: 25px;
     }
 }
 
-.slick-current {
-    margin: 0 0.1rem;
+.slick-track.nearly-last {
+    left: 45px;
     @media screen and (orientation: landscape) {
-        margin: 0 0.2rem;
+        left: 90px;
     }
+}
+
+.slick-list {
+    margin-left: 1rem;
 }

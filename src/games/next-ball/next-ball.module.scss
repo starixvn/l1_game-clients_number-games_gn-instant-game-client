@@ -23,6 +23,10 @@
 .bg-bet-option {
     position: absolute;
     top: 2px;
+
+    @media screen and (orientation: landscape) {
+        // transform: scale(0.99);
+    }
 }
 
 .under:has(> .bg-bet-option) {
@@ -105,12 +109,13 @@
 .winning-effect {
     position: absolute;
     top: 0px;
-    transform: scale(0.98);
     left: 0px;
 
     @media screen and (orientation: landscape) {
-        transform: scale(0.99);
-        left: 0px;
+        transform: scaleY(0.99);
+        height: 100%;
+        top: -3px;
+        left: 1px;
     }
 }
 
@@ -136,9 +141,10 @@
         height: 22.6rem;
         background: url("/static/images/next-ball/landscape/highlight-winning-bg.png?v=#{$version-image}") no-repeat;
         top: 0px;
-        left: -1.5px;
+        // left: -1.5px;
     }
 }
+
 
 .highlight-winning-bg-over {
     transform: scaleX(-1);
@@ -167,6 +173,7 @@
         width: 23.6rem;
         height: 22.6rem;
         background-image: url("/static/images/next-ball/landscape/winning-previous.png?v=#{$version-image}");
+
     }
 }
 
@@ -196,6 +203,10 @@
             justify-content: end;
         }
     }
+
+    @media screen and (orientation: landscape) {
+        height: 100%;
+    }
 }
 
 .choice-odds-area {
@@ -212,6 +223,7 @@
 
     @media screen and (orientation: landscape) {
         height: 23rem;
+        width: 100%;
     }
 
     .bet-option {

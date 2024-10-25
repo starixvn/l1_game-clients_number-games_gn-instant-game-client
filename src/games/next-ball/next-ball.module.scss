@@ -140,13 +140,13 @@
 .highlight-winning-bg-under {
     width: 20.6rem;
     height: 21.4rem;
-    background: url("/static/images/next-ball/portrait/highlight-winning-bg.png?v=#{$version-image}") no-repeat;
+    background: url("/static/images/next-ball/portrait/highlight-winning-bg.webp?v=#{$version-image}") no-repeat;
     top: 1px;
 
     @media screen and (orientation: landscape) {
         width: 23.6rem;
         height: 22.6rem;
-        background: url("/static/images/next-ball/landscape/highlight-winning-bg.png?v=#{$version-image}") no-repeat;
+        background: url("/static/images/next-ball/landscape/highlight-winning-bg.webp?v=#{$version-image}") no-repeat;
 
     }
 }

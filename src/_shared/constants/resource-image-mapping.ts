@@ -13,9 +13,7 @@ export const getPathImageGameId = (gameId: number) => {
     if (!gameImagePath) {
         return [];
     }
-
-    const devicePixelRatioSuffix = getDevicePixelRatio() > 1 ? "/2x" : "/1x";
-    return [gameImagePath, `${gameImagePath}${devicePixelRatioSuffix}`, ...optionalGamePaths];
+    return [gameImagePath, `${gameImagePath}/portrait`, `${gameImagePath}/landscape`, ...optionalGamePaths];
 };
 
 

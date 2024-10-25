@@ -22,7 +22,7 @@ const NextBallWinningAnimation: React.FC<Props> = ({ choice, roundState, settlem
             <div className="d-grid">
                 <Spritesheet
                     className={`${Styles[`winning-light-anim`]} ${Styles[`anim-${choice}`]}`}
-                    image={`/static/images/next-ball/${isPortrait ? "portrait" : "landscape"}/highlight-winning.png?v=${buildVersion}`}
+                    image={`/static/images/next-ball/${isPortrait ? "portrait" : "landscape"}/highlight-winning.webp?v=${buildVersion}`}
                     widthFrame={isPortrait ? 217 : 246}
                     isResponsive
                     heightFrame={isPortrait ? 224 : 236}

@@ -15,20 +15,39 @@
     justify-content: center;
 }
 
-.slick-track {
-    left: 15px;
-    @media screen and (orientation: landscape) {
-        left: 25px;
-    }
-}
-
 .slick-track.nearly-last {
     left: 45px;
     @media screen and (orientation: landscape) {
-        left: 90px;
+        left: 96px;
     }
+    transition: all 0.7s ease;
+}
+
+.slick-track {
+    left: 0;
+    transition: all 0.7s ease;
+}
+
+.slick-track.nearly-first {
+    left: 15px;
+    transition: all 0.7s ease;
 }
 
 .slick-list {
     margin-left: 1rem;
 }
+
+.slick-active:has(.selected) {
+    margin: 0 0.5rem;
+    @media screen and (orientation: landscape) {
+        margin: 0 1rem;
+    }
+}
+
+// .slick-active {
+//     margin:0 0.15rem;
+
+//     @media screen and (orientation: landscape) {
+//         margin: 0 0.2rem;
+//     }
+// }

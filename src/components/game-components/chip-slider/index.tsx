@@ -90,22 +90,33 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
             return;
         }
         const chipIndex = chipValues.indexOf(chipValue);
+
         const slickTrack = document.getElementsByClassName("slick-track")?.[0] as HTMLElement;
-        const addLastCss = () => {
-            if (!slickTrack.classList.contains("nearly-last")) {
-                slickTrack.classList.add("nearly-last");
+
+        const addCss = (className) => {
+            if (!slickTrack.classList.contains(className)) {
+                slickTrack.classList.add(className);
             }
         };
-        const removeLastCss = () => {
-            if (slickTrack.classList.contains("nearly-last")) {
-                slickTrack.classList.remove("nearly-last");
+        const removeCss = (className) => {
+            if (slickTrack.classList.contains(className)) {
+                slickTrack.classList.remove(className);
             }
         };
+
+        const nearlyFirstChip = isPortrait ? 2 : 5;
+
+        if (chipIndex < nearlyFirstChip) {
+            addCss("nearly-first");
+        } else {
+            removeCss("nearly-first");
+        }
+
         const nearlyLastChip = isPortrait ? 3 : 6;
         if (chipIndex > chipValues.length - nearlyLastChip) {
-            addLastCss();
+            addCss("nearly-last");
         } else {
-            removeLastCss();
+            removeCss("nearly-last");
         }
     };
 

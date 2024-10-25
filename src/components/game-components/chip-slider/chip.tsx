@@ -19,7 +19,7 @@ export const Chip: React.FC<{ value: number; onClickChip: Function; text: string
     const [loadingComplete, setLoadingComplete] = useState(false);
 
     const getChipClassName = () => {
-        return `${Styles["chip-container"]} ${selectedChip === value ? Styles["selected"] : ""}`;
+        return `${Styles["chip-container"]} ${selectedChip === value ? `${Styles["selected"]} selected` : ""}`;
     };
 
     const getDefaultChipText = () => {

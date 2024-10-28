@@ -84,7 +84,7 @@ html {
 [data-theme="light"] {
     --page-background-color: #061827;
     --game-background-image: url("/static/images/bg-galaxy.webp?v=#{$version-image}");
-    --game-small-background-image: url("/static/images/bg-galaxy-small.webp?v=#{$version-image}");
+    --game-background-image-landscape: url("/static/images/bg-galaxy-landscape.webp?v=#{$version-image}");
     --text-color: #2c2f3e;
 
     --border-color: #c5cbdb;

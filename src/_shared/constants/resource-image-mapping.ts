@@ -5,7 +5,7 @@ export const getDevicePixelRatio = () => {
     return (typeof window !== "undefined" && window?.devicePixelRatio) || 0;
 };
 
-export const getPathImageGameId = (gameId: number) => {
+export const getPathImageGameId = (gameId: number, isPortrait: boolean) => {
     const gameSettings = getGameSettings(gameId);
     const gameImagePath = gameSettings?.gameResourceConfigs?.path || "";
     const optionalGamePaths = gameSettings?.gameResourceConfigs?.optionalPaths || [];
@@ -13,7 +13,8 @@ export const getPathImageGameId = (gameId: number) => {
     if (!gameImagePath) {
         return [];
     }
-    return [gameImagePath, `${gameImagePath}/portrait`, `${gameImagePath}/landscape`, ...optionalGamePaths];
+    const gameImageFolderByOrientation = isPortrait? "portrait":"landscape";
+    return [gameImagePath, `${gameImagePath}/${gameImageFolderByOrientation}`, ...optionalGamePaths];
 };
 
 

@@ -13,11 +13,12 @@ const DEFAULT_IMG_PATH = "/static/images/";
 interface RequestBody {
     gameId: number;
     locale: string;
+    isPortrait: boolean;
 }
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<any[]>) {
-    const { gameId, locale } = req.body as RequestBody;
-    const pathsImg = getPathsImg(gameId, locale);
+    const { gameId, locale, isPortrait } = req.body as RequestBody;
+    const pathsImg = getPathsImg(gameId, locale, isPortrait);
     const cacheKey = `${gameId}-${buildVersion}`;
 
     if (!Array.isArray(pathsImg)) {
@@ -62,12 +63,13 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<any[]>
     return res.status(200).json(imageFiles);
 }
 
-const getPathsImg = (gameId: number, currentLocale: string) => {
+const getPathsImg = (gameId: number, currentLocale: string, isPortrait: boolean) => {
     if (gameId > 0) {
+
         if (gameId === GameIds.SicBall) {
-            return [...getPathImageGameId(gameId), ...pathImageMapping[GameIds.SicBall]];
+            return [...getPathImageGameId(gameId, isPortrait), ...pathImageMapping[GameIds.SicBall]];
         }
-        return [...getPathImageGameId(gameId), ...pathImageMapping.game];
+        return [...getPathImageGameId(gameId, isPortrait), ...pathImageMapping.game];
     }
 
     return [];

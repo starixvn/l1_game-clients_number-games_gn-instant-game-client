@@ -49,13 +49,16 @@ const PreloadResources: React.FC<{
         const [loadedImages, setLoadedImages] = useState<any>(new Set());
         const [startTime, setStartTime] = useState(null);
         const [images, setImages] = useState<string[]>([]);
+        const isPortrait = window.innerHeight > window.innerWidth;
+
         let timeoutWithoutPreloadResource: NodeJS.Timeout;
 
         const fetchImages = async () => {
             try {
                 const response = await axios.post("/api/preload-images", {
                     gameId,
-                    locale
+                    locale,
+                    isPortrait
                 });
 
                 const imagesPath = response?.data || [];

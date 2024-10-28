@@ -44,6 +44,7 @@ import { GameStateHandler, IGameStateHandler } from "./handlers/game-state-handl
 import { PFWrapper } from "./handlers/pf-wrapper/pf-wrapper";
 import { PlaceBetHandlerWrapper } from "./handlers/place-bet-wrapper/place-bet-handler-wrapper";
 import { GameBaseHandlers, GameBaseProps, GameBaseState, RoundState } from "./type";
+import BetConfirmDialog from "../game-components/bet-confirm-dialog";
 
 abstract class GameBase<P extends GameBaseProps, S extends GameBaseState> extends React.PureComponent<P, S> {
     protected socket: Socket;
@@ -528,6 +529,10 @@ abstract class GameBase<P extends GameBaseProps, S extends GameBaseState> extend
         return <BetSettings gameConfigs={gameConfigs} userStakeLevel={userStakeLevel} />;
     }
 
+    renderConfirmDialog() {
+        return <BetConfirmDialog />;
+    }
+
     renderStatistic() {
         return <></>;
     }
@@ -559,6 +564,7 @@ abstract class GameBase<P extends GameBaseProps, S extends GameBaseState> extend
                         <PlaceBetProvider>
                             <PlaceBetHandlerWrapper handler={this.placeBetHandler} signOut={(this.context as PlayerContextModel)?.signOut}>
                                 {this.renderBettingBlock()}
+                                {this.renderConfirmDialog()}
                             </PlaceBetHandlerWrapper>
                         </PlaceBetProvider>
                         {this.renderStatistic()}

@@ -72,7 +72,6 @@
         width: 23.6rem;
         height: 23rem;
 
-
         .disable-layer {
             background: url("/static/images/next-ball/landscape/lockbet.png?v=#{$version-image}") no-repeat;
             width: 23.6rem;
@@ -95,7 +94,7 @@
 
     .disable-layer {
         transform: scaleY(1.01);
-        top: 1px
+        top: 1px;
     }
 }
 
@@ -147,10 +146,8 @@
         width: 23.6rem;
         height: 22.6rem;
         background: url("/static/images/next-ball/landscape/highlight-winning-bg.webp?v=#{$version-image}") no-repeat;
-
     }
 }
-
 
 .highlight-winning-bg-over {
     transform: scaleX(-1);
@@ -179,7 +176,6 @@
         width: 23.6rem;
         height: 22.6rem;
         background-image: url("/static/images/next-ball/landscape/winning-previous.png?v=#{$version-image}");
-
     }
 }
 
@@ -244,6 +240,10 @@
         width: 100%;
         flex-direction: row;
         justify-content: center;
+        @media screen and (orientation: landscape) {
+            justify-content: space-around;
+        }
+
         align-items: center;
         gap: 2px;
         display: flex;
@@ -275,10 +275,6 @@
         gap: 10px;
         display: flex;
         padding-left: 1.5rem;
-
-        @media screen and (orientation: landscape) {
-            padding-left: 3rem;
-        }
     }
 
     .bet-info {
@@ -440,7 +436,6 @@
         left: 50%;
         transform: translateX(-50%);
     }
-
 
     .bet-option-row {
         height: 230px;

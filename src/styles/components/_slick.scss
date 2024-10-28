@@ -20,17 +20,14 @@
     @media screen and (orientation: landscape) {
         left: 96px;
     }
-    transition: all 0.7s ease;
 }
 
 .slick-track {
     left: 0;
-    transition: all 0.7s ease;
 }
 
 .slick-track.nearly-first {
     left: 15px;
-    transition: all 0.7s ease;
 }
 
 .slick-list {

@@ -23,19 +23,6 @@
 .bg-bet-option {
     position: absolute;
     top: 2px;
-
-    @media screen and (orientation: landscape) {
-        // transform: scale(0.99);
-    }
-}
-
-.under:has(> .bg-bet-option) {
-    @media screen and (orientation: landscape) {
-        .bg-bet-option {
-            left: -1px;
-            width: 234px;
-        }
-    }
 }
 
 %main-option {
@@ -95,6 +82,13 @@
     .disable-layer {
         transform: scaleY(1.01);
         top: 1px;
+        @media screen and (orientation: landscape) {
+            transform: scaleY(1.04);
+            transform: scaleX(1.04);
+            left: 1px;
+            top: 1.6px;
+            border-radius: 3.5rem 0rem 5rem 1rem;
+        }
     }
 }
 
@@ -118,9 +112,8 @@
     left: 0px;
 
     @media screen and (orientation: landscape) {
-        transform: scaleY(0.99);
+        transform: scaleY(1);
         height: 100%;
-        top: -3px;
         left: 1px;
     }
 }
@@ -173,6 +166,7 @@
     background-image: url("/static/images/next-ball/portrait/winning-previous.png?v=#{$version-image}");
 
     @media screen and (orientation: landscape) {
+        scale: 1.01;
         width: 23.6rem;
         height: 22.6rem;
         background-image: url("/static/images/next-ball/landscape/winning-previous.png?v=#{$version-image}");
@@ -186,7 +180,6 @@
 .highlight-prev-result-under {
     @extend %highlight-prev-result;
     transform: scaleX(-1);
-    top: 1px;
 }
 
 .choice-info {

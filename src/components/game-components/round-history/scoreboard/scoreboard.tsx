@@ -149,7 +149,6 @@ export class Scoreboard<Round> extends Component<ScoreboardProps<Round>, Scorebo
                 onMouseLeave={this.handleMouseLeave}
                 onMouseUp={this.handleMouseUp}
                 onMouseMove={this.handleMouseMove}
-                style={{ cursor: this.state.isDragging ? "grabbing" : "grab" }}
             >
                 {groupItems.map((items: Round[], index: number) => {
                     const rowByGroup = (originalRow / block) >> 0;

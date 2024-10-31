@@ -112,8 +112,8 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
             removeCss("nearly-first");
         }
 
-        const nearlyLastChip = isPortrait ? 3 : 6;
-        if (chipIndex > chipValues.length - nearlyLastChip) {
+        const nearlyLastChip = isPortrait ? 3 : 5;
+        if (chipIndex >= nearlyLastChip) {
             addCss("nearly-last");
         } else {
             removeCss("nearly-last");

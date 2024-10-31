@@ -91,7 +91,7 @@ export const languageNameMapper = { en: "English", vi: "Tiếng Việt" };
 
 export const Themes = {
     light: "light",
-    numberGame: "number-game",
+    numberGame: "number-game-instant",
 };
 
 export const buildVersion = process?.env?.buildVersion || 111;

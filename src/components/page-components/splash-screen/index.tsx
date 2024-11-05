@@ -208,11 +208,15 @@ const SplashScreen: React.FC = () => {
 
     return (
         <>
-            <Logo
-                onLoad={() => {
-                    setIsDoneLoadLogo(true);
-                }}
-            />
+            {!locale ? (
+                <></>
+            ) : (
+                <Logo
+                    onLoad={() => {
+                        setIsDoneLoadLogo(true);
+                    }}
+                />
+            )}
             {isDoneLoadLogo && !!locale && (
                 <PreloadResources
                     setIsDonePreload={setIsDonePreloadResources}

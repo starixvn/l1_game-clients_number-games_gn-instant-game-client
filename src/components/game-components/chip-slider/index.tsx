@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import Slider from "react-slick";
 import {
     PlayerContextModel,
@@ -18,6 +18,7 @@ const SlidingTimeInMillisecond = 100;
 let isSwipe = true;
 
 export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: UserStakeLevel }> = ({ gameConfigs, userStakeLevel }) => {
+    const isPortrait = useScreenOrientation();
     const systemContext = useSystemContext();
     const dispatch = useSystemDispatch();
     const { authorizeInfo, enableQuickBet } = usePlayerContext() as PlayerContextModel;
@@ -25,13 +26,20 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
     const { selectedChip } = systemContext;
     const [enabledPrevBtn, setEnabledPrevBtn] = useState(false);
     const [enabledNextBtn, setEnabledNextBtn] = useState(true);
-    const [slidesToShow, setSlidesToShow] = useState(3);
+    const [slidesToShow, setSlidesToShow] = useState(isPortrait ? 4 : 7);
     const settingContext = useSettingContext();
     const chipSettings = settingContext.chipSettings;
-    const isPortrait = useScreenOrientation();
     const [isSliding, setIsSliding] = useState(false);
+
+    const firstSlideRef = useRef(null);
+    const [slickListStyle, setSlickListStyle] = useState({
+        paddingLeft: 0,
+        paddingRight: 0,
+    });
+
     let sliderRef = null;
     const playClickChip = useSelectChipSound();
+
     const chipValues = useMemo(() => {
         if (gameConfigs && userStakeLevel) {
             const maxBet = Math.min(userStakeLevel.maxBet, gameConfigs.maxBet);
@@ -43,7 +51,7 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
 
     useEffect(() => {
         const checkOrientation = () => {
-            setSlidesToShow(window.innerHeight < window.innerWidth ? 6 : 3);
+            setSlidesToShow(isPortrait ? 4 : 7);
         };
 
         checkOrientation();
@@ -81,42 +89,6 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
                 },
             });
             playClickChip();
-            adjustSlideChipListUI(chipValue);
-        }
-    };
-
-    const adjustSlideChipListUI = (chipValue: number) => {
-        if (chipValues.length < 7) {
-            return;
-        }
-        const chipIndex = chipValues.indexOf(chipValue);
-
-        const slickTrack = document.getElementsByClassName("slick-track")?.[0] as HTMLElement;
-
-        const addCss = (className) => {
-            if (!slickTrack.classList.contains(className)) {
-                slickTrack.classList.add(className);
-            }
-        };
-        const removeCss = (className) => {
-            if (slickTrack.classList.contains(className)) {
-                slickTrack.classList.remove(className);
-            }
-        };
-
-        const nearlyFirstChip = isPortrait ? 2 : 5;
-
-        if (chipIndex < nearlyFirstChip) {
-            addCss("nearly-first");
-        } else {
-            removeCss("nearly-first");
-        }
-
-        const nearlyLastChip = isPortrait ? 3 : 5;
-        if (chipIndex >= nearlyLastChip) {
-            addCss("nearly-last");
-        } else {
-            removeCss("nearly-last");
         }
     };
 
@@ -166,25 +138,27 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
         chipValues && updateArrowsByChipValue(selectedChip);
     }, [chipValues, selectedChip]);
 
-    useEffect(() => {
-        if (sliderRef) {
-            isSwipe = false;
-            const chipIndex = chipValues.indexOf(selectedChip);
-            sliderRef.slickGoTo(chipIndex);
-            updateArrowsByChipValue(selectedChip);
-        }
-    }, []);
-
     const findChipSetting = (value) => {
         return chipSettings?.find((c) => c.value === value);
     };
 
+    const updateSlickListStyle = (index: number) => {
+        if (index === 0) {
+            setSlickListStyle({ paddingLeft: 0, paddingRight: 3 });
+
+        } else if (index === chipValues.length - 1) {
+            setSlickListStyle({ paddingLeft: 0, paddingRight: 0 });
+        }
+        else {
+            setSlickListStyle({ paddingLeft: 3, paddingRight: 0 });
+        }
+    }
     const SliderSetting = {
         speed: SlidingTimeInMillisecond,
         infinite: false,
         adaptiveHeight: true,
         swipeToSlide: true,
-        slidesToShow,
+        slidesToShow,//: window.innerHeight < window.innerWidth ? 7 : 3,
         arrows: false,
         variableWidth: true,
         onSwipe: () => {
@@ -195,6 +169,8 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
                 oldIndex > newIndex && handleSelectChip(chipValues[newIndex + slidesToShow - 1]);
                 oldIndex < newIndex && handleSelectChip(chipValues[newIndex]);
             }
+
+            updateSlickListStyle(newIndex);
         },
     };
 
@@ -212,17 +188,27 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
                     }}
                     {...SliderSetting}
                 >
-                    {chipValues.map((value) => (
-                        <Chip
-                            key={+value}
-                            value={+value}
-                            text={findChipSetting(value)?.text}
-                            image={findChipSetting(value)?.color}
-                            onClickChip={onClickChip}
-                        />
+                    {chipValues.map((value, index) => (
+                        <div
+                            key={index}
+                            ref={index === 0 ? firstSlideRef : null}
+                        >
+                            <Chip
+                                key={+value}
+                                value={+value}
+                                text={findChipSetting(value)?.text}
+                                image={findChipSetting(value)?.color}
+                                onClickChip={onClickChip}
+                            />
+                        </div>
                     ))}
                 </Slider>
             )}
+            {
+                <style>
+                    {`.slick-list { padding: 0.3rem ${slickListStyle.paddingLeft}rem 0 ${slickListStyle.paddingRight}rem;}`}
+                </style>
+            }
             <span
                 id="icon-chip-slider-next"
                 className={`${Styles["icon-next"]} ${!enabledNextBtn && Styles["disabled"]} ${enabledQuickBet ? Styles["quick-bet"] : ""}`}

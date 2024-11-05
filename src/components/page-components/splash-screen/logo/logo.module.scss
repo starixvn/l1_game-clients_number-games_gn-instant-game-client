@@ -59,8 +59,10 @@
             height: 9.4rem;
             width: 37.4rem;
             background-image: url("/static/images/splash-screen/1x/light.png?v=#{$version-image}");
-            background-image: image-set(url("/static/images/splash-screen/1x/light.png?v=#{$version-image}") 1x,
-                url("/static/images/splash-screen/2x/light.png?v=#{$version-image}") 2x);
+            background-image: image-set(
+                url("/static/images/splash-screen/1x/light.png?v=#{$version-image}") 1x,
+                url("/static/images/splash-screen/2x/light.png?v=#{$version-image}") 2x
+            );
         }
 
         &::after {
@@ -118,9 +120,15 @@
         }
 
         .text-first-download {
-            width: 37.5rem;
+            width: 60rem;
             padding: 0 1rem;
             font-size: 2rem;
+            &.vi {
+                width: 62rem;
+            }
+            &.id {
+                width: 58rem;
+            }
         }
     }
 }
@@ -186,8 +194,10 @@
             height: 9.4rem;
             width: 37.4rem;
             background-image: url("/static/images/splash-screen/1x/light.png?v=#{$version-image}");
-            background-image: image-set(url("/static/images/splash-screen/1x/light.png?v=#{$version-image}") 1x,
-                url("/static/images/splash-screen/2x/light.png?v=#{$version-image}") 2x);
+            background-image: image-set(
+                url("/static/images/splash-screen/1x/light.png?v=#{$version-image}") 1x,
+                url("/static/images/splash-screen/2x/light.png?v=#{$version-image}") 2x
+            );
         }
 
         &::after {
@@ -218,7 +228,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 2rem;
+        gap: 1rem;
         width: 100%;
         transform: translateX(-50%);
         color: #989898;
@@ -248,6 +258,13 @@
             width: 37.5rem;
             padding: 0 1rem;
             font-size: 2rem;
+            &.vi {
+                width: 39rem;
+            }
+            &.id {
+                width: 38rem;
+                font-size: 1.6rem;
+            }
         }
     }
 }

@@ -31,7 +31,7 @@ export const Logo = ({ onLoad }: { onLoad: Function }) => {
                 <div className={Styles["progress"]}>
                     <div className={Styles["progress-bar"]} id="progress-bar"></div>
                 </div>
-                <p className={Styles["text-first-download"]}>{locale && t("Common.message_download_first_visit")}</p>
+                <p className={`${Styles["text-first-download"]} ${Styles[locale]}`}>{locale && t("Common.message_download_first_visit")}</p>
             </div>
         </div>
     );

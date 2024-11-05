@@ -28,6 +28,9 @@
         background-repeat: no-repeat;
         background-position: center;
         background-size: 3rem 3rem;
+        @media screen and (orientation:landscape) {
+            margin-left: -1rem;
+        }
     }
 
     &.up:after {

@@ -58,7 +58,7 @@ const ErrorCodeDictionary = {
     SB1904: `${INSTANT_GAME}.message_jackpot_processing`,
     SB1905: `${INSTANT_GAME}.message_placebet_next_round`,
     SB1906: `${INSTANT_GAME}.message_cannot_bet`,
-    SB1907: `${INSTANT_GAME}.message_insufficient_fund`,
+    SB1907: `${ResourceTypes.COMMON}.not_enough_money`,
     SB1908: `${INSTANT_GAME}.message_not_enough_scoin`,
     SB1909: `${INSTANT_GAME}.message_min_bet_notice`,
     SB1910: `${INSTANT_GAME}.message_option_maxbet`,

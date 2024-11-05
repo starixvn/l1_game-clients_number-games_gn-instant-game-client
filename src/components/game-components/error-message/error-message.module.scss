@@ -45,10 +45,35 @@
         margin: 0 auto;
         width: 32rem;
 
+        &.en {
+            width: 34rem;
+        }
+
+        &.th {
+            width: 31rem;
+        }
+        &.id {
+            width: 39rem;
+        }
+
         @media screen and (orientation: landscape) {
-            padding-top: 7rem;
+            padding-top: 11rem;
 
             font-size: 24px;
+            &.en {
+                width: 66rem;
+            }
+
+            &.vi {
+                width: 55rem;
+            }
+
+            &.th,
+            &.id,
+            &.zh_cn,
+            &.zh_tw {
+                width: 58rem;
+            }
         }
     }
 

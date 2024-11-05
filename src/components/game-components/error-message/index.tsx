@@ -3,6 +3,7 @@ import { useTranslator } from "../../../_shared/react-hooks/use-translator";
 import { ResourceTypes } from "../../../_shared/resources";
 import Styles from "./error-message.module.scss";
 import { ConnectFailedReasonKey } from "./type";
+import { tolgee } from "../../../_shared/tolgee";
 
 export const ConnectFailedMessage: React.FC<{
     tolgeeNamespace: string;
@@ -12,6 +13,7 @@ export const ConnectFailedMessage: React.FC<{
 }> = ({ tolgeeNamespace, id, onReconnect, reason }) => {
     const { t } = useTranslator([tolgeeNamespace]);
 
+    const locale = tolgee.getLanguage() ?? "en";
     const isLostConnection = reason === ConnectFailedReasonKey.lostConnection;
     const renderButton = () => {
         return isLostConnection ? (
@@ -30,7 +32,7 @@ export const ConnectFailedMessage: React.FC<{
             <div className={`overlay-mask ${"disconnect"}`}>
                 <div className={Styles[`container`]}>
                     <div className={Styles[`title`]}>{t(`${tolgeeNamespace}.game_name_${id}`)}</div>
-                    <div className={Styles[`content`]}>
+                    <div className={`${Styles[`content`]} ${Styles[locale]}`}>
                         {t(reason, { gameName: tolgeeNamespace }).replaceTolgeeFormat().replace(tolgeeNamespace, "")}
                     </div>
                     {<div className={Styles[`action`]}>{renderButton()}</div>}

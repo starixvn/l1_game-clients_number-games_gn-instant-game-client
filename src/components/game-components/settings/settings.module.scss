@@ -6,47 +6,50 @@
     right: 1rem;
     top: 1rem;
     z-index: 10;
+
+    @media screen and (orientation: landscape) {
+        top: 1px;
+        right: 2rem;
+    }
 }
 
 .setting-right {
     display: flex;
     justify-content: end;
-    gap: 0rem;
+    gap: 1rem;
     flex: 1 1;
+
+    @media screen and (orientation: landscape) {
+        gap: 1rem;
+        flex-direction: row-reverse;
+    }
 }
 
 .setting-button {
-    height: 4.8rem;
-    width: 4.8rem;
+    height: 5.2rem;
+    width: 5.2rem;
     display: flex;
     align-items: center;
     justify-content: center;
     background: url("/static/images/icons/setting-button-border.png?v=#{$version-image}") no-repeat center;
     border: none;
     cursor: pointer;
+
+    @media screen and (orientation: landscape) {
+        background: url("/static/images/icons/setting-button-border-lanscape.png?v=#{$version-image}") no-repeat center;
+        height: 4rem;
+        width: 4rem;
+    }
 }
 
 .icon-guide,
 .icon-sound-on,
 .icon-sound-off {
     &::before {
-        font-size: 2.2rem;
-    }
-}
+        font-size: 3.5rem;
 
-@media screen and (orientation: landscape) {
-    .setting-right {
-        gap: 1rem;
-        flex-direction: row-reverse;
-    }
-
-    .settings-container {
-        top: 1px;
-        right: 2rem;
-    }
-
-    .setting-button {
-        height: 4rem;
-        width: 4rem;
+        @media screen and (orientation: landscape) {
+            font-size: 2.2rem;
+        }
     }
 }

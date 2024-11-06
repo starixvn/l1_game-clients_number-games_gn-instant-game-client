@@ -126,7 +126,7 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
             const newSelectedChip = chipValues[chipIndex + 1];
 
             isSwipe = false;
-            sliderRef.slickGoTo(chipIndex + 2 - slidesToShow);
+            sliderRef.slickGoTo(chipIndex + 3 - slidesToShow);
             handleSelectChip(newSelectedChip);
             disableSelectChipWhenSliding();
         }
@@ -138,7 +138,7 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
             const newSelectedChip = chipValues[chipIndex - 1];
 
             isSwipe = false;
-            sliderRef.slickGoTo(chipIndex - 2);
+            sliderRef.slickGoTo(chipIndex - 3);
             handleSelectChip(newSelectedChip);
             disableSelectChipWhenSliding();
         }
@@ -156,13 +156,13 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
 
     const updateSlickListStyle = (index: number) => {
         if (index === 0) {
-            setSlickListStyle({ paddingLeft: 0, paddingRight: 2 });
+            setSlickListStyle({ paddingLeft: 0, paddingRight: 1 });
 
         } else if (index === chipValues.length - 1) {
-            setSlickListStyle({ paddingLeft: 0, paddingRight: 0 });
+            setSlickListStyle({ paddingLeft: 1, paddingRight: 0 });
         }
         else {
-            setSlickListStyle({ paddingLeft: 2, paddingRight: 0 });
+            setSlickListStyle({ paddingLeft: 0, paddingRight: 0 });
         }
     }
 
@@ -174,6 +174,7 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
         slidesToShow,
         arrows: false,
         variableWidth: true,
+        draggable: true,
         onSwipe: () => {
             isSwipe = true;
         },
@@ -214,7 +215,7 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
             )}
             {
                 <style>
-                    {`.slick-list { padding: 0.3rem ${slickListStyle.paddingLeft}rem 0 ${slickListStyle.paddingRight}rem;}`}
+                    {`.slick-list { padding: 0.2rem ${slickListStyle.paddingLeft}rem 0 ${slickListStyle.paddingRight}rem;}`}
                 </style>
             }
             <span

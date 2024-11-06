@@ -5,6 +5,11 @@
     z-index: 2;
     padding: 0 0.5rem 0 0.5rem;
     top: 0.5rem;
+
+    @media screen and (orientation: landscape) {
+        top: -22.5rem !important;
+        padding: 0;
+    }
 }
 
 .result-container {
@@ -82,6 +87,7 @@
     .disable-layer {
         transform: scaleY(1.01);
         top: 1px;
+
         @media screen and (orientation: landscape) {
             transform: scaleY(1.04);
             transform: scaleX(1.04);
@@ -96,6 +102,10 @@
     display: flex;
     flex-direction: column;
     gap: 0.6rem;
+
+    @media screen and (orientation: landscape) {
+        height: 230px;
+    }
 
     .own-bet {
         bottom: 2.4rem;
@@ -233,6 +243,7 @@
         width: 100%;
         flex-direction: row;
         justify-content: center;
+
         @media screen and (orientation: landscape) {
             justify-content: space-around;
         }
@@ -245,7 +256,7 @@
     .odds {
         text-align: center;
         color: white;
-        font-size: 2.4rem;
+        font-size: 2.5rem;
         font-weight: 500;
         letter-spacing: 0.96px;
     }
@@ -254,7 +265,7 @@
     .bet-name-under {
         width: 102px;
         color: white;
-        font-size: 2.4rem;
+        font-size: 2.5rem;
         font-weight: 500;
         letter-spacing: 0.96px;
         word-wrap: break-word;
@@ -274,8 +285,12 @@
         width: 82px;
         text-transform: uppercase;
         word-wrap: break-word;
-        font-size: 1.8rem;
+        font-size: 2.1rem;
         color: var(--color);
+
+        @media screen and (orientation: landscape) {
+            font-size: 2rem;
+        }
     }
 }
 
@@ -299,6 +314,11 @@
 .statistic {
     margin: 4rem 5rem 1.5rem 0;
     position: relative;
+
+    @media screen and (orientation: landscape) {
+        top: -7.5rem;
+        width: 85%;
+    }
 }
 
 %icon {
@@ -326,6 +346,11 @@
 
     background: url("/static/images/icons/button-statistic.svg?v=#{$version-image}") no-repeat center;
     right: -6.5rem;
+
+    @media screen and (orientation: landscape) {
+        top: calc(50% - 2.7rem);
+        right: -7rem;
+    }
 }
 
 .icon-close-wrapper {
@@ -357,6 +382,12 @@
     left: 9px;
     padding: 0 1rem;
 
+    @media screen and (orientation: landscape) {
+        top: 4rem;
+        width: 792px;
+        height: 36rem;
+    }
+
     .statistic-header {
         display: flex;
         height: 6rem;
@@ -376,27 +407,59 @@
     display: flex;
     position: absolute;
     top: 2rem;
+
+    @media screen and (orientation: landscape) {
+        top: 0.2rem;
+    }
 }
 
 .scoreboard-wrapper {
     --border-scoreboard-color: none;
     --border-item-color: none;
     border-radius: 2rem;
+
+    @media screen and (orientation: landscape) {
+        gap: 7px;
+    }
 }
 
 .scoreboard-block {
     width: 3.5rem;
     height: 3.5rem;
 
-    [class^="icon-"] {
-        font-size: 2.5rem !important;
+    @media screen and (orientation: landscape) {
+        width: 100%;
+        height: 100%;
     }
+
+    [class^="icon-"] {
+        font-size: 3rem !important;
+
+        @media screen and (orientation: landscape) {
+            font-size: 2.8rem !important;
+        }
+    }
+
 }
 
 .scoreboard-popup-block {
+    @media screen and (orientation: landscape) {
+        width: 4.2rem !important;
+        height: 4.6rem !important;
+    }
+
     .scoreboard-popup-element {
         width: 3.2rem !important;
         height: 3.2rem !important;
+
+        @media screen and (orientation: landscape) {
+            width: 3.5rem !important;
+            height: 3.5rem !important;
+
+            [class^="icon-"] {
+                font-size: 3.5rem !important;
+            }
+        }
 
         [class^="icon-"] {
             font-size: 3.2rem !important;
@@ -416,10 +479,6 @@
 }
 
 @media screen and (orientation: landscape) {
-    .round-id-wrapper {
-        top: 0.2rem;
-    }
-
     .result-zone-wrapper {
         top: 112px;
         position: absolute;
@@ -427,57 +486,10 @@
         transform: translateX(-50%);
     }
 
-    .bet-option-row {
-        height: 230px;
-    }
-
-    .statistic {
-        top: -8rem;
-    }
-
-    .scoreboard-and-statistic {
-        top: 4rem;
-        width: 792px;
-        height: 36rem;
-    }
-
-    .scoreboard-block {
-        width: 100%;
-        height: 100%;
-    }
-
     .scoreboard {
         height: 29rem;
         width: 77rem;
         overflow-x: scroll;
         overflow-y: hidden;
-    }
-
-    .scoreboard-wrapper {
-        gap: 7px;
-    }
-
-    .betting-zone {
-        top: -22.5rem !important;
-        padding: 0 1rem 0 1rem;
-    }
-
-    .icon-statistic {
-        top: calc(50% - 2.7rem);
-        right: -7rem;
-    }
-
-    .scoreboard-popup-block {
-        width: 4.2rem !important;
-        height: 4.6rem !important;
-
-        .scoreboard-popup-element {
-            width: 3.5rem !important;
-            height: 3.5rem !important;
-
-            [class^="icon-"] {
-                font-size: 3.5rem !important;
-            }
-        }
     }
 }

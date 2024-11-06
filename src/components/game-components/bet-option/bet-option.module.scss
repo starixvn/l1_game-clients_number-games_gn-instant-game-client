@@ -28,6 +28,7 @@
         background-repeat: no-repeat;
         background-position: center;
         background-size: 3rem 3rem;
+
         @media screen and (orientation:landscape) {
             margin-left: -1rem;
         }
@@ -52,8 +53,8 @@
 
 .player-count,
 .total-stakes {
-    height: 1.8rem;
-    font-size: 1.8rem;
+    height: 2rem;
+    font-size: 2rem;
     font-weight: 600;
     color: var(--color);
     position: relative;

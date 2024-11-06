@@ -56,7 +56,8 @@
     margin-top: 3rem;
     font-weight: 500;
     line-height: 1.5;
-    font-size: 2.4rem;
+    font-size: 2.6rem;
+
     @media screen and (orientation: landscape) {
         margin-top: -2rem;
         font-size: 2rem;
@@ -69,10 +70,8 @@
     width: 34.8rem;
     height: 20.6rem;
     background-image: url("/static/images/error-page/1x/spaceman-timeout.png?v=#{$version-image}");
-    background-image: image-set(
-        url("/static/images/error-page/1x/spaceman-timeout.png?v=#{$version-image}") 1x,
-        url("/static/images/error-page/2x/spaceman-timeout.png?v=#{$version-image}") 2x
-    );
+    background-image: image-set(url("/static/images/error-page/1x/spaceman-timeout.png?v=#{$version-image}") 1x,
+        url("/static/images/error-page/2x/spaceman-timeout.png?v=#{$version-image}") 2x);
     animation: spin 9s linear infinite;
 }
 
@@ -82,10 +81,8 @@
     width: 34.8rem;
     height: 19.9rem;
     background-image: url("/static/images/error-page/1x/spaceman-um.png?v=#{$version-image}");
-    background-image: image-set(
-        url("/static/images/error-page/1x/spaceman-um.png?v=#{$version-image}") 1x,
-        url("/static/images/error-page/2x/spaceman-um.png?v=#{$version-image}") 2x
-    );
+    background-image: image-set(url("/static/images/error-page/1x/spaceman-um.png?v=#{$version-image}") 1x,
+        url("/static/images/error-page/2x/spaceman-um.png?v=#{$version-image}") 2x);
     animation: spin 9s linear infinite;
 }
 
@@ -113,10 +110,8 @@
     width: 37.2rem;
     height: 37.6rem;
     background-image: url("/static/images/error-page/1x/planet-center.png?v=#{$version-image}");
-    background-image: image-set(
-        url("/static/images/error-page/1x/planet-center.png?v=#{$version-image}") 1x,
-        url("/static/images/error-page/2x/planet-center.png?v=#{$version-image}") 2x
-    );
+    background-image: image-set(url("/static/images/error-page/1x/planet-center.png?v=#{$version-image}") 1x,
+        url("/static/images/error-page/2x/planet-center.png?v=#{$version-image}") 2x);
 }
 
 .um-moving-comet {
@@ -216,6 +211,7 @@
     line-height: 2.6rem;
     padding-left: 2rem;
     padding-right: 2rem;
+
     &.timeout-msg {
         margin-top: 2rem;
 
@@ -223,6 +219,7 @@
             margin: -5rem 2rem 0 2rem;
         }
     }
+
     @media screen and (orientation: landscape) {
         font-size: 2rem;
     }
@@ -232,12 +229,14 @@
     from {
         transform: rotate(0deg) translate(-5px) rotate(0deg);
     }
+
     to {
         transform: rotate(360deg) translate(-5px) rotate(-360deg);
     }
 }
 
 @keyframes star-bling {
+
     0%,
     100% {
         opacity: 0.5;
@@ -249,20 +248,24 @@
 }
 
 @keyframes comet-move {
+
     20%,
     100% {
         opacity: 0;
         transform: translate(-38rem, 28rem);
     }
+
     0% {
         opacity: 0;
     }
+
     10% {
         opacity: 1;
     }
 }
 
 @keyframes top-to-bottom {
+
     0%,
     100% {
         transform: translateY(0);

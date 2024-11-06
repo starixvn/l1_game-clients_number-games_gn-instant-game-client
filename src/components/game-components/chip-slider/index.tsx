@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Slider from "react-slick";
 import {
     PlayerContextModel,
@@ -14,7 +14,10 @@ import { Chip } from "./chip";
 import Styles from "./chip-slider.module.scss";
 
 const SlidingTimeInMillisecond = 100;
-
+const slideToShowConstant = {
+    portrait: 3,
+    landscape: 7
+}
 let isSwipe = true;
 
 export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: UserStakeLevel }> = ({ gameConfigs, userStakeLevel }) => {
@@ -26,12 +29,11 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
     const { selectedChip } = systemContext;
     const [enabledPrevBtn, setEnabledPrevBtn] = useState(false);
     const [enabledNextBtn, setEnabledNextBtn] = useState(true);
-    const [slidesToShow, setSlidesToShow] = useState(isPortrait ? 4 : 7);
+    const [slidesToShow, setSlidesToShow] = useState(slideToShowConstant.portrait);
     const settingContext = useSettingContext();
     const chipSettings = settingContext.chipSettings;
     const [isSliding, setIsSliding] = useState(false);
 
-    const firstSlideRef = useRef(null);
     const [slickListStyle, setSlickListStyle] = useState({
         paddingLeft: 0,
         paddingRight: 0,
@@ -51,14 +53,24 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
 
     useEffect(() => {
         const checkOrientation = () => {
-            setSlidesToShow(isPortrait ? 4 : 7);
+            const { portrait, landscape } = slideToShowConstant;
+            setSlidesToShow(isPortrait ? portrait : landscape);
+
         };
 
         checkOrientation();
 
         window.addEventListener("resize", checkOrientation);
 
+        if (sliderRef) {
+            isSwipe = false;
+            const chipIndex = chipValues.indexOf(selectedChip);
+            sliderRef.slickGoTo(chipIndex);
+            updateArrowsByChipValue(selectedChip);
+        }
+
         return () => window.removeEventListener("resize", checkOrientation);
+
     }, []);
 
     const onClickChip = (chipValue: number) => {
@@ -114,7 +126,7 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
             const newSelectedChip = chipValues[chipIndex + 1];
 
             isSwipe = false;
-            sliderRef.slickGoTo(chipIndex + 3 - slidesToShow);
+            sliderRef.slickGoTo(chipIndex + 2 - slidesToShow);
             handleSelectChip(newSelectedChip);
             disableSelectChipWhenSliding();
         }
@@ -144,21 +156,22 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
 
     const updateSlickListStyle = (index: number) => {
         if (index === 0) {
-            setSlickListStyle({ paddingLeft: 0, paddingRight: 3 });
+            setSlickListStyle({ paddingLeft: 0, paddingRight: 2 });
 
         } else if (index === chipValues.length - 1) {
             setSlickListStyle({ paddingLeft: 0, paddingRight: 0 });
         }
         else {
-            setSlickListStyle({ paddingLeft: 3, paddingRight: 0 });
+            setSlickListStyle({ paddingLeft: 2, paddingRight: 0 });
         }
     }
+
     const SliderSetting = {
         speed: SlidingTimeInMillisecond,
         infinite: false,
         adaptiveHeight: true,
         swipeToSlide: true,
-        slidesToShow,//: window.innerHeight < window.innerWidth ? 7 : 3,
+        slidesToShow,
         arrows: false,
         variableWidth: true,
         onSwipe: () => {
@@ -188,19 +201,14 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
                     }}
                     {...SliderSetting}
                 >
-                    {chipValues.map((value, index) => (
-                        <div
-                            key={index}
-                            ref={index === 0 ? firstSlideRef : null}
-                        >
-                            <Chip
-                                key={+value}
-                                value={+value}
-                                text={findChipSetting(value)?.text}
-                                image={findChipSetting(value)?.color}
-                                onClickChip={onClickChip}
-                            />
-                        </div>
+                    {chipValues.map((value) => (
+                        <Chip
+                            key={+value}
+                            value={+value}
+                            text={findChipSetting(value)?.text}
+                            image={findChipSetting(value)?.color}
+                            onClickChip={onClickChip}
+                        />
                     ))}
                 </Slider>
             )}

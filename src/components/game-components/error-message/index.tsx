@@ -1,9 +1,8 @@
 import React from "react";
-import { useTranslator } from "../../../_shared/react-hooks/use-translator";
+import { useCurrentLanguage, useTranslator } from "../../../_shared/react-hooks/use-translator";
 import { ResourceTypes } from "../../../_shared/resources";
 import Styles from "./error-message.module.scss";
 import { ConnectFailedReasonKey } from "./type";
-import { tolgee } from "../../../_shared/tolgee";
 
 export const ConnectFailedMessage: React.FC<{
     tolgeeNamespace: string;
@@ -13,7 +12,7 @@ export const ConnectFailedMessage: React.FC<{
 }> = ({ tolgeeNamespace, id, onReconnect, reason }) => {
     const { t } = useTranslator([tolgeeNamespace]);
 
-    const locale = tolgee.getLanguage() ?? "en";
+    const locale = useCurrentLanguage();
     const isLostConnection = reason === ConnectFailedReasonKey.lostConnection;
     const renderButton = () => {
         return isLostConnection ? (

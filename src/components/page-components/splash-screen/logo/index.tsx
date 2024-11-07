@@ -1,10 +1,9 @@
 import Image from "next/image";
 import { buildVersion } from "../../../../_shared/constants";
-import { useTranslator } from "../../../../_shared/react-hooks";
-import { tolgee } from "../../../../_shared/tolgee";
+import { useCurrentLanguage, useTranslator } from "../../../../_shared/react-hooks";
 import Styles from "./logo.module.scss";
 export const Logo = ({ onLoad }: { onLoad: Function }) => {
-    const locale = tolgee.getLanguage() ?? "en";
+    const locale = useCurrentLanguage();
     const { t } = useTranslator();
     const isLandscapeMode = window.innerHeight < window.innerWidth;
     const pageStyle = Styles[`${isLandscapeMode ? "page" : "page-portrait"}`];

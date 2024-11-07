@@ -1,5 +1,6 @@
 import { useTranslate } from "@tolgee/react";
 import { ResourceTypes } from "../resources";
+import { tolgee } from "../tolgee";
 
 export function parseTranslationKey(input: string) {
     if (input.includes(".")) {
@@ -29,4 +30,9 @@ export const useCommonTranslate = () => {
 
 export const useSNTranslate = () => {
     return useTranslate(ResourceTypes.SABA_NUMBER);
+};
+
+export const useCurrentLanguage = () => {
+    const currentLanguage = tolgee.getLanguage() ?? "en";
+    return currentLanguage;
 };

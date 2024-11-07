@@ -91,5 +91,19 @@
 @media screen and (orientation: landscape) {
     .game-status {
         top: 4.5rem;
+        .no-more-bets,
+        .open-result {
+            &.vi {
+                font-size: 2rem;
+            }
+        }
+        .no-more-bets {
+            &.id {
+                font-size: 2rem;
+                width: 15rem;
+                text-align: center;
+                margin-top: -0.8rem;
+            }
+        }
     }
 }

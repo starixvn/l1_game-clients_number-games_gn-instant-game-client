@@ -2,19 +2,20 @@ import { useEffect, useState } from "react";
 
 import { useGameContext } from "../../../_shared/react-contexts";
 import { useGameStateContext } from "../../../_shared/react-contexts/game-state-context/game-state-context";
-import { useSNTranslate } from "../../../_shared/react-hooks/use-translator";
+import { useCurrentLanguage, useSNTranslate } from "../../../_shared/react-hooks/use-translator";
 import { messageEventType } from "../../game-base/handlers";
 import { RoundState } from "../../game-base/type";
 import styles from "./countdown-timer.module.scss";
 
 export type Rotation = "clockwise" | "counterclockwise";
 
-
 export const CountdownTimer = ({ SimpleTimerProp = SimpleTimer, GameStatusProp = GameStatusMap.TurnBaseStatus }) => {
     const { roundState } = useGameStateContext();
     const { t } = useSNTranslate();
+    const locale = useCurrentLanguage();
     const { gameMessageHandler } = useGameContext();
     const [clientRemainingTime, setClientRemainingTime] = useState(0);
+    const getStyle = (className) => `${styles[`${className}`]} ${styles[`${locale}`]}`;
 
     useEffect(() => {
         const handlerId = gameMessageHandler?.register(messageEventType.CLIENT_REMAINING_TIME, ({ clientRemainingTime }) => {
@@ -32,7 +33,7 @@ export const CountdownTimer = ({ SimpleTimerProp = SimpleTimer, GameStatusProp =
                 <>
                     <SimpleTimerProp clientRemainingTime={clientRemainingTime} />
                     <GameStatusProp>
-                        <div className={styles["start-betting"]}>{t("status_start_bet")}</div>
+                        <div className={getStyle("start-betting")}>{t("status_start_bet")}</div>
                     </GameStatusProp>
                 </>
             );
@@ -41,7 +42,7 @@ export const CountdownTimer = ({ SimpleTimerProp = SimpleTimer, GameStatusProp =
                 <>
                     <SimpleTimerProp clientRemainingTime={clientRemainingTime} />
                     <GameStatusProp>
-                        <div className={styles["no-more-bets"]}>{t("status_stop_bet")}</div>
+                        <div className={getStyle("no-more-bets")}>{t("status_stop_bet")}</div>
                     </GameStatusProp>
                 </>
             );
@@ -51,7 +52,7 @@ export const CountdownTimer = ({ SimpleTimerProp = SimpleTimer, GameStatusProp =
                 <>
                     <div className={`loader-show-result`}></div>
                     <GameStatusProp>
-                        <div className={styles["open-result"]}>{t("status_result")}</div>
+                        <div className={getStyle("open-result")}>{t("status_result")}</div>
                     </GameStatusProp>
                 </>
             );
@@ -101,17 +102,12 @@ export const TurnBaseStatus = ({ children }) => {
 };
 
 export const RoundBaseStatus = ({ children }) => {
-    return (
-        <div className={`${styles["game-status"]}`}>
-            {children}
-        </div>
-    );
+    return <div className={`${styles["game-status"]}`}>{children}</div>;
 };
 
 export const GameStatusMap = {
     TurnBaseStatus: TurnBaseStatus,
     RoundBaseStatus: RoundBaseStatus,
-}
-
+};
 
 export default CountdownTimer;

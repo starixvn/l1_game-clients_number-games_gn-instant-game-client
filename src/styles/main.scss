@@ -114,8 +114,6 @@ body {
     overflow: hidden;
 }
 
-
-
 #__next {
     height: 740px;
     width: 448px;
@@ -172,6 +170,9 @@ body {
     padding-left: 0.8rem;
     line-height: 26.82px;
     font-size: 2.4rem;
+    @media screen and (orientation: landscape) {
+        font-size: 2.2rem;
+    }
 
     font-weight: 400;
     color: #fff;

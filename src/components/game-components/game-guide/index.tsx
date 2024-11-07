@@ -5,12 +5,15 @@ import { buildVersion, Themes } from "../../../_shared/constants";
 import { buildGameGuideUrl } from "../../../_shared/helpers";
 import { usePlayerContext } from "../../../_shared/react-contexts";
 import { useGameStateContext } from "../../../_shared/react-contexts/game-state-context/game-state-context";
-import { useCommonTranslate } from "../../../_shared/react-hooks";
-import { tolgee } from "../../../_shared/tolgee";
+import { useCommonTranslate, useCurrentLanguage } from "../../../_shared/react-hooks";
 import { LoadingSpinner } from "../game-loading/loading-spinner";
 import ModalContainer from "../modal-container";
 import Styles from "./game-guide.module.scss";
-import { GlobalTransmitterEvent, registerGlobalMessageEvent, unsubscribeGlobalMessageEvent } from "../../../_shared/helpers/message-transmitter/global-transmitter";
+import {
+    GlobalTransmitterEvent,
+    registerGlobalMessageEvent,
+    unsubscribeGlobalMessageEvent,
+} from "../../../_shared/helpers/message-transmitter/global-transmitter";
 
 const GameGuideModal: FC = () => {
     const { t: translate } = useCommonTranslate();
@@ -42,7 +45,7 @@ const GameGuideModal: FC = () => {
 const GameGuide: FC = () => {
     const { userStakeLevel, gameConfigs } = useGameStateContext();
     const theme = Themes.numberGame ?? "dark";
-    const language = tolgee.getLanguage() ?? "en";
+    const language = useCurrentLanguage();
     const wrapperRef = useRef<HTMLIFrameElement>();
     const wrapperIframeRef = useRef<HTMLIFrameElement>();
     const [isLoading, setIsLoading] = useState<boolean>(true);

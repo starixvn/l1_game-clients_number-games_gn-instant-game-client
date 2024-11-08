@@ -2,8 +2,8 @@ import { Tooltip as ReactTooltip } from 'react-tooltip';
 import styled from 'styled-components';
 
 export const BeadBoardTooltip = styled(ReactTooltip)`
-  border-radius: 1rem;
-  border: ${(props) => props.arrowColor} 1px solid;
+  border-radius: 1.5rem !important;
+  border: ${(props) => props.arrowColor} 2px solid;
   width: fit-content;
   height: fit-content;
   padding: 0 !important;

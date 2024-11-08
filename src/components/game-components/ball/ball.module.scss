@@ -48,8 +48,9 @@ $ball-size: 5.4rem;
 
 .ball-number-small {
     @extend .ball-number;
-    font-size: 16px;
+    font-size: 2.4rem;
     line-height: 22px;
+    font-weight: 600;
 }
 
 .red {
@@ -113,6 +114,6 @@ $ball-size: 5.4rem;
 
 .ball-small {
     @extend .ball;
-    width: 3rem;
-    height: 3rem;
+    width: 4.8rem;
+    height: 4.8rem;
 }

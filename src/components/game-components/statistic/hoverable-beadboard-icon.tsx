@@ -32,7 +32,7 @@ const HoverableBeadBoardIcon: React.FC<HoverableBeadBoardIconProps> = ({ choice,
                         <div className={Styles["items"]}>
                             <div className={Styles["draw"]}>#{drawId}</div>
                             <div className={Styles["bottom"]}>
-                                <div className={Styles["choice"]}>{t(`glossary_${choice}`)}</div>
+                                <div className={Styles["choice"]}>{t(`glossary_${choice}`).toUpperCase()}</div>
                                 <div className={Styles["result"]}>
                                     {<Ball number={result} delayTime={0} status={BallStatus.SHOW} size={BallSize.SMALL} />}
                                 </div>

@@ -8,11 +8,7 @@ import { AuthorizeResponse, SSOResponse } from "sc-user-service-client/dist/auth
 import { getAppSettings } from "../../../_shared/app-settings";
 import { Themes, languageMapper, locales } from "../../../_shared/constants";
 import { AnalyticsHelper, StorageHelper, localStorageKeys, randomInteger } from "../../../_shared/helpers";
-import PreloadResources, {
-    DURATION_HOLD_SPLASH_SCREEN,
-    getAndHandleGameOfferIds,
-    updateProgressBar,
-} from "../../../_shared/helpers/preload-resources";
+import PreloadResources, { DURATION_HOLD_SPLASH_SCREEN, updateProgressBar } from "../../../_shared/helpers/preload-resources";
 import { PlayerContextModel, URLContext, usePlayerContext } from "../../../_shared/react-contexts";
 import { setSentryUser } from "../../../_shared/sentry";
 import { tolgee } from "../../../_shared/tolgee";
@@ -99,10 +95,8 @@ const SplashScreen: React.FC = () => {
     const [isUm, setIsUm] = useState(player?.session?.isUM);
     const [isDonePreloadResources, setIsDonePreloadResources] = useState<boolean>(false);
     const [isDoneLoadLogo, setIsDoneLoadLogo] = useState<boolean>(false);
-    const [bannerId, setBannerId] = useState<number>(0);
     const [locale, setLocale] = useState<string>();
     const [currentSession, setCurrentSession] = useState<SSOResponse>();
-    const [gameOfferIds, setGameOfferIds] = useState<number[]>([]);
     const [currentGameId, setCurrentGameId] = useState<number>(-1);
     const [authorizeResponse, setAuthorizeResponse] = useState<AuthorizeResponse>(null);
     const [lobbyConfigs, setLobbyConfigs] = useState<ILobbyConfigs>(null);
@@ -159,7 +153,6 @@ const SplashScreen: React.FC = () => {
 
             if (lobby?.lobbyConfigs) {
                 setLobbyConfigs(lobby?.lobbyConfigs);
-                getAndHandleGameOfferIds(authorizeInfo, lobby.lobbyConfigs, setGameOfferIds);
             }
 
             authorizeInfo && setAuthorizeResponse(authorizeInfo);

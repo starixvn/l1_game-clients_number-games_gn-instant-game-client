@@ -2,22 +2,12 @@ import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
-import { AuthorizeResponse } from "sc-user-service-client/dist/auth";
-import { LobbyConfigs } from "sc-user-service-client/dist/lobby";
 import { v4 as uuidv4 } from "uuid";
-import { getLobbyGamesIds } from "./lobby-helper";
 
 const MAX_DELAY_TIME = 5000;
 const DEFAULT_PROGRESS_BAR_ID = "progress-bar";
 export const DURATION_HOLD_SPLASH_SCREEN = 1000;
 
-
-export const getAndHandleGameOfferIds = (authorizeInfo: AuthorizeResponse, lobbyConfigs: LobbyConfigs, callbackFn: Function) => {
-    const gameOfferIds = getLobbyGamesIds(lobbyConfigs, authorizeInfo);
-    if (gameOfferIds.length > 0) {
-        callbackFn(gameOfferIds);
-    }
-};
 
 export const updateProgressBar = (percentage: number, progressBarId = DEFAULT_PROGRESS_BAR_ID) => {
     const progressBars = document.querySelectorAll(`#${progressBarId}`);

@@ -10,7 +10,7 @@ export const Chip: React.FC<{ value: number; onClickChip: Function; text: string
     value,
     onClickChip,
     text,
-    image,
+    image
 }) => {
     const systemContext = useSystemContext();
 

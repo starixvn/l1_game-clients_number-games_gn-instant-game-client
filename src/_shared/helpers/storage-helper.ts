@@ -119,6 +119,8 @@ export const localStorageKeys = {
     pfSetting: buildLocalStorageKey("pf-setting"),
     debug: buildLocalStorageKey("debug"),
     url: buildLocalStorageKey("url"),
+    isSleepMode: buildLocalStorageKey("is-sleep-mode"),
+    currentChipSlide: buildLocalStorageKey("current-chip-slide"),
 };
 
 export function buildLocalStorageKey(key: string) {

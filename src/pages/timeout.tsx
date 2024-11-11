@@ -9,6 +9,7 @@ const TimeOut = () => {
     const { t } = useTranslator();
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(true);
+    const isPortrait = window.innerHeight > window.innerWidth;
 
     useEffect(() => {
         setIsLoading(false);
@@ -26,6 +27,8 @@ const TimeOut = () => {
     return (
         <div className="error-page">
             <div className="um-background">
+                <div className={`logo${isPortrait ? "" : "-landscape"}`} />
+
                 <div className="star-bg" />
                 <div className="planet-center" />
             </div>

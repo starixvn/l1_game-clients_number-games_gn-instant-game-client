@@ -114,6 +114,26 @@
         url("/static/images/error-page/2x/planet-center.png?v=#{$version-image}") 2x);
 }
 
+.logo {
+    position: absolute;
+    top: -15rem;
+    left: 9rem;
+    width: 19.5rem;
+    height: 16.2rem;
+    scale: 0.6;
+    background-image: url("/static/images/splash-screen/1x/logo.png?v=#{$version-image}");
+}
+
+.logo-landscape {
+    position: absolute;
+    top: -7rem;
+    left: 10rem;
+    width: 19.5rem;
+    height: 16.2rem;
+    scale: 0.5;
+    background-image: url("/static/images/splash-screen/1x/logo.png?v=#{$version-image}");
+}
+
 .um-moving-comet {
     position: absolute;
     width: 37.5rem;

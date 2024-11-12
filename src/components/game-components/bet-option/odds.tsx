@@ -48,11 +48,13 @@ export const Odds: React.FC<Props> = ({ tolgeeNamespace, choice, className, anim
         }
 
         return (
-            <div
-                id={`${tolgeeNamespace}-${choice}-odds`}
-                className={`text-center ${Styles["bet-odds"]} ${className} ${Styles[classOddsIcon]} ${showOddsIcon}`}
-            >
-                {odds}
+            <div className={`${Styles[`odds-container`]}`}>
+                <div id={`${tolgeeNamespace}-${choice}-odds`} className={`text-center ${Styles["bet-odds"]} ${className} ${showOddsIcon}`}>
+                    {odds}
+                </div>
+                <div className={`${Styles[`container-icon`]} ${showOddsIcon}`}>
+                    <div className={`${Styles[classOddsIcon]} ${Styles["arrow"]}`}></div>
+                </div>
             </div>
         );
     }, [odds, showOddsIcon]);

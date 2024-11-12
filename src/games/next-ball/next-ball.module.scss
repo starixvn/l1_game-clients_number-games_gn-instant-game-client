@@ -256,15 +256,12 @@
         font-size: 2.5rem;
         font-weight: 500;
         letter-spacing: 0.96px;
-        padding-right: 1.4rem;
-        @media screen and (orientation: landscape) {
-            padding-right: 1.8rem;
-        }
+        padding-right: 0.4rem;
     }
 
     .bet-name-over,
     .bet-name-under {
-        width: 110rem;
+        width: 11rem;
         color: white;
         font-size: 2.5rem;
         font-weight: 500;

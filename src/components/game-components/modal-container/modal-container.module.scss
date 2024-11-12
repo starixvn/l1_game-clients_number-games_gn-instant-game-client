@@ -27,10 +27,6 @@
 
 .content {
     height: 100%;
-
-    &.mobile {
-        height: calc(var(--modal-container-height) - 8.6rem);
-    }
 }
 
 .icon-close {

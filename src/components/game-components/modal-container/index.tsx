@@ -15,10 +15,6 @@ const ModalContainer: FC<{
     isOverlap?: boolean;
 }> = ({ title, children, onCloseModal, isOpen, isOverlap, id }) => {
     const clickSound = useClickSound();
-    useEffect(() => {
-        const root: HTMLElement = document.querySelector(":root");
-        root.style.setProperty("--modal-container-height", `${globalThis.innerHeight}px`);
-    }, [globalThis.innerHeight]);
     return (
         <BaseDialog type={ModalType.Full} enableBackdrop={true} isOverlap={isOverlap}>
             <div id={id} className={`${Styles["modal-full"]} ${isOpen ? Styles["open"] : Styles["close"]}`}>

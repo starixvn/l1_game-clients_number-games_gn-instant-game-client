@@ -121,6 +121,7 @@ export const localStorageKeys = {
     url: buildLocalStorageKey("url"),
     isSleepMode: buildLocalStorageKey("is-sleep-mode"),
     currentChipSlide: buildLocalStorageKey("current-chip-slide"),
+    currentChipSlideTransX: buildLocalStorageKey("current-chip-slide-transx"),
 };
 
 export function buildLocalStorageKey(key: string) {

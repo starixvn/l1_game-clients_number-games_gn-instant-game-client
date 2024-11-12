@@ -33,6 +33,8 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
     const [isSliding, setIsSliding] = useState(false);
     let sliderRef = useRef<any>(null);
     let sliderWrapperRef = useRef<any>(null);
+    const [currentSlide, setCurrentSlide] = useState(0);
+    const [currenChipIndex, setCurrenChipIndex] = useState(0);
 
     const [slickListStyle, setSlickListStyle] = useState({
         paddingLeft: 0,
@@ -105,6 +107,7 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
                 },
             });
             playClickChip();
+            StorageHelper.set(localStorageKeys.isSleepMode, false);
         }
     };
 
@@ -126,11 +129,11 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
 
 
     useEffect(() => {
-        // console.log(`change chipValues`);
-        // console.log({ selectedChip });
-        // const chip = chipValues.find((chip) => chip === selectedChip) || chipValues?.[0];
-        // chip > 0 && onClickChip(chip);
-        // chipValues && updateArrowsByChipValue(selectedChip);
+        console.log(`change chipValues`);
+        console.log({ selectedChip });
+        const chip = chipValues.find((chip) => chip === selectedChip) || chipValues?.[0];
+        chip > 0 && onClickChip(chip);
+        chipValues && updateArrowsByChipValue(selectedChip);
     }, [chipValues]);
 
     useEffect(() => {
@@ -209,38 +212,72 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
         const dataIndexes = Array.from(activeElements || []).map((element) => {
             return element?.getAttribute("data-index") || null;
         });
-        console.log({ dataIndexes })
+
         return dataIndexes;
     };
-    const updateSelectedChipBySlick = () => {
 
+    const updateSelectedChipBySlickWhenScroll = () => {
         const activeElements = sliderWrapperRef.current?.querySelectorAll(".slick-active");
-
-        const dataIndexes = getSlickActiveParentDataIndexes(sliderWrapperRef);
-
         const parentIndex = activeElements?.[activeElements.length - 1].getAttribute("data-index");
 
+        console.log(`updateSelectedChipBySlick parentIndex: ` + parentIndex);
+        sliderRef.current?.slickGoTo(parentIndex);
+
+        handleSelectChip(chipValues[parentIndex]);
+    }
+
+
+    const checkWhetherScrollEvent = () => {
+        const dataIndexes = getSlickActiveParentDataIndexes(sliderWrapperRef);
+        console.log({ dataIndexes });
         const chipIndex = chipValues.indexOf(selectedChip);
+
+        // setCurrenChipIndex(chipIndex);
+        // console.log(`updateSelectedChipBySlick chipIndex: ` + chipIndex);
 
         if (dataIndexes.includes(chipIndex.toString())) {
             return;
         }
-        sliderRef.current?.slickGoTo(parentIndex);
 
-        handleSelectChip(chipValues[parentIndex]);
+        updateSelectedChipBySlickWhenScroll();
 
     }
 
     const handleSleepMode = () => {
-        const chipIndex = chipValues.indexOf(selectedChip);
-        const currentSlideStore = StorageHelper.get<number>(`${localStorageKeys.currentChipSlide}`);
-        console.log("sleep mode: ");
-        console.log({ selectedChip, chipIndex, currentSlideStore });
-        console.log(`------------`);
-        sliderRef.current?.slickGoTo(currentSlideStore);
+        if (sliderRef.current) {
+            const chipIndex = chipValues.indexOf(selectedChip);
+            const currentSlideStore = StorageHelper.get<number>(`${localStorageKeys.currentChipSlide}`);
+            console.log("sleep mode: ");
+            console.log({ selectedChip, chipIndex, currentSlideStore });
+            console.log(`------------`);
+            sliderRef.current?.slickGoTo(currentSlideStore);
 
-        StorageHelper.set(localStorageKeys.isSleepMode, false);
+            const slickTrack = sliderRef.current?.innerSlider?.list.querySelector(".slick-track");
+            if (slickTrack) {
+                console.log(`translateX : ${StorageHelper.get<number>(`${localStorageKeys.currentChipSlideTransX}`)}`);
+                slickTrack.style.transform = `translateX(${StorageHelper.get<number>(`${localStorageKeys.currentChipSlideTransX}`)})`;
+            }
+        }
+
+        // StorageHelper.set(localStorageKeys.isSleepMode, false);
+
     }
+    const getTransformX = () => {
+        const slickTrack = sliderRef.current?.innerSlider?.list.querySelector('.slick-track');
+
+        if (slickTrack) {
+            const transformStyle = getComputedStyle(slickTrack).transform;
+
+            const matrix = transformStyle.match(/matrix.*\((.+)\)/);
+            if (matrix) {
+                const matrixValues = matrix[1].split(', ');
+                const translateX = parseFloat(matrixValues[4]);
+                console.log('TransformX value:', translateX);
+                return translateX;
+            }
+        }
+        return 0;
+    };
 
     const SliderSetting = {
         speed: SlidingTimeInMillisecond,
@@ -254,21 +291,29 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
         // slidesToScroll: 1,
         slidesToScroll: isPortrait ? 5 : 5,
         // draggable: true,
-        onSwipe: (direction) => {
+        onSwipe: () => {
         },
         beforeChange: (currentSlide: number, nextSlide: number) => {
             console.log({ currentSlide, nextSlide });
 
         },
-        afterChange: (currentSlide: number) => {
+        afterChange: (currentSlideRef: number) => {
+            console.log({ currentSlideRef, currentSlide });
+            if (currentSlideRef === currentSlide) {
+                return;
+            }
             const isSleepMode = StorageHelper.get<boolean>(`${localStorageKeys.isSleepMode}`);
+
             if (isSleepMode) {
                 return handleSleepMode();
             }
 
-            StorageHelper.set(localStorageKeys.currentChipSlide, currentSlide);
-            console.log("afterChange currentSlide : " + currentSlide);
-            updateSelectedChipBySlick();
+            console.log("afterChange currentSlide : " + currentSlideRef);
+            setCurrentSlide(currentSlideRef);
+            StorageHelper.set(localStorageKeys.currentChipSlide, currentSlideRef);
+            StorageHelper.set(localStorageKeys.currentChipSlideTransX, getTransformX());
+
+            checkWhetherScrollEvent();
         },
 
         onInit: () => {

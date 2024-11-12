@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useTranslator } from "../_shared/react-hooks/use-translator";
+import { useTranslator, useCurrentLanguage } from "../_shared/react-hooks/use-translator";
 import BackgroundComet from "../components/page-components/background-error";
 import { clearSession } from "../services/auth-service";
 import { ResourceTypes } from "../_shared/resources";
@@ -9,8 +9,7 @@ const TimeOut = () => {
     const { t } = useTranslator();
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(true);
-    const isPortrait = window.innerHeight > window.innerWidth;
-
+    const lang = useCurrentLanguage();
     useEffect(() => {
         setIsLoading(false);
         clearSession();
@@ -25,18 +24,14 @@ const TimeOut = () => {
         return <></>;
     }
     return (
-        <div className="error-page">
-            <div className="um-background">
-                <div className={`logo${isPortrait ? "" : "-landscape"}`} />
+        <div className={`error-page`}>
+            <div className={`logo`} />
 
-                <div className="star-bg" />
-                <div className="planet-center" />
-            </div>
+            <div className="star-bg" />
+            <div className="planet-center" />
             <BackgroundComet />
             <div className="timeout-spaceman" />
-            <p className={`errorOccurred-info break timeout-msg`}>
-                {t(`${ResourceTypes.INSTANT_GAME}.message_session_timeout`)}
-            </p>
+            <p className={`errorOccurred-info break timeout-msg ${lang}`}>{t(`${ResourceTypes.INSTANT_GAME}.message_session_timeout`)}</p>
         </div>
     );
 };

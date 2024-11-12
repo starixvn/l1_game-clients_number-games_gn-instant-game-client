@@ -14,6 +14,7 @@ const UMPage: React.FC = () => {
     const [startTime, setStartTime] = useState<string>(null);
     const [endTime, setEndTime] = useState<string>(null);
     const [isLoading, setIsLoading] = useState(true);
+    const isPortrait = window.innerHeight > window.innerWidth;
 
     useEffect(() => {
         if (router.isReady) {
@@ -34,14 +35,16 @@ const UMPage: React.FC = () => {
     }
     return (
         <div className="error-page">
-            <div className="um-background">
-                <div className="star-bg" />
-                <div className="planet-center" />
-            </div>
+            <div className={`logo`} />
+
+            <div className="star-bg" />
+            <div className="planet-center" />
             <BackgroundComet />
             <div className="um-spaceman" />
             <p className="um-title">
-                {t(`${ResourceTypes.COMMON}.message_sys_maintenance`)} <br /> {t(`${ResourceTypes.SABA_NUMBER}.message_um_title`)}
+                {t(`${ResourceTypes.COMMON}.message_sys_maintenance`)}
+                {isPortrait ? <br /> : <>&nbsp;</>}
+                {t(`${ResourceTypes.SABA_NUMBER}.message_um_title`)}
             </p>
         </div>
     );

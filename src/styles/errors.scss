@@ -1,13 +1,14 @@
 [data-theme="light"] .error-page {
-    --error-page-background: #061827;
+    // --error-page-background: #061827;
     --error-page-text-color: #fff;
     --error-page-text-highlight-color: #ffa825;
 }
 
 .error-page {
     position: relative;
-    width: 37.5rem;
-    height: 100%;
+    width: 812px;
+    height: 456px;
+
     margin: 0 auto;
     display: flex;
     align-items: center;
@@ -17,11 +18,16 @@
     line-height: 2.4rem;
     text-align: center;
     color: var(--error-page-text-color);
-    background-color: var(--error-page-background);
+
     overflow: hidden;
+    background-image: url("/static/images/bg-galaxy-landscape.webp?v=#{$version-image}");
+    opacity: 1;
 
     @media screen and (orientation: portrait) {
-        width: 100%;
+        width: 448px;
+        height: 734px;
+        background-image: url("/static/images/bg-galaxy.webp?v=#{$version-image}");
+        opacity: 1;
     }
 
     .error-background {
@@ -52,27 +58,35 @@
 // UM Page
 
 .um-title {
-    margin-bottom: 3rem;
-    margin-top: 3rem;
+    position: absolute;
     font-weight: 500;
     line-height: 1.5;
     font-size: 2.6rem;
+    bottom: 1rem;
 
     @media screen and (orientation: landscape) {
-        margin-top: -2rem;
         font-size: 2rem;
     }
 }
 
 .timeout-spaceman {
     position: absolute;
+    bottom: 16rem;
+
     transform: translate(0, 0);
     width: 34.8rem;
     height: 20.6rem;
     background-image: url("/static/images/error-page/1x/spaceman-timeout.png?v=#{$version-image}");
-    background-image: image-set(url("/static/images/error-page/1x/spaceman-timeout.png?v=#{$version-image}") 1x,
-        url("/static/images/error-page/2x/spaceman-timeout.png?v=#{$version-image}") 2x);
+    background-image: image-set(
+        url("/static/images/error-page/1x/spaceman-timeout.png?v=#{$version-image}") 1x,
+        url("/static/images/error-page/2x/spaceman-timeout.png?v=#{$version-image}") 2x
+    );
     animation: spin 9s linear infinite;
+
+    @media screen and (orientation: landscape) {
+        scale: 0.8;
+        bottom: 6rem;
+    }
 }
 
 .um-spaceman {
@@ -80,9 +94,16 @@
     transform: translate(0, 0);
     width: 34.8rem;
     height: 19.9rem;
+    @media screen and (orientation: landscape) {
+        top: 19rem;
+        scale: 0.8;
+    }
+
     background-image: url("/static/images/error-page/1x/spaceman-um.png?v=#{$version-image}");
-    background-image: image-set(url("/static/images/error-page/1x/spaceman-um.png?v=#{$version-image}") 1x,
-        url("/static/images/error-page/2x/spaceman-um.png?v=#{$version-image}") 2x);
+    background-image: image-set(
+        url("/static/images/error-page/1x/spaceman-um.png?v=#{$version-image}") 1x,
+        url("/static/images/error-page/2x/spaceman-um.png?v=#{$version-image}") 2x
+    );
     animation: spin 9s linear infinite;
 }
 
@@ -91,47 +112,61 @@
     z-index: 2;
 }
 
-.um-background {
-    position: relative;
-}
-
 .star-bg {
     position: absolute;
     left: 0;
-    top: -8rem;
-    width: 37.2rem;
-    height: 37.6rem;
+    width: 44.8rem;
+    height: 74rem;
     animation: star-bling 5s infinite;
     background-image: url("/static/images/error-page/1x/star-bg.png?v=#{$version-image}");
-    background-image: image-set(url("/static/images/error-page/1x/star-bg.png?v=#{$version-image}") 1x, url("/static/images/error-page/2x/star-bg.png?v=#{$version-image}") 2x);
+    background-image: image-set(
+        url("/static/images/error-page/1x/star-bg.png?v=#{$version-image}") 1x,
+        url("/static/images/error-page/2x/star-bg.png?v=#{$version-image}") 2x
+    );
+
+    @media screen and (orientation: landscape) {
+        width: 81.2rem;
+        height: 45.6rem;
+    }
 }
 
 .planet-center {
+    position: absolute;
+    top: 22rem;
     width: 37.2rem;
     height: 37.6rem;
+    scale: 1;
+
     background-image: url("/static/images/error-page/1x/planet-center.png?v=#{$version-image}");
-    background-image: image-set(url("/static/images/error-page/1x/planet-center.png?v=#{$version-image}") 1x,
-        url("/static/images/error-page/2x/planet-center.png?v=#{$version-image}") 2x);
+    background-image: image-set(
+        url("/static/images/error-page/1x/planet-center.png?v=#{$version-image}") 1x,
+        url("/static/images/error-page/2x/planet-center.png?v=#{$version-image}") 2x
+    );
+
+    @media screen and (orientation: landscape) {
+        top: 7rem;
+        opacity: 1;
+        width: 37.2rem;
+        height: 37.6rem;
+        scale: 0.75;
+    }
 }
 
 .logo {
     position: absolute;
-    top: -15rem;
-    left: 9rem;
-    width: 19.5rem;
-    height: 16.2rem;
-    scale: 0.6;
-    background-image: url("/static/images/splash-screen/1x/logo.png?v=#{$version-image}");
-}
-
-.logo-landscape {
-    position: absolute;
-    top: -7rem;
-    left: 10rem;
+    top: 1rem;
+    left: 13rem;
     width: 19.5rem;
     height: 16.2rem;
     scale: 0.5;
     background-image: url("/static/images/splash-screen/1x/logo.png?v=#{$version-image}");
+    @media screen and (orientation: landscape) {
+        top: -2rem;
+        left: 31rem;
+        width: 19.5rem;
+        height: 16.2rem;
+        scale: 0.65;
+    }
 }
 
 .um-moving-comet {
@@ -152,7 +187,10 @@
         width: 9.3rem;
         height: 8.9rem;
         background-image: url("/static/images/error-page/1x/comet-1.png?v=#{$version-image}");
-        background-image: image-set(url("/static/images/error-page/1x/comet-1.png") 1x, url("/static/images/error-page/2x/comet-1.png?v=#{$version-image}") 2x);
+        background-image: image-set(
+            url("/static/images/error-page/1x/comet-1.png") 1x,
+            url("/static/images/error-page/2x/comet-1.png?v=#{$version-image}") 2x
+        );
     }
 
     &.comet-2 {
@@ -162,7 +200,10 @@
         width: 6.5rem;
         height: 5.7rem;
         background-image: url("/static/images/error-page/1x/comet-2.png?v=#{$version-image}");
-        background-image: image-set(url("/static/images/error-page/1x/comet-2.png") 1x, url("/static/images/error-page/2x/comet-2.png?v=#{$version-image}") 2x);
+        background-image: image-set(
+            url("/static/images/error-page/1x/comet-2.png") 1x,
+            url("/static/images/error-page/2x/comet-2.png?v=#{$version-image}") 2x
+        );
         animation-delay: 1s;
     }
 
@@ -173,7 +214,10 @@
         width: 6.3rem;
         height: 5.6rem;
         background-image: url("/static/images/error-page/1x/comet-3.png?v=#{$version-image}");
-        background-image: image-set(url("/static/images/error-page/1x/comet-3.png?v=#{$version-image}") 1x, url("/static/images/error-page/2x/comet-3.png?v=#{$version-image}") 2x);
+        background-image: image-set(
+            url("/static/images/error-page/1x/comet-3.png?v=#{$version-image}") 1x,
+            url("/static/images/error-page/2x/comet-3.png?v=#{$version-image}") 2x
+        );
         animation-delay: 1.5s;
     }
 
@@ -184,7 +228,10 @@
         width: 5.2rem;
         height: 4.8rem;
         background-image: url("/static/images/error-page/1x/comet-4.png?v=#{$version-image}");
-        background-image: image-set(url("/static/images/error-page/1x/comet-4.png") 1x, url("/static/images/error-page/2x/comet-4.png?v=#{$version-image}") 2x);
+        background-image: image-set(
+            url("/static/images/error-page/1x/comet-4.png") 1x,
+            url("/static/images/error-page/2x/comet-4.png?v=#{$version-image}") 2x
+        );
         animation-delay: 2s;
     }
 }
@@ -192,12 +239,15 @@
 .planet-small {
     position: absolute;
     z-index: 2;
-    top: 15rem;
+    top: 25rem;
     left: 6rem;
     width: 22.9rem;
     height: 22.8rem;
     background-image: url("/static/images/error-page/1x/planet.png?v=#{$version-image}");
-    background-image: image-set(url("/static/images/error-page/1x/planet.png?v=#{$version-image}") 1x, url("/static/images/error-page/2x/planet.png?v=#{$version-image}") 2x);
+    background-image: image-set(
+        url("/static/images/error-page/1x/planet.png?v=#{$version-image}") 1x,
+        url("/static/images/error-page/2x/planet.png?v=#{$version-image}") 2x
+    );
 }
 
 // 404 Page
@@ -207,7 +257,10 @@
     width: 9.2rem;
     height: 12.6rem;
     background-image: url("/static/images/error-page/1x/4.png?v=#{$version-image}");
-    background-image: image-set(url("/static/images/error-page/1x/4.png?v=#{$version-image}") 1x, url("/static/images/error-page/2x/4.png?v=#{$version-image}") 2x);
+    background-image: image-set(
+        url("/static/images/error-page/1x/4.png?v=#{$version-image}") 1x,
+        url("/static/images/error-page/2x/4.png?v=#{$version-image}") 2x
+    );
 }
 
 .number-4-left {
@@ -233,10 +286,19 @@
     padding-right: 2rem;
 
     &.timeout-msg {
-        margin-top: 2rem;
+        position: absolute;
+        bottom: 2rem;
+        padding: 0 6rem;
+
+        &.en {
+            padding: 0 4rem;
+        }
+        &.th {
+            padding: 0 8rem;
+        }
 
         @media screen and (orientation: landscape) {
-            margin: -5rem 2rem 0 2rem;
+            bottom: 1rem;
         }
     }
 
@@ -256,7 +318,6 @@
 }
 
 @keyframes star-bling {
-
     0%,
     100% {
         opacity: 0.5;
@@ -268,7 +329,6 @@
 }
 
 @keyframes comet-move {
-
     20%,
     100% {
         opacity: 0;
@@ -285,7 +345,6 @@
 }
 
 @keyframes top-to-bottom {
-
     0%,
     100% {
         transform: translateY(0);

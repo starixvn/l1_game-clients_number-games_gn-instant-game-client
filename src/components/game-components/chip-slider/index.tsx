@@ -1,9 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import Slider from "react-slick";
 import {
-    PlayerContextModel,
     SystemEventActionType,
-    usePlayerContext,
     useSettingContext,
     useSystemContext,
     useSystemDispatch,
@@ -30,11 +28,11 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
     const [slidesToShow, setSlidesToShow] = useState(slideToShowConstant.portrait);
     const settingContext = useSettingContext();
     const chipSettings = settingContext.chipSettings;
-    const [isSliding, setIsSliding] = useState(false);
+    const [isFirstLoad, setIsFirstLoad] = useState(false);
+    const [isScrolling, setIsScrolling] = useState(false);
+
     let sliderRef = useRef<any>(null);
     let sliderWrapperRef = useRef<any>(null);
-    const [currentSlide, setCurrentSlide] = useState(0);
-    const [currenChipIndex, setCurrenChipIndex] = useState(0);
 
     const [slickListStyle, setSlickListStyle] = useState({
         paddingLeft: 0,
@@ -42,7 +40,6 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
     });
 
     const playClickChip = useSelectChipSound();
-
 
     const chipValues = useMemo(() => {
         if (gameConfigs && userStakeLevel) {
@@ -57,49 +54,49 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
         const checkOrientation = () => {
             const { portrait, landscape } = slideToShowConstant;
             setSlidesToShow(isPortrait ? portrait : landscape);
-
         };
+
+        setIsFirstLoad(true);
 
         checkOrientation();
 
         window.addEventListener("resize", checkOrientation);
 
-        if (sliderRef) {
-            const chipIndex = chipValues.indexOf(selectedChip);
-            sliderRef.current?.slickGoTo(chipIndex);
-            updateArrowsByChipValue(selectedChip);
-        }
-
         return () => {
             StorageHelper.set(localStorageKeys.isSleepMode, document.hidden);;
             window.removeEventListener("resize", checkOrientation);
         }
-
     }, []);
 
-    const onClickChip = (chipValue: number) => {
+    const onClickChip = (chipValue: number, isManualCLick = true) => {
         console.log(`onClickChip: ` + chipValue);
         const chipIndex = chipValues.indexOf(chipValue);
 
         const currentSlide = sliderRef.current?.innerSlider.state.currentSlide;
 
         if (chipIndex + 1 - slidesToShow >= currentSlide) {
-            disableSelectChipWhenSliding();
             sliderRef.current?.slickGoTo(chipIndex + 2 - slidesToShow);
         }
 
         if (chipIndex - 1 <= currentSlide) {
-            disableSelectChipWhenSliding();
             sliderRef.current?.slickGoTo(chipIndex - 1);
         }
 
         handleSelectChip(chipValue);
         updateSlickListStyle(chipIndex);
+
+        if (isManualCLick) {
+            setIsScrolling(false);
+
+        }
+        else {
+            handleAfterChangeSlider();
+        }
     };
 
     const handleSelectChip = (chipValue: number) => {
         console.log({ chipValue, selectedChip });
-        if (selectedChip !== chipValue) {
+        if (selectedChip !== chipValue && !StorageHelper.get<boolean>(`${localStorageKeys.isSleepMode}`)) {
             dispatch({
                 type: SystemEventActionType.SELECT_CHIP,
                 payload: {
@@ -107,42 +104,23 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
                 },
             });
             playClickChip();
-            StorageHelper.set(localStorageKeys.isSleepMode, false);
         }
     };
 
     const updateArrowsByChipValue = (chipValue: number) => {
         const chipIndex = chipValues.indexOf(chipValue);
 
-        chipIndex <= 0 ? setEnabledPrevBtn(false) : setEnabledPrevBtn(true);
-        chipIndex === chipValues.length - 1 ? setEnabledNextBtn(false) : setEnabledNextBtn(true);
+        setEnabledPrevBtn(chipIndex > 0);
+        setEnabledNextBtn(chipIndex !== chipValues.length - 1);
     };
-
-    const disableSelectChipWhenSliding = () => {
-        setIsSliding(true);
-
-        const slidingTimeOut = setTimeout(() => {
-            setIsSliding(false);
-            clearTimeout(slidingTimeOut);
-        }, SlidingTimeInMillisecond);
-    };
-
-
-    useEffect(() => {
-        console.log(`change chipValues`);
-        console.log({ selectedChip });
-        const chip = chipValues.find((chip) => chip === selectedChip) || chipValues?.[0];
-        chip > 0 && onClickChip(chip);
-        chipValues && updateArrowsByChipValue(selectedChip);
-    }, [chipValues]);
 
     useEffect(() => {
         console.log(`change selectedChip`);
         console.log({ selectedChip });
         const chip = chipValues.find((chip) => chip === selectedChip) || chipValues?.[0];
-        chip > 0 && onClickChip(chip);
+        chip > 0 && onClickChip(chip, false);
         chipValues && updateArrowsByChipValue(selectedChip);
-    }, [selectedChip]);
+    }, [chipValues, selectedChip]);
 
     const findChipSetting = (value) => {
         return chipSettings?.find((c) => c.value === value);
@@ -160,17 +138,15 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
         }
     }
 
-    const SamplePrevArrow = (props) => {
-        const { className, onClick } = props;
+    const PrevArrow = () => {
         const onClickPrev = () => {
-            console.log({ props });
-            if (enabledPrevBtn && !isSliding) {
+            if (enabledPrevBtn && !isScrolling) {
                 const chipIndex = chipValues.indexOf(selectedChip);
                 const newSelectedChip = chipValues[chipIndex - 1];
 
-                sliderRef.current?.slickGoTo(chipIndex - 1);
+                sliderRef.current?.slickGoTo(chipIndex - slidesToShow + 1);
                 handleSelectChip(newSelectedChip);
-                disableSelectChipWhenSliding();
+                setIsScrolling(false);
             }
         };
 
@@ -183,17 +159,15 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
         );
     }
 
-    const SampleNextArrow = (props) => {
-        const { className, onClick } = props;
+    const NextArrow = () => {
         const onClickNext = () => {
-            console.log({ props });
-            if (enabledNextBtn && !isSliding) {
+            if (enabledNextBtn && !isScrolling) {
                 const chipIndex = chipValues.indexOf(selectedChip);
                 const newSelectedChip = chipValues[chipIndex + 1];
 
-                sliderRef.current?.slickGoTo(chipIndex + 1);
+                sliderRef.current?.slickGoTo(chipIndex);
                 handleSelectChip(newSelectedChip);
-                disableSelectChipWhenSliding();
+                setIsScrolling(false);
             }
         };
 
@@ -206,78 +180,69 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
         );
     }
 
-    const getSlickActiveParentDataIndexes = (sliderWrapperRef: React.RefObject<HTMLDivElement>): (string | null)[] => {
+    const handleScrollChips = () => {
         const activeElements = sliderWrapperRef.current?.querySelectorAll(".slick-active");
-
-        const dataIndexes = Array.from(activeElements || []).map((element) => {
-            return element?.getAttribute("data-index") || null;
-        });
-
-        return dataIndexes;
-    };
-
-    const updateSelectedChipBySlickWhenScroll = () => {
-        const activeElements = sliderWrapperRef.current?.querySelectorAll(".slick-active");
-        const parentIndex = activeElements?.[activeElements.length - 1].getAttribute("data-index");
+        console.log(activeElements);
+        const parentIndex = isFirstLoad ? 0 : activeElements?.[activeElements.length - 1].getAttribute("data-index");
 
         console.log(`updateSelectedChipBySlick parentIndex: ` + parentIndex);
         sliderRef.current?.slickGoTo(parentIndex);
 
         handleSelectChip(chipValues[parentIndex]);
+        setIsScrolling(false);
+        if (isFirstLoad) {
+            setIsFirstLoad(false);
+        }
     }
 
+    const isPrevOrNextEvent = () => {
+        const activeElements = (sliderWrapperRef as React.RefObject<HTMLDivElement>).current?.querySelectorAll(".slick-active");
 
-    const checkWhetherScrollEvent = () => {
-        const dataIndexes = getSlickActiveParentDataIndexes(sliderWrapperRef);
-        console.log({ dataIndexes });
+        const dataIndexes = Array.from(activeElements || []).map((element) => {
+            return element?.getAttribute("data-index") || null;
+        });
+
         const chipIndex = chipValues.indexOf(selectedChip);
+        console.log({ dataIndexes, isPrevOrNextEvent: dataIndexes.includes(chipIndex.toString()) });
 
-        // setCurrenChipIndex(chipIndex);
-        // console.log(`updateSelectedChipBySlick chipIndex: ` + chipIndex);
-
-        if (dataIndexes.includes(chipIndex.toString())) {
-            return;
-        }
-
-        updateSelectedChipBySlickWhenScroll();
-
+        return dataIndexes.includes(chipIndex.toString());
     }
 
     const handleSleepMode = () => {
         if (sliderRef.current) {
-            const chipIndex = chipValues.indexOf(selectedChip);
             const currentSlideStore = StorageHelper.get<number>(`${localStorageKeys.currentChipSlide}`);
+            sliderRef.current?.slickGoTo(currentSlideStore);
+
+            const chipIndex = chipValues.indexOf(selectedChip);
+            handleSelectChip(chipValues[chipIndex]);
+
+            const rect = sliderWrapperRef.current?.querySelector(`[data-index="${chipIndex}"]`)?.getBoundingClientRect();
+
+            if (rect) {
+                console.log({ rect });
+                const isInView = rect?.top >= 0 && rect?.bottom <= window.innerHeight;
+
+                console.log({ isInView });
+                isInView && StorageHelper.set(localStorageKeys.isSleepMode, false);
+            }
+
+            setTimeout(() => {
+                StorageHelper.set(localStorageKeys.isSleepMode, false);
+            }, 500);
+
             console.log("sleep mode: ");
             console.log({ selectedChip, chipIndex, currentSlideStore });
             console.log(`------------`);
-            sliderRef.current?.slickGoTo(currentSlideStore);
-
-            const slickTrack = sliderRef.current?.innerSlider?.list.querySelector(".slick-track");
-            if (slickTrack) {
-                console.log(`translateX : ${StorageHelper.get<number>(`${localStorageKeys.currentChipSlideTransX}`)}`);
-                slickTrack.style.transform = `translateX(${StorageHelper.get<number>(`${localStorageKeys.currentChipSlideTransX}`)})`;
-            }
         }
-
-        // StorageHelper.set(localStorageKeys.isSleepMode, false);
-
     }
-    const getTransformX = () => {
-        const slickTrack = sliderRef.current?.innerSlider?.list.querySelector('.slick-track');
 
-        if (slickTrack) {
-            const transformStyle = getComputedStyle(slickTrack).transform;
-
-            const matrix = transformStyle.match(/matrix.*\((.+)\)/);
-            if (matrix) {
-                const matrixValues = matrix[1].split(', ');
-                const translateX = parseFloat(matrixValues[4]);
-                console.log('TransformX value:', translateX);
-                return translateX;
-            }
+    const handleAfterChangeSlider = () => {
+        if (isPrevOrNextEvent()) {
+            return;
         }
-        return 0;
-    };
+
+        return handleScrollChips();
+    }
 
     const SliderSetting = {
         speed: SlidingTimeInMillisecond,
@@ -287,43 +252,44 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
         slidesToShow,
         arrows: true,
         variableWidth: true,
+        pauseOnFocus: true,
+        pauseOnHover: true,
         // touchMove: !isPortrait,
         // slidesToScroll: 1,
-        slidesToScroll: isPortrait ? 5 : 5,
+        slidesToScroll: slidesToShow,
         // draggable: true,
+        touchThreshold: 10,
+        swipeEvent: (swipeDirection) => {
+            setIsScrolling(true);
+            console.log({ swipeDirection });
+        },
         onSwipe: () => {
+            // alert("onSwipe");
         },
         beforeChange: (currentSlide: number, nextSlide: number) => {
-            console.log({ currentSlide, nextSlide });
+            // console.log({ currentSlide, nextSlide });
 
         },
-        afterChange: (currentSlideRef: number) => {
-            console.log({ currentSlideRef, currentSlide });
-            if (currentSlideRef === currentSlide) {
-                return;
-            }
-            const isSleepMode = StorageHelper.get<boolean>(`${localStorageKeys.isSleepMode}`);
-
-            if (isSleepMode) {
+        afterChange: (currentSlide: number) => {
+            console.log("afterChange currentSlide : " + currentSlide);
+            StorageHelper.set(localStorageKeys.currentChipSlide, currentSlide);
+            if (StorageHelper.get<boolean>(`${localStorageKeys.isSleepMode}`)) {
                 return handleSleepMode();
             }
 
-            console.log("afterChange currentSlide : " + currentSlideRef);
-            setCurrentSlide(currentSlideRef);
-            StorageHelper.set(localStorageKeys.currentChipSlide, currentSlideRef);
-            StorageHelper.set(localStorageKeys.currentChipSlideTransX, getTransformX());
 
-            checkWhetherScrollEvent();
+            if (isScrolling) {
+                handleScrollChips();
+            }
         },
-
         onInit: () => {
             // console.log("onInit");
         },
         onReInit: () => {
             // console.log("onReInit");
         },
-        nextArrow: <SampleNextArrow />,
-        prevArrow: <SamplePrevArrow />
+        nextArrow: <NextArrow />,
+        prevArrow: <PrevArrow />
     };
 
     return (

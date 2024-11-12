@@ -14,6 +14,7 @@ jest.mock("../../../../_shared/react-contexts/game-state-context/game-state-cont
 
 jest.mock("../../../../_shared/react-hooks/use-translator", () => ({
     useSNTranslate: jest.fn().mockReturnValue({ t: (key: string) => key }),
+    useCurrentLanguage: jest.fn().mockReturnValue("en"),
 }));
 
 jest.mock("react", () => ({

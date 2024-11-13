@@ -86,7 +86,6 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
 
         if (isManualCLick) {
             setIsScrolling(false);
-
         }
         else {
             handleAfterChangeSlider();
@@ -133,76 +132,53 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
             setSlickListStyle({ paddingLeft: 0, paddingRight: 0 });
         }
     }
+    const PrevArrow: React.FC<{ currentSlide: number }> = ({ currentSlide }) => (
+        <span
+            id="icon-chip-slider-pre"
+            className={`${Styles["icon-prev"]} ${!enabledPrevBtn && Styles["disabled"]}`}
+            onClick={() => {
+                if (enabledPrevBtn && !isScrolling) {
+                    sliderRef.current?.slickGoTo(currentSlide - 1);
+                    const chipIndex = chipValues.indexOf(selectedChip);
+                    handleSelectChip(chipValues[chipIndex - 1]);
+                    setIsScrolling(false);
+                    setEnabledNextBtn(false);
+                    setEnabledPrevBtn(false);
+                }
+            }}
+        ></span>
+    );
 
-    const PrevArrow = () => {
-        const onClickPrev = () => {
-            if (enabledPrevBtn && !isScrolling) {
-                const chipIndex = chipValues.indexOf(selectedChip);
-                const newSelectedChip = chipValues[chipIndex - 1];
-
-                sliderRef.current?.slickGoTo(chipIndex - slidesToShow + 1);
-                handleSelectChip(newSelectedChip);
-                setIsScrolling(false);
-                setEnabledNextBtn(false);
-                setEnabledPrevBtn(false);
-            }
-        };
-
-        return (
-            <span
-                id="icon-chip-slider-pre"
-                className={`${Styles["icon-prev"]} ${!enabledPrevBtn && Styles["disabled"]}`}
-                onClick={onClickPrev}
-            ></span>
-        );
-    }
-
-    const NextArrow = () => {
-        const onClickNext = () => {
-            if (enabledNextBtn && !isScrolling) {
-                const chipIndex = chipValues.indexOf(selectedChip);
-                const newSelectedChip = chipValues[chipIndex + 1];
-
-                sliderRef.current?.slickGoTo(chipIndex);
-                handleSelectChip(newSelectedChip);
-                setIsScrolling(false);
-                setEnabledNextBtn(false);
-                setEnabledPrevBtn(false);
-            }
-        };
-
-        return (
-            <span
-                id="icon-chip-slider-next"
-                className={`${Styles["icon-next"]} ${!enabledNextBtn && Styles["disabled"]} : ""}`}
-                onClick={onClickNext}
-            ></span>
-        );
-    }
+    const NextArrow: React.FC<{ currentSlide: number }> = ({ currentSlide }) => (
+        <span
+            id="icon-chip-slider-next"
+            className={`${Styles["icon-next"]} ${!enabledNextBtn && Styles["disabled"]}`}
+            onClick={() => {
+                if (enabledNextBtn && !isScrolling) {
+                    sliderRef.current?.slickGoTo(currentSlide + 1);
+                    const chipIndex = chipValues.indexOf(selectedChip);
+                    handleSelectChip(chipValues[chipIndex + 1]);
+                    setIsScrolling(false);
+                    setEnabledNextBtn(false);
+                    setEnabledPrevBtn(false);
+                }
+            }}
+        ></span>
+    );
 
     const handleScrollChips = () => {
-        const activeElements = sliderWrapperRef.current?.querySelectorAll(".slick-active");
-        const parentIndex = isFirstLoad ? 0 : activeElements?.[activeElements.length - 1].getAttribute("data-index");
-
+        const activeElements = sliderWrapperRef.current?.querySelectorAll(".slick-active") || [];
+        const parentIndex = isFirstLoad ? 0 : parseInt(activeElements[activeElements.length - 1]?.getAttribute("data-index") || "0", 10);
         sliderRef.current?.slickGoTo(parentIndex);
-
         handleSelectChip(chipValues[parentIndex]);
         setIsScrolling(false);
-        if (isFirstLoad) {
-            setIsFirstLoad(false);
-        }
-    }
+        setIsFirstLoad(false);
+    };
 
     const isPrevOrNextEvent = () => {
-        const activeElements = (sliderWrapperRef as React.RefObject<HTMLDivElement>).current?.querySelectorAll(".slick-active");
-
-        const dataIndexes = Array.from(activeElements || []).map((element) => {
-            return element?.getAttribute("data-index") || null;
-        });
-
-        const chipIndex = chipValues.indexOf(selectedChip);
-
-        return dataIndexes.includes(chipIndex.toString());
+        const activeElements = Array.from((sliderWrapperRef as React.RefObject<HTMLDivElement>).current?.querySelectorAll(".slick-active") || []);
+        const dataIndexes = activeElements.map((element) => element.getAttribute("data-index"));
+        return dataIndexes.includes(chipValues.indexOf(selectedChip).toString());
     }
 
     const handleSleepMode = () => {
@@ -227,12 +203,10 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
     }
 
     const handleAfterChangeSlider = () => {
-        if (isPrevOrNextEvent()) {
-            return;
+        if (!isPrevOrNextEvent()) {
+            handleScrollChips();
         }
-
-        return handleScrollChips();
-    }
+    };
 
     const SliderSetting = {
         speed: SlidingTimeInMillisecond,
@@ -245,20 +219,16 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
         pauseOnHover: true,
         slidesToScroll: slidesToShow,
         touchThreshold: 10,
-        swipeEvent: (swipeDirection) => {
-            setIsScrolling(true);
-        },
+        swipeEvent: () => setIsScrolling(true),
         afterChange: (currentSlide: number) => {
             StorageHelper.set(localStorageKeys.currentChipSlide, currentSlide);
-            if (StorageHelper.get<boolean>(`${localStorageKeys.isSleepMode}`)) {
-                return handleSleepMode();
+            if (StorageHelper.get<boolean>(localStorageKeys.isSleepMode)) {
+                handleSleepMode();
             }
-            if (isScrolling) {
-                handleScrollChips();
-            }
+            isScrolling && handleScrollChips();
         },
-        nextArrow: <NextArrow />,
-        prevArrow: <PrevArrow />
+        nextArrow: <NextArrow currentSlide={0} />,
+        prevArrow: <PrevArrow currentSlide={0} />,
     };
 
     return (

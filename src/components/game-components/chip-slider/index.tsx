@@ -69,7 +69,6 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
     }, []);
 
     const onClickChip = (chipValue: number, isManualCLick = true) => {
-        console.log(`onClickChip: ` + chipValue);
         const chipIndex = chipValues.indexOf(chipValue);
 
         const currentSlide = sliderRef.current?.innerSlider.state.currentSlide;
@@ -95,7 +94,6 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
     };
 
     const handleSelectChip = (chipValue: number) => {
-        console.log({ chipValue, selectedChip });
         if (selectedChip !== chipValue && !StorageHelper.get<boolean>(`${localStorageKeys.isSleepMode}`)) {
             dispatch({
                 type: SystemEventActionType.SELECT_CHIP,
@@ -115,8 +113,6 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
     };
 
     useEffect(() => {
-        console.log(`change selectedChip`);
-        console.log({ selectedChip });
         const chip = chipValues.find((chip) => chip === selectedChip) || chipValues?.[0];
         chip > 0 && onClickChip(chip, false);
         chipValues && updateArrowsByChipValue(selectedChip);
@@ -186,10 +182,8 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
 
     const handleScrollChips = () => {
         const activeElements = sliderWrapperRef.current?.querySelectorAll(".slick-active");
-        console.log(activeElements);
         const parentIndex = isFirstLoad ? 0 : activeElements?.[activeElements.length - 1].getAttribute("data-index");
 
-        console.log(`updateSelectedChipBySlick parentIndex: ` + parentIndex);
         sliderRef.current?.slickGoTo(parentIndex);
 
         handleSelectChip(chipValues[parentIndex]);
@@ -207,7 +201,6 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
         });
 
         const chipIndex = chipValues.indexOf(selectedChip);
-        console.log({ dataIndexes, isPrevOrNextEvent: dataIndexes.includes(chipIndex.toString()) });
 
         return dataIndexes.includes(chipIndex.toString());
     }
@@ -223,20 +216,13 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
             const rect = sliderWrapperRef.current?.querySelector(`[data-index="${chipIndex}"]`)?.getBoundingClientRect();
 
             if (rect) {
-                console.log({ rect });
                 const isInView = rect?.top >= 0 && rect?.bottom <= window.innerHeight;
-
-                console.log({ isInView });
                 isInView && StorageHelper.set(localStorageKeys.isSleepMode, false);
             }
 
             setTimeout(() => {
                 StorageHelper.set(localStorageKeys.isSleepMode, false);
             }, 500);
-
-            console.log("sleep mode: ");
-            console.log({ selectedChip, chipIndex, currentSlideStore });
-            console.log(`------------`);
         }
     }
 
@@ -252,45 +238,24 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
         speed: SlidingTimeInMillisecond,
         infinite: false,
         adaptiveHeight: true,
-        // swipeToSlide: true,
         slidesToShow,
         arrows: true,
         variableWidth: true,
         pauseOnFocus: true,
         pauseOnHover: true,
-        // touchMove: !isPortrait,
-        // slidesToScroll: 1,
         slidesToScroll: slidesToShow,
-        // draggable: true,
         touchThreshold: 10,
         swipeEvent: (swipeDirection) => {
             setIsScrolling(true);
-            console.log({ swipeDirection });
-        },
-        onSwipe: () => {
-            // alert("onSwipe");
-        },
-        beforeChange: (currentSlide: number, nextSlide: number) => {
-            // console.log({ currentSlide, nextSlide });
-
         },
         afterChange: (currentSlide: number) => {
-            console.log("afterChange currentSlide : " + currentSlide);
             StorageHelper.set(localStorageKeys.currentChipSlide, currentSlide);
             if (StorageHelper.get<boolean>(`${localStorageKeys.isSleepMode}`)) {
                 return handleSleepMode();
             }
-
-
             if (isScrolling) {
                 handleScrollChips();
             }
-        },
-        onInit: () => {
-            // console.log("onInit");
-        },
-        onReInit: () => {
-            // console.log("onReInit");
         },
         nextArrow: <NextArrow />,
         prevArrow: <PrevArrow />

@@ -41,14 +41,15 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
 
     const playClickChip = useSelectChipSound();
 
+
     const chipValues = useMemo(() => {
         if (gameConfigs && userStakeLevel) {
             const maxBet = Math.min(userStakeLevel.maxBet, gameConfigs.maxBet);
             const minBet = Math.max(userStakeLevel.minBet, gameConfigs.minBet);
-            return gameConfigs.chips?.map((chip) => +chip).filter((value) => value >= minBet && value <= maxBet) || [];
+            return gameConfigs.chips?.map(Number).filter((value) => value >= minBet && value <= maxBet) || [];
         }
         return [];
-    }, [gameConfigs?.maxBet, gameConfigs?.minBet, gameConfigs?.chips, userStakeLevel]);
+    }, [gameConfigs, userStakeLevel]);
 
     useEffect(() => {
         const checkOrientation = () => {
@@ -57,16 +58,14 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
         };
 
         setIsFirstLoad(true);
-
         checkOrientation();
-
         window.addEventListener("resize", checkOrientation);
 
         return () => {
-            StorageHelper.set(localStorageKeys.isSleepMode, document.hidden);;
+            StorageHelper.set(localStorageKeys.isSleepMode, document.hidden);
             window.removeEventListener("resize", checkOrientation);
-        }
-    }, []);
+        };
+    }, [isPortrait]);
 
     const onClickChip = (chipValue: number, isManualCLick = true) => {
         const chipIndex = chipValues.indexOf(chipValue);
@@ -122,16 +121,15 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
     };
 
     const updateSlickListStyle = (chipIndex: number) => {
-        if (chipIndex === 0) {
-            setSlickListStyle({ paddingLeft: 0, paddingRight: 1 });
+        setSlickListStyle(
+            chipIndex === 0
+                ? { paddingLeft: 0, paddingRight: 1 }
+                : chipIndex === chipValues.length - 1
+                    ? { paddingLeft: 2, paddingRight: 0 }
+                    : { paddingLeft: 0, paddingRight: 0 }
+        );
+    };
 
-        } else if (chipIndex === chipValues.length - 1) {
-            setSlickListStyle({ paddingLeft: 2, paddingRight: 0 });
-        }
-        else {
-            setSlickListStyle({ paddingLeft: 0, paddingRight: 0 });
-        }
-    }
     const PrevArrow: React.FC<{ currentSlide: number }> = ({ currentSlide }) => (
         <span
             id="icon-chip-slider-pre"
@@ -168,11 +166,10 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
 
     const handleScrollChips = () => {
         const activeElements = sliderWrapperRef.current?.querySelectorAll(".slick-active") || [];
-        const parentIndex = isFirstLoad ? 0 : parseInt(activeElements[activeElements.length - 1]?.getAttribute("data-index") || "0", 10);
+        const parentIndex = parseInt(activeElements[activeElements.length - 1]?.getAttribute("data-index") || "0", 10);
         sliderRef.current?.slickGoTo(parentIndex);
         handleSelectChip(chipValues[parentIndex]);
         setIsScrolling(false);
-        setIsFirstLoad(false);
     };
 
     const isPrevOrNextEvent = () => {
@@ -203,9 +200,11 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
     }
 
     const handleAfterChangeSlider = () => {
-        if (!isPrevOrNextEvent()) {
+        if (!isPrevOrNextEvent() && !isFirstLoad) {
             handleScrollChips();
         }
+
+        setIsFirstLoad(false);
     };
 
     const SliderSetting = {

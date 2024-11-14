@@ -269,6 +269,7 @@
         word-wrap: break-word;
         text-align: left !important;
         padding-left: 0.8rem;
+
         @media screen and (orientation: landscape) {
             padding-left: 1.5rem;
             width: 12rem;
@@ -282,6 +283,7 @@
         gap: 10px;
         display: flex;
         padding-left: 0.8rem;
+
         @media screen and (orientation: landscape) {
             padding-left: 1.5rem;
         }
@@ -404,7 +406,7 @@
     background: rgba(0, 0, 0, 0.8) !important;
     height: 25rem;
     width: 41rem;
-    overflow-x: scroll;
+    overflow-x: hidden;
     overflow-y: hidden;
 }
 
@@ -493,7 +495,7 @@
     .scoreboard {
         height: 29rem;
         width: 77rem;
-        overflow-x: scroll;
+        overflow-x: hidden;
         overflow-y: hidden;
     }
 }

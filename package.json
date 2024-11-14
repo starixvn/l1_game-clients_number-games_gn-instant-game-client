@@ -26,6 +26,7 @@
         "@sentry/nextjs": "6.19.6",
         "@tolgee/format-icu": "^5.28.6",
         "@tolgee/react": "^5.28.6",
+        "@use-gesture/react": "^10.3.1",
         "axios": "^1.6.8",
         "base64-string": "^1.1.2",
         "interweave": "^13.1.0",

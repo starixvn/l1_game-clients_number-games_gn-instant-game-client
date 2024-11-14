@@ -2,6 +2,7 @@ import { Attributes, CSSProperties, Component, ComponentType, HTMLAttributes, Re
 import styles from "./scoreboard.module.scss";
 import { chunk } from "./utilities";
 import React from "react";
+import SwipeScrollGrid from "./swipe-scroll-grid";
 
 export type ScoreboardProps<Round> = {
     arrange: (data: unknown[], scoreboard: unknown) => unknown[];
@@ -21,48 +22,16 @@ export type ScoreboardItemProps<Round> = {
     scoreboard?: Scoreboard<Round>;
 };
 
-type HorizontalScrollableState = {
-    isDragging: boolean;
-    startX: number;
-    scrollLeft: number;
-};
 
-type ScoreboardState = HorizontalScrollableState;
-export class Scoreboard<Round> extends Component<ScoreboardProps<Round>, ScoreboardState> {
+export class Scoreboard<Round> extends Component<ScoreboardProps<Round>> {
     private scrollableDivRef: React.RefObject<HTMLDivElement>;
     private actualColumns: number;
 
     constructor(props) {
         super(props);
         this.scrollableDivRef = React.createRef();
-        this.state = { isDragging: false, scrollLeft: 0, startX: 0 };
     }
 
-    handleMouseDown = (e: React.MouseEvent) => {
-        this.setState({ isDragging: true });
-        if (this.scrollableDivRef.current) {
-            this.setState({
-                startX: e.pageX - this.scrollableDivRef.current.offsetLeft,
-                scrollLeft: this.scrollableDivRef.current.scrollLeft,
-            });
-        }
-    };
-
-    handleMouseLeave = () => {
-        this.setState({ isDragging: false });
-    };
-
-    handleMouseUp = () => {
-        this.setState({ isDragging: false });
-    };
-
-    handleMouseMove = (e: React.MouseEvent) => {
-        if (!this.state.isDragging || !this.scrollableDivRef.current) return;
-        e.preventDefault();
-        const x = e.pageX - this.scrollableDivRef.current.offsetLeft;
-        const walk = (x - this.state.startX) * 2;
-        this.scrollableDivRef.current.scrollLeft = this.state.scrollLeft - walk;
-    };
 
     static defaultProps: Partial<ScoreboardProps<unknown>> = {
         column: 17,
@@ -141,48 +110,45 @@ export class Scoreboard<Round> extends Component<ScoreboardProps<Round>, Scorebo
 
         return (
             <div
-                ref={this.scrollableDivRef}
                 className={`${styles.scoreboard} ${className}`}
                 {...htmlProps}
                 data-testid="scoreboard"
-                onMouseDown={this.handleMouseDown}
-                onMouseLeave={this.handleMouseLeave}
-                onMouseUp={this.handleMouseUp}
-                onMouseMove={this.handleMouseMove}
             >
-                {groupItems.map((items: Round[], index: number) => {
-                    const rowByGroup = (originalRow / block) >> 0;
-                    const parentColumn = (index / rowByGroup + 1) >> 0;
-                    const row = (index % rowByGroup) + 1;
-                    const style: CSSProperties = {
-                        gridColumnStart: parentColumn,
-                        gridRowStart: row,
-                    };
+                <SwipeScrollGrid>
+                    {groupItems.map((items: Round[], index: number) => {
+                        const rowByGroup = (originalRow / block) >> 0;
+                        const parentColumn = (index / rowByGroup + 1) >> 0;
+                        const row = (index % rowByGroup) + 1;
+                        const style: CSSProperties = {
+                            gridColumnStart: parentColumn,
+                            gridRowStart: row,
+                        };
 
-                    const classNames = `scoreboard-block ${styles["scoreboard-block"]} ${blockClassName}`;
-                    return (
-                        <div className={classNames} key={index} style={style}>
-                            {items.map((round, index) => {
-                                const column = (index / block + 1) >> 0;
-                                const row = (index % block) + 1;
-                                const style: CSSProperties = {
-                                    gridColumnStart: column,
-                                    gridRowStart: row,
-                                };
+                        const classNames = `scoreboard-block ${styles["scoreboard-block"]} ${blockClassName}`;
+                        return (
+                            <div className={classNames} key={index} style={style}>
+                                {items.map((round, index) => {
+                                    const column = (index / block + 1) >> 0;
+                                    const row = (index % block) + 1;
+                                    const style: CSSProperties = {
+                                        gridColumnStart: column,
+                                        gridRowStart: row,
+                                    };
 
-                                if (round && round["data"]?.length > 0) {
-                                    this.actualColumns = parentColumn;
-                                }
+                                    if (round && round["data"]?.length > 0) {
+                                        this.actualColumns = parentColumn;
+                                    }
 
-                                return this.renderElement(round, {
-                                    className: `${styles["scoreboard-item"]} ${elementClassName}`,
-                                    style,
-                                    key: index,
-                                });
-                            })}
-                        </div>
-                    );
-                })}
+                                    return this.renderElement(round, {
+                                        className: `${styles["scoreboard-item"]} ${elementClassName}`,
+                                        style,
+                                        key: index,
+                                    });
+                                })}
+                            </div>
+                        );
+                    })}
+                </SwipeScrollGrid>
             </div>
         );
     }

@@ -70,7 +70,7 @@ abstract class GameBase<P extends GameBaseProps, S extends GameBaseState> extend
             statisticGroup: 0,
             showScoreboard: false,
             scoreboardColumns: 100,
-            statisticColumns: this.getStatisticColumns()
+            statisticColumns: this.getStatisticColumns(),
         } as S;
 
         const { dispatch } = this.props;
@@ -324,6 +324,13 @@ abstract class GameBase<P extends GameBaseProps, S extends GameBaseState> extend
         this.gameRoundHistoryHandler.handleRoundHistory({ ...gameMessage, newRoundState });
     }
 
+    handleToggleScoreboard() {
+        this.props.gameSound.clickSound();
+        this.setState((prevState) => ({
+            showScoreboard: !prevState.showScoreboard,
+        }));
+    }
+
     handleRemainingTime({ remainingTime }) {
         const { durations, gameStateContextModel } = this.props;
         const { roundState, isUMInFirstLoad } = gameStateContextModel;
@@ -569,7 +576,7 @@ abstract class GameBase<P extends GameBaseProps, S extends GameBaseState> extend
                         </PlaceBetProvider>
                         {this.renderStatistic()}
                         {this.renderScoreboardsPopup()}
-                        <div className={`${SwiperNoSwiping} slide-chip-wrapper`} > {this.renderSlidingChips()}</div>
+                        <div className={`${SwiperNoSwiping} slide-chip-wrapper`}> {this.renderSlidingChips()}</div>
                     </div>
                     {!availableInGameData && <OverlayMask removeOverlay={isDisabledGame} />}
                     {this.renderGameGuideModal()}
@@ -587,10 +594,7 @@ abstract class GameBase<P extends GameBaseProps, S extends GameBaseState> extend
 
         return (
             <GameContextProvider value={{ ...this.props, gameMessageHandler: this.gameMessageHandler }}>
-                <GameActionsContextProvider value={gameActionsContext}>{
-                    this.getRenderTemplate()
-                }
-                </GameActionsContextProvider>
+                <GameActionsContextProvider value={gameActionsContext}>{this.getRenderTemplate()}</GameActionsContextProvider>
             </GameContextProvider>
         );
     }

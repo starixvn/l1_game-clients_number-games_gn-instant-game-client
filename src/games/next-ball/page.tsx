@@ -27,7 +27,6 @@ import { SwitchableScoreboard } from "../../components/game-components/round-his
 const DrawIdBlock = dynamic(() => import("../../components/game-components/draw-id"));
 
 class NextBall extends GameBase<GameBaseProps, GameBaseState> {
-
     private turnIdHandler?: TurnIdHandler;
 
     constructor(props: GameBaseProps) {
@@ -55,7 +54,6 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
         this.turnIdHandler?.registerEvents();
     }
 
-
     renderResultBlock() {
         const { roundHistory, result, roundState, roundData, turnCounter, drawId, playResultAnimation, isPlayStartRoundAnimation } =
             this.props.gameStateContextModel;
@@ -80,12 +78,6 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
         return <NextBallBettingBlock />;
     }
 
-    handleSwitchScoreboard() {
-        this.setState(prevState => ({
-            showScoreboard: !prevState.showScoreboard
-        }));
-    }
-
     renderScoreboardPopupStatistic() {
         const { roundHistory } = this.props.gameStateContextModel;
         const { statisticGroup } = this.state;
@@ -94,9 +86,7 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
             <PercentageStatistic
                 roundHistory={roundHistory}
                 mainChoices={[NextBallBetOptions.OVER, NextBallBetOptions.UNDER]}
-                choicesInGroups={[
-                    [NextBallBetOptions.OVER, NextBallBetOptions.UNDER]
-                ]}
+                choicesInGroups={[[NextBallBetOptions.OVER, NextBallBetOptions.UNDER]]}
                 selectedGroup={statisticGroup}
                 onSelectGroup={(index: number) => this.setState({ statisticGroup: index })}
             />
@@ -117,15 +107,9 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
             <div className={Styles["scoreboard-and-statistic"]} id="big-road">
                 <div className={Styles["statistic-header"]}>
                     {this.renderScoreboardPopupStatistic()}
-                    <div
-                        className={`${Styles["icon-close-wrapper"]} `}>
-                        <span
-                            id="icon-close"
-                            className={`${Styles["icon-close"]} `}
-                            onClick={() => this.handleSwitchScoreboard()}
-                        ></span>
+                    <div className={`${Styles["icon-close-wrapper"]} `}>
+                        <span id="icon-close" className={`${Styles["icon-close"]} `} onClick={() => this.handleToggleScoreboard()}></span>
                     </div>
-
                 </div>
                 <SwitchableScoreboard
                     className={`${Styles["custom-horizontal-scrollbar"]} ${Styles["scoreboard"]}`}
@@ -152,8 +136,8 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
         const rounds = isShowBlink ? [{}, ...roundHistory] : roundHistory;
 
         return (
-            <div className={Styles["statistic-wrapper"]} >
-                <div className={Styles["statistic"]} id="bead-road" >
+            <div className={Styles["statistic-wrapper"]}>
+                <div className={Styles["statistic"]} id="bead-road">
                     <SwitchableScoreboard
                         className={Styles["scoreboard-wrapper"]}
                         rounds={rounds}
@@ -171,15 +155,18 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
                     <span
                         id="icon-statistic"
                         className={`${Styles["icon-statistic"]} `}
-                        onClick={() => this.handleSwitchScoreboard()}
+                        onClick={() => this.handleToggleScoreboard()}
                     ></span>
                 </div>
             </div>
-
         );
     }
     renderRoundIdSection(): JSX.Element {
-        return <div className={Styles["round-id-wrapper"]}><DrawIdBlock /></div>;
+        return (
+            <div className={Styles["round-id-wrapper"]}>
+                <DrawIdBlock />
+            </div>
+        );
     }
 }
 
@@ -205,9 +192,7 @@ const NextBallFC = (props) => {
                 systemDispatch: useSystemDispatch(),
                 translate: t,
                 tolgeeNamespace,
-                hedgeBetGroups: [
-                    [NextBallBetOptions.OVER, NextBallBetOptions.UNDER],
-                ],
+                hedgeBetGroups: [[NextBallBetOptions.OVER, NextBallBetOptions.UNDER]],
             }}
         />
     );

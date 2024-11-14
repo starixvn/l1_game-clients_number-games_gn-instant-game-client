@@ -12,7 +12,7 @@ import {
     usePlayerContext,
     useSettingDispatch,
 } from "../_shared/react-contexts";
-import { useBlockBetSound, usePlaceBetSound, useStartDrawSound, useStartRoundSound } from "../_shared/react-hooks";
+import { useBlockBetSound, useClickSound, usePlaceBetSound, useStartDrawSound, useStartRoundSound } from "../_shared/react-hooks";
 import { GameSound } from "../components/game-base/type";
 import { getChipSettings } from "../services/user-setting-service";
 import styles from "./games.module.scss";
@@ -61,6 +61,7 @@ export const Games: React.FC<Props> = ({
         startPlaceBetSound: useStartDrawSound(),
         startRoundSound: useStartRoundSound(),
         blockBetSound: useBlockBetSound(),
+        clickSound: useClickSound(),
     };
 
     const getGameComponentById = (gameId: number) => {

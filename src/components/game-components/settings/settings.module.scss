@@ -46,10 +46,10 @@
 .icon-sound-on,
 .icon-sound-off {
     &::before {
-        font-size: 3.5rem;
+        font-size: 3rem;
 
         @media screen and (orientation: landscape) {
-            font-size: 2.2rem;
+            font-size: 2rem;
         }
     }
 }

@@ -16,10 +16,10 @@
     direction: ltr;
     justify-content: flex-start;
     align-items: center;
-    padding-right: 0rem;
+    padding-right: 0.3rem;
 
     @media screen and (orientation: landscape) {
-        padding-right: 0.5rem;
+        padding-right: 0.8rem;
     }
 
     .container-icon {

@@ -1,45 +1,37 @@
-import { memo, useEffect, useState } from "react";
-
+import { memo } from "react";
 import { useLowPerformanceDevice } from "../../../_shared/react-hooks";
 import { Spritesheet } from "../sprites-sheet";
 import Styles from "./cage.module.scss";
+import { useGameStateContext } from "../../../_shared/react-contexts/game-state-context/game-state-context";
+import { RoundState } from "../../game-base/type";
 
-const BallLoops: React.FC<{ isPlayStartRoundAnimation?: boolean }> = ({ isPlayStartRoundAnimation }) => {
+const VALID_RENDER_STATES = [RoundState.InRound, RoundState.LockingBet, RoundState.BeforePlaceBet, RoundState.DisplayResult];
+
+const BallAnimation: React.FC = () => {
     const isLowPerformanceDevice = useLowPerformanceDevice();
-    const [showIdleBalls, setShowIdleBalls] = useState(false);
 
-    useEffect(() => {
-        let timeOut: NodeJS.Timeout;
-
-        if (isPlayStartRoundAnimation) {
-            setShowIdleBalls(true);
-            timeOut = setTimeout(() => {
-                setShowIdleBalls(false);
-            }, 1300);
-        }
-
-        return () => {
-            clearTimeout(timeOut);
-        };
-    }, [isPlayStartRoundAnimation]);
-
-    const renderBalls = () => (
+    return (
         <Spritesheet
             className={`fade-in ${Styles["balls-loop"]}`}
             image="/static/images/cage/cage-loop-anim.webp"
             widthFrame={130}
-            isResponsive
             heightFrame={130}
+            isResponsive
             steps={11}
             autoplay
             loop
             fps={isLowPerformanceDevice ? 30 : 40}
         />
     );
+};
+
+const BallLoops: React.FC = () => {
+    const { roundState } = useGameStateContext();
+    const shouldRenderBalls = VALID_RENDER_STATES.includes(roundState);
 
     return (
         <div id="cage-balls" className={Styles["cage-balls"]}>
-            {showIdleBalls ? <div className={Styles["idle-balls"]} /> : renderBalls()}
+            {shouldRenderBalls ? <BallAnimation /> : <div className={Styles["idle-balls"]} />}
         </div>
     );
 };

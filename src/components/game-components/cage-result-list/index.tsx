@@ -14,7 +14,6 @@ export type CageResultListProps = {
     color: string;
     isSmall: boolean;
     position: string;
-    isPlayStartRoundAnimation?: boolean;
     listResult: number[];
     gameFolder: string;
     highlightBallSize: { width: number; height: number };
@@ -30,7 +29,6 @@ const CageResultList: React.FC<CageResultListProps> = ({
     color,
     playResultAnimation,
     ballFPS,
-    isPlayStartRoundAnimation,
     listResult,
     roundState,
     initialBallDelayTime,
@@ -91,7 +89,7 @@ const CageResultList: React.FC<CageResultListProps> = ({
         >
             <div className={`${Styles["ball"]} ${customCageClass}`}>
                 <div id="cage-bg" className={CageStyles["cage-bg"]}></div>
-                <BallLoops isPlayStartRoundAnimation={isPlayStartRoundAnimation} />
+                <BallLoops />
                 <div id="cage-cover" className={CageStyles["cage-cover"]}></div>
                 <div id="cage-border" className={`${CageStyles["cage-border"]} ${CageStyles[color]}`}>
                     {!showBalls && <div id="cage-lid" className={CageStyles["cage-lid"]} />}

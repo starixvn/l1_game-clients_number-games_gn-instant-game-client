@@ -18,7 +18,6 @@ export interface GameStateContextModel {
     showWinningAnimation: boolean;
     playResultAnimation: boolean;
     isShowBlink: boolean;
-    activeScoreboardTab?: number;
     rate?: number;
     disconnectReason?: string;
     isUMInFirstLoad: boolean;
@@ -27,14 +26,7 @@ export interface GameStateContextModel {
     drawId: number;
     turnCounter: number;
     userStakeLevel: IUserStakeLevel;
-    isShowBetHistory: boolean;
-    isShowBetDetail: boolean;
-    betDetailModalData?: {
-        drawInfo: DrawInfo;
-        betLogDetails: any[];
-    };
     isPlayStartRoundAnimation?: boolean;
-    isScoreboardTab?: boolean;
     availableInGameData?: boolean
 }
 
@@ -53,7 +45,6 @@ export const initialGameStateContextModel = () => {
         playResultAnimation: false,
         isShowBlink: false,
         notice: null,
-        activeScoreboardTab: 0,
         rate: 0,
         disconnectReason: "",
         gameConfigs: {
@@ -74,9 +65,7 @@ export const initialGameStateContextModel = () => {
             minBet: 1,
             maxBet: 200_000,
         },
-        isShowBetHistory: false,
         isPlayStartRoundAnimation: false,
-        isScoreboardTab: true,
         availableInGameData: false
     };
 };

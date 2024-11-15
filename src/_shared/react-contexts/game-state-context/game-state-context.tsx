@@ -51,7 +51,6 @@ function gameStateReducer(state: GameStateContextModel, action: GameEventAction)
         drawId,
         disconnectReason,
         showWinningAnimation,
-        activeScoreboardTab,
         playResultAnimation,
         newGameState,
         showResultInfo,
@@ -211,13 +210,6 @@ function gameStateReducer(state: GameStateContextModel, action: GameEventAction)
             return {
                 ...state,
                 showWinningAnimation,
-            };
-        }
-
-        case GameEventActionType.ACTIVE_SCORE_BOARD: {
-            return {
-                ...state,
-                activeScoreboardTab,
             };
         }
 

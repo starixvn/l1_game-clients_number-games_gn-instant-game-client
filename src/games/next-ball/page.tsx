@@ -98,7 +98,7 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
             return <></>;
         }
 
-        const { roundHistory, isShowBlink } = this.props.gameStateContextModel;
+        const { roundHistory, isShowBlink, playResultAnimation } = this.props.gameStateContextModel;
         const settlements = [...roundHistory].map((round) => round.settlementResult);
 
         isShowBlink && NextBallBigRoadConverter.addBlinkNode(settlements as any);
@@ -124,6 +124,7 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
                             updateScoreboardColumns: this.updateScoreboardColumns,
                             elementClassName: Styles["scoreboard-popup-element"],
                             blockClassName: Styles["scoreboard-popup-block"],
+                            scrollToRight: playResultAnimation
                         },
                     ]}
                 />

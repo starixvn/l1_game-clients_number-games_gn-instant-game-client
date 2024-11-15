@@ -8,6 +8,7 @@ export const ScrollContainer = styled.div<{ dragging: boolean }>`
   display: grid;
   user-select: none;
   touch-action: none;
+  align-items: center;
   cursor: ${({ dragging }) => (dragging ? 'grabbing' : 'grab')};
 
   &::-webkit-scrollbar {

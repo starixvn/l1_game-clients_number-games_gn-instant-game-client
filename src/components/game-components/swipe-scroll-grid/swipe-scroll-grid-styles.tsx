@@ -1,7 +1,7 @@
 
 import styled from 'styled-components';
 
-export const ScrollContainer = styled.div<{ dragging: boolean }>`
+export const ScrollContainer = styled.div<{ $dragging?: boolean }>`
   overflow-x: auto;
   overflow-y: hidden;
   height: 100%;
@@ -9,7 +9,7 @@ export const ScrollContainer = styled.div<{ dragging: boolean }>`
   user-select: none;
   touch-action: none;
   align-items: center;
-  cursor: ${({ dragging }) => (dragging ? 'grabbing' : 'grab')};
+  cursor: ${({ $dragging }) => ($dragging ? 'grabbing' : 'grab')};
 
   &::-webkit-scrollbar {
     width: 5px;

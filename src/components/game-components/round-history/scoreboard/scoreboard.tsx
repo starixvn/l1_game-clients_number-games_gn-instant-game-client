@@ -22,14 +22,16 @@ export type ScoreboardItemProps<Round> = {
     scoreboard?: Scoreboard<Round>;
 };
 
+type ScoreboardState = {
+    scrollToRight: boolean;
+};
 
-export class Scoreboard<Round> extends Component<ScoreboardProps<Round>> {
-    private scrollableDivRef: React.RefObject<HTMLDivElement>;
+export class Scoreboard<Round> extends Component<ScoreboardProps<Round>, ScoreboardState> {
     private actualColumns: number;
 
     constructor(props) {
         super(props);
-        this.scrollableDivRef = React.createRef();
+        this.state = { scrollToRight: true };
     }
 
     static defaultProps: Partial<ScoreboardProps<unknown>> = {
@@ -74,22 +76,21 @@ export class Scoreboard<Round> extends Component<ScoreboardProps<Round>> {
         return groups;
     }
 
+    focusOnFirstRoundAndCalculateColumns(): void {
+        const { updateScoreboardColumns } = this.props;
+        updateScoreboardColumns?.(this.actualColumns);
+        this.setState({ scrollToRight: true }, () => setTimeout(() => this.setState({ scrollToRight: false }), 0));
+    }
     componentDidMount(): void {
-        if (this.scrollableDivRef.current) {
-            this.scrollableDivRef.current.scrollLeft = this.scrollableDivRef.current.scrollWidth;
-        }
-
-        if (this.props.updateScoreboardColumns) {
-            this.props.updateScoreboardColumns(this.actualColumns);
-        }
+        this.focusOnFirstRoundAndCalculateColumns();
     }
 
     componentDidUpdate(prevProps): void {
         const prevDrawId = prevProps.rounds.at(-1)?.["drawId"];
         const currentDrawId = this.props.rounds.at(-1)?.["drawId"];
 
-        if (prevDrawId !== currentDrawId && this.props.updateScoreboardColumns) {
-            this.props.updateScoreboardColumns(this.actualColumns);
+        if (prevDrawId !== currentDrawId) {
+            this.focusOnFirstRoundAndCalculateColumns();
         }
     }
 
@@ -112,6 +113,7 @@ export class Scoreboard<Round> extends Component<ScoreboardProps<Round>> {
 
     render(): ReactNode {
         const { rounds, className, elementClassName, blockClassName, block, row: originalRow, arrange } = this.props;
+        const { scrollToRight: scrollToEnd } = this.state;
         const htmlProps = this.getHTMLAttributes();
         const arranged = arrange(rounds, this);
         const groupItems = this.createGroup(arranged);
@@ -122,7 +124,7 @@ export class Scoreboard<Round> extends Component<ScoreboardProps<Round>> {
                 {...htmlProps}
                 data-testid="scoreboard"
             >
-                <SwipeScrollGrid>
+                <SwipeScrollGrid scrollRightSignal={scrollToEnd}>
                     {groupItems.map((items: Round[], index: number) => {
                         const rowByGroup = (originalRow / block) >> 0;
                         const parentColumn = (index / rowByGroup + 1) >> 0;

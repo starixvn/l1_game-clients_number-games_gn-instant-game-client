@@ -3,7 +3,16 @@ import { useDrag } from '@use-gesture/react';
 import { ReactDOMAttributes } from '@use-gesture/react/dist/declarations/src/types';
 import { ScrollContainer } from './swipe-scroll-grid-styles';
 
-const SwipeScrollGrid = ({ children }) => {
+
+interface SwipeScrollGridProps {
+    children: React.ReactNode;
+    scrollRightSignal?: boolean;
+    initialScrollRight?: boolean;
+}
+
+const SwipeScrollGrid: React.FC<SwipeScrollGridProps> = ({ children,
+    initialScrollRight = true,
+    scrollRightSignal, }) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const [dragging, setDragging] = useState(false);
 
@@ -35,13 +44,19 @@ const SwipeScrollGrid = ({ children }) => {
     ) as unknown as (...args: any[]) => ReactDOMAttributes;
 
     useEffect(() => {
-        if (containerRef.current) {
-            containerRef.current.scrollLeft = containerRef.current.scrollWidth;
+        if (initialScrollRight && containerRef.current) {
+            containerRef.current.scrollTo({ left: containerRef.current.scrollWidth, behavior: 'smooth' });
         }
-    }, []);
+    }, [initialScrollRight]);
+
+    useEffect(() => {
+        if (containerRef.current) {
+            containerRef.current.scrollTo({ left: containerRef.current.scrollWidth, behavior: 'smooth' });
+        }
+    }, [scrollRightSignal]);
 
     return (
-        <ScrollContainer ref={containerRef} {...bind()} dragging={dragging}>
+        <ScrollContainer ref={containerRef} {...bind()} $dragging={dragging}>
             {children}
         </ScrollContainer>
     );

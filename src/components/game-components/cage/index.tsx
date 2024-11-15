@@ -40,7 +40,6 @@ const Cage: React.FC<CageProps> = ({
     roundState,
     highlight,
     ballFPS,
-    isPlayStartRoundAnimation,
 }) => {
     const [isDelayShowResult, setIsDelayShowResult] = useState<boolean>(false);
     const [ballColor, setBallColor] = useState<string>(null);
@@ -68,7 +67,7 @@ const Cage: React.FC<CageProps> = ({
         <div className={`${Styles["cage-area"]} ${isSmall ? Styles["small"] : ""} ${Styles[position]}`}>
             {highlight && <div className={`${Styles["cage-bg-highlight"]}`}></div>}
             <div id="cage-bg" className={Styles["cage-bg"]}></div>
-            <BallLoops isPlayStartRoundAnimation={isPlayStartRoundAnimation} />
+            <BallLoops />
             <div id="cage-cover" className={Styles["cage-cover"]}></div>
             <div id="cage-border" className={`${Styles["cage-border"]} ${Styles[color]}`}>
                 {!isDelayShowResult && <div id="cage-lid" className={Styles["cage-lid"]} />}

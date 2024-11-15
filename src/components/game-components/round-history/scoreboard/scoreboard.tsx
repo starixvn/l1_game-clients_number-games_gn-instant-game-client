@@ -32,7 +32,6 @@ export class Scoreboard<Round> extends Component<ScoreboardProps<Round>> {
         this.scrollableDivRef = React.createRef();
     }
 
-
     static defaultProps: Partial<ScoreboardProps<unknown>> = {
         column: 17,
         row: 6,

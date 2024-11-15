@@ -84,6 +84,15 @@ export class Scoreboard<Round> extends Component<ScoreboardProps<Round>> {
         }
     }
 
+    componentDidUpdate(prevProps): void {
+        const prevDrawId = prevProps.rounds.at(-1)?.["drawId"];
+        const currentDrawId = this.props.rounds.at(-1)?.["drawId"];
+
+        if (prevDrawId !== currentDrawId && this.props.updateScoreboardColumns) {
+            this.props.updateScoreboardColumns(this.actualColumns);
+        }
+    }
+
     getHTMLAttributes() {
         const {
             rounds,

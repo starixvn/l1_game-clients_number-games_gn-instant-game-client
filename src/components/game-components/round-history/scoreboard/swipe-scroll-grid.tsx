@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useDrag, useWheel } from '@use-gesture/react';
+import { useDrag } from '@use-gesture/react';
 import { ReactDOMAttributes } from '@use-gesture/react/dist/declarations/src/types';
 
 const SwipeScrollGrid = ({ children }) => {
@@ -10,17 +10,14 @@ const SwipeScrollGrid = ({ children }) => {
         ({ movement: [mx], memo = containerRef.current.scrollLeft, first, last, direction: [dx] }) => {
             if (first) {
                 setDragging(true);
-                console.log('Drag started');
             }
 
             if (containerRef.current) {
                 containerRef.current.scrollLeft = memo - mx;
-                console.log('Dragging');
             }
 
             if (last) {
                 setDragging(false);
-                console.log('Drag ended');
 
                 const scrollWidth = containerRef.current.scrollWidth;
                 const clientWidth = containerRef.current.clientWidth;
@@ -36,12 +33,6 @@ const SwipeScrollGrid = ({ children }) => {
         }
     ) as unknown as (...args: any[]) => ReactDOMAttributes;
 
-    const bindWheel = useWheel(({ delta: [, dy] }) => {
-        if (containerRef.current) {
-            containerRef.current.scrollLeft += dy;
-        }
-    }) as unknown as (...args: any[]) => ReactDOMAttributes;
-
     useEffect(() => {
         if (containerRef.current) {
             containerRef.current.scrollLeft = containerRef.current.scrollWidth;
@@ -52,7 +43,6 @@ const SwipeScrollGrid = ({ children }) => {
         <div
             ref={containerRef}
             {...bind()}
-            {...bindWheel()}
             style={{
                 overflowX: 'auto',
                 overflowY: 'hidden',

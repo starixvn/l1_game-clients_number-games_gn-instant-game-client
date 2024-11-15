@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDrag } from '@use-gesture/react';
 import { ReactDOMAttributes } from '@use-gesture/react/dist/declarations/src/types';
+import { ScrollContainer } from './swipe-scroll-grid-styles';
 
 const SwipeScrollGrid = ({ children }) => {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -40,23 +41,10 @@ const SwipeScrollGrid = ({ children }) => {
     }, []);
 
     return (
-        <div
-            ref={containerRef}
-            {...bind()}
-            style={{
-                overflowX: 'auto',
-                overflowY: 'hidden',
-                height: '100%',
-                cursor: dragging ? 'grabbing' : 'grab/pointer',
-                display: 'grid',
-                userSelect: 'none',
-                touchAction: 'none',
-            }}
-        >
+        <ScrollContainer ref={containerRef} {...bind()} dragging={dragging}>
             {children}
-        </div>
+        </ScrollContainer>
     );
-}
+};
 
 export default SwipeScrollGrid;
-

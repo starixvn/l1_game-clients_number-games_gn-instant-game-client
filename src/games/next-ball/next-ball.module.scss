@@ -473,17 +473,6 @@
     }
 }
 
-.custom-horizontal-scrollbar::-webkit-scrollbar {
-    width: 5px;
-    border-radius: 10px;
-    background-color: #3d3d3d;
-}
-
-.custom-horizontal-scrollbar::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    background: linear-gradient(180deg, #84c0ff 0%, #064f9b 100%);
-}
-
 @media screen and (orientation: landscape) {
     .result-zone-wrapper {
         top: 112px;

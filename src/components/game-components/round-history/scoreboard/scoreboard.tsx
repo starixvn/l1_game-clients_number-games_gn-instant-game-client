@@ -2,7 +2,7 @@ import { Attributes, CSSProperties, Component, ComponentType, HTMLAttributes, Re
 import styles from "./scoreboard.module.scss";
 import { chunk } from "./utilities";
 import React from "react";
-import SwipeScrollGrid from "./swipe-scroll-grid";
+import SwipeScrollGrid from "../../swipe-scroll-grid";
 
 export type ScoreboardProps<Round> = {
     arrange: (data: unknown[], scoreboard: unknown) => unknown[];

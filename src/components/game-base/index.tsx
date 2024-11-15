@@ -63,6 +63,7 @@ abstract class GameBase<P extends GameBaseProps, S extends GameBaseState> extend
     private readonly gameRoundHistoryHandler?: GameRoundHistoryHandler;
     private readonly gameSoundHandler: IGameSoundHandler;
     private readonly gameRoundDataHandler?: GameRoundDataHandler;
+    private readonly minimumScoreboardColumns = 10;
 
     constructor(props: P, handlers: GameBaseHandlers) {
         super(props);
@@ -179,7 +180,7 @@ abstract class GameBase<P extends GameBaseProps, S extends GameBaseState> extend
     }
 
     updateScoreboardColumns(actualColumns: number) {
-        this.setState({ scoreboardColumns: actualColumns });
+        this.setState({ scoreboardColumns: actualColumns >= this.minimumScoreboardColumns ? actualColumns : this.minimumScoreboardColumns });
     }
 
     getGameStateContext = () => {

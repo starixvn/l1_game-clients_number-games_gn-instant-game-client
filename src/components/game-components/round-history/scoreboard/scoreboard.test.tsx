@@ -2,6 +2,11 @@ import { Component } from "react";
 import { Scoreboard, ScoreboardItemProps } from "./scoreboard";
 import { render, screen } from "@testing-library/react";
 
+jest.mock("../../swipe-scroll-grid", () => {
+    const SwipeScrollGrid = ({ children }: { children: React.ReactNode }) => <div data-testid="swipe-scroll-grid-stub">{children}</div>;
+    return SwipeScrollGrid;
+});
+
 const arrange = jest.fn();
 const renderItem = jest.fn();
 

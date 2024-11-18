@@ -429,6 +429,10 @@
         gap: 7px;
     }
 
+    div:has(.scoreboard-block) {
+        cursor: auto;
+    }
+
     .scoreboard-block {
         cursor: auto;
     }

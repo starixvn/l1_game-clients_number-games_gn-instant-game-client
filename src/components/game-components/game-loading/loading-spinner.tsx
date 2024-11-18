@@ -6,24 +6,26 @@ export const LoadingSpinner = ({ removeSpinner = false, timeOut = TimeOutConstan
     const [isClearSpinner, setIsClearSpinner] = useState(false);
 
     useEffect(() => {
-        const timeOutId = null;;
+        let timeOutId = null;
 
         if (removeSpinner) {
-            setTimeout(() => {
+            timeOutId = setTimeout(() => {
                 setIsClearSpinner(true);
             }, timeOut);
         }
 
         return () => {
             timeOutId && clearTimeout(timeOutId);
-        }
-    }, [removeSpinner])
+        };
+    }, [removeSpinner]);
 
     if (isClearSpinner) {
         return <></>;
     }
 
-    return <div className={Styles["spinner-container"]}>
-        <div className={Styles["loader"]}></div>
-    </div>
+    return (
+        <div className={Styles["spinner-container"]}>
+            <div className={Styles["loader"]}></div>
+        </div>
+    );
 };

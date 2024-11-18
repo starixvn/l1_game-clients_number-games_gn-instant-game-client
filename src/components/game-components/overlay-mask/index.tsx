@@ -5,22 +5,22 @@ export const OverlayMask = ({ removeOverlay = false, timeOut = TimeOutConstants.
     const [isClearOverlayMask, setIsClearOverlayMask] = useState(false);
 
     useEffect(() => {
-        const timeOutId = null;;
+        let timeOutId = null;
 
         if (removeOverlay) {
-            setTimeout(() => {
+            timeOutId = setTimeout(() => {
                 setIsClearOverlayMask(true);
             }, timeOut);
         }
 
         return () => {
             timeOutId && clearTimeout(timeOutId);
-        }
-    }, [removeOverlay])
+        };
+    }, [removeOverlay]);
 
     if (isClearOverlayMask) {
         return <></>;
     }
 
     return <div className="game-over-layer"></div>;
-}
+};

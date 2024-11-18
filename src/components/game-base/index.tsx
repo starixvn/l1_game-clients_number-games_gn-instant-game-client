@@ -137,6 +137,8 @@ abstract class GameBase<P extends GameBaseProps, S extends GameBaseState> extend
                 gameId: this.props.id,
                 gameStateContextModel: this.getGameStateContext.bind(this),
                 gameRoundDataHandler: this.gameRoundDataHandler,
+                connectSocket: this.connectSocket.bind(this),
+                disconnectSocket: this.disconnectSocket.bind(this),
             });
 
         this.gameDisabledHandler =
@@ -205,6 +207,14 @@ abstract class GameBase<P extends GameBaseProps, S extends GameBaseState> extend
     getPlayerBalance = () => {
         return (this.context as PlayerContextModel).authorizeInfo.user.red;
     };
+
+    disconnectSocket() {
+        this.socket?.disconnect();
+    }
+
+    connectSocket() {
+        this.socket?.connect();
+    }
 
     onDestroy() {
         this.props.dispatch({

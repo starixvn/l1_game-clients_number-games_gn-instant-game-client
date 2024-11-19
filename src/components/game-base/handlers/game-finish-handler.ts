@@ -49,14 +49,23 @@ export class GameFinishHandler {
             // console.log(`_elapsedTimeFromLastedRound: ${this._elapsedTimeFromLastedRound}`);
             // console.log(`whole turn: ${this._wholeTurn}`);
             if (this._elapsedTimeFromLastedFinishEvent++ > this._wholeTurn + 3) {
-                this._elapsedTimeFromLastedFinishEvent = 0;
+
+                console.log("------------------");
                 console.log("GameFinishHandler: disconnect Socket");
+                const now = new Date();
+                const hours = now.getHours().toString().padStart(2, "0");
+                const minutes = now.getMinutes().toString().padStart(2, "0");
+                const seconds = now.getSeconds().toString().padStart(2, "0");
+                const milliseconds = now.getMilliseconds().toString().padStart(3, "0");
+                console.log(`_elapsedTimeFromLastedRound: ${this._elapsedTimeFromLastedFinishEvent} ${hours}:${minutes}:${seconds}.${milliseconds}`);
+
+                this._elapsedTimeFromLastedFinishEvent = 0;
                 this.props.disconnectSocket();
                 this._connectServiceTimeout = setTimeout(() => {
-
                     console.log("GameFinishHandler: connect Socket");
+                    console.log("------------------");
                     this.props.connectSocket();
-                }, 500)
+                }, 3000)
             }
         }, 1000);
     };

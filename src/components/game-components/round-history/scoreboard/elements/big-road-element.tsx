@@ -11,15 +11,15 @@ export abstract class BigRoadElement<Round> extends Component<ScoreboardItemProp
         return function (rounds: Round[], scoreboard: Scoreboard<Round>): BigRoadRound<Round>[] {
             const { row, column } = scoreboard.props;
             const bigRoad = new BigRoadScoreboard({ converter, height: row });
-            const input = [...rounds].reverse();
-            let total = Math.max(Math.round((rounds.length ?? 0) / row), column) * row;
 
+            const input = [...rounds].reverse();
             bigRoad.initialize(input);
 
             const rows = bigRoad.rows();
             const columns = toFlattenColumns(rows);
+            let calculatedTotalColumns = Math.max(Math.round((columns.length ?? 0) / row), column) * row;
 
-            return fitContent(columns, total, { data: [] } as BigRoadScoreboardPoint<Round>);
+            return fitContent(columns, calculatedTotalColumns, { data: [] } as BigRoadScoreboardPoint<Round>);
         };
     }
 

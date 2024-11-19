@@ -21,10 +21,11 @@ export type ScoreboardProps<Round> = {
 export type ScoreboardItemProps<Round> = {
     round: Round;
     scoreboard?: Scoreboard<Round>;
+    isWriteLog?: boolean;
 };
 
-export class Scoreboard<Round> extends Component<ScoreboardProps<Round>> {
-    private actualColumns: number;
+export class Scoreboard<Round> extends Component<ScoreboardProps<Round>, { noOfRound: number, testRounds: Round[] }> {
+    private actualColumns = 0;
 
     constructor(props) {
         super(props);
@@ -37,7 +38,7 @@ export class Scoreboard<Round> extends Component<ScoreboardProps<Round>> {
         elementClassName: "",
         block: 1,
         blockClassName: "",
-        scrollToRight: true
+        scrollToRight: true,
     };
 
     private renderElement(round: Round, props: Attributes | HTMLAttributes<unknown>): ReactNode {
@@ -51,6 +52,10 @@ export class Scoreboard<Round> extends Component<ScoreboardProps<Round>> {
         const rowByGroup = (row / block) >> 0;
 
         const horizontalGroups = chunk(rounds, block);
+
+        // if (this.props.updateScoreboardColumns) {
+        //     console.log({ rounds, horizontalGroups, rowByGroup, block });
+        // }
         const columns = chunk(horizontalGroups, rowByGroup);
         const verticalGroups = chunk(columns, block);
 
@@ -70,6 +75,9 @@ export class Scoreboard<Round> extends Component<ScoreboardProps<Round>> {
             return blocks;
         });
 
+        // if (this.props.updateScoreboardColumns) {
+        //     console.log({ groups });
+        // }
         return groups;
     }
 
@@ -77,6 +85,7 @@ export class Scoreboard<Round> extends Component<ScoreboardProps<Round>> {
         const { updateScoreboardColumns } = this.props;
         updateScoreboardColumns?.(this.actualColumns);
     }
+
     componentDidMount(): void {
         this.focusOnFirstRoundAndCalculateColumns();
     }
@@ -109,28 +118,33 @@ export class Scoreboard<Round> extends Component<ScoreboardProps<Round>> {
     }
 
     render(): ReactNode {
-        const { rounds, className, elementClassName, blockClassName, block, row: originalRow, arrange, scrollToRight } = this.props;
+        const { rounds, className, elementClassName, blockClassName, block, row: originalRow, arrange, scrollToRight, updateScoreboardColumns } = this.props;
         const htmlProps = this.getHTMLAttributes();
         const arranged = arrange(rounds, this);
         const groupItems = this.createGroup(arranged);
 
+        // if (updateScoreboardColumns) {
+        //     console.log({ rounds })
+        // }
+
+        // console.log(`rounds: `, rounds.length);
+
         return (
-            <div
-                className={`${styles.scoreboard} ${className}`}
-                {...htmlProps}
-                data-testid="scoreboard"
-            >
+            <div className={`${styles.scoreboard} ${className}`} {...htmlProps} data-testid="scoreboard">
                 <SwipeScrollGrid scrollRightSignal={scrollToRight}>
                     {groupItems.map((items: Round[], index: number) => {
                         const rowByGroup = (originalRow / block) >> 0;
+                        // console.log({ index, rowByGroup, parentColumn: (index / rowByGroup + 1) >> 0 })
                         const parentColumn = (index / rowByGroup + 1) >> 0;
                         const row = (index % rowByGroup) + 1;
                         const style: CSSProperties = {
                             gridColumnStart: parentColumn,
                             gridRowStart: row,
                         };
-
                         const classNames = `scoreboard-block ${styles["scoreboard-block"]} ${blockClassName}`;
+                        // console.log(
+                        //     `parentColumn: ${parentColumn} items: ${items.length} rowByGroup: ${rowByGroup} row: ${row} index: ${index} originalRow: ${originalRow} block: ${block} `
+                        // );
                         return (
                             <div className={classNames} key={index} style={style}>
                                 {items.map((round, index) => {
@@ -143,6 +157,9 @@ export class Scoreboard<Round> extends Component<ScoreboardProps<Round>> {
 
                                     if (round && round["data"]?.length > 0) {
                                         this.actualColumns = parentColumn;
+
+                                        // console.log({ parentColumn })
+                                        // console.log(`Has data: col ${column} row ${row} `);
                                     }
 
                                     return this.renderElement(round, {

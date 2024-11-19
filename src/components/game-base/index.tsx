@@ -188,7 +188,9 @@ abstract class GameBase<P extends GameBaseProps, S extends GameBaseState> extend
     }
 
     updateScoreboardColumns(actualColumns: number) {
-        this.setState({ scoreboardColumns: actualColumns >= this.minimumScoreboardColumns ? actualColumns : this.minimumScoreboardColumns });
+        const toUpdateColumns = actualColumns >= this.minimumScoreboardColumns ? actualColumns : this.minimumScoreboardColumns;
+        console.log("updateScoreboardColumns", toUpdateColumns);
+        this.setState({ scoreboardColumns: toUpdateColumns });
     }
 
     getGameStateContext = () => {

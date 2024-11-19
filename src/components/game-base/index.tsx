@@ -45,6 +45,12 @@ import { PFWrapper } from "./handlers/pf-wrapper/pf-wrapper";
 import { PlaceBetHandlerWrapper } from "./handlers/place-bet-wrapper/place-bet-handler-wrapper";
 import { GameBaseHandlers, GameBaseProps, GameBaseState, RoundState } from "./type";
 import BetConfirmDialog from "../game-components/bet-confirm-dialog";
+import { isPortrait } from "../../_shared/react-hooks";
+
+const minimumScoreboardColumns = {
+    portrait: 10,
+    landscape: 18
+};
 
 abstract class GameBase<P extends GameBaseProps, S extends GameBaseState> extends React.PureComponent<P, S> {
     protected socket: Socket;
@@ -63,7 +69,7 @@ abstract class GameBase<P extends GameBaseProps, S extends GameBaseState> extend
     private readonly gameRoundHistoryHandler?: GameRoundHistoryHandler;
     private readonly gameSoundHandler: IGameSoundHandler;
     private readonly gameRoundDataHandler?: GameRoundDataHandler;
-    private readonly minimumScoreboardColumns = 10;
+    private minimumScoreboardColumns = minimumScoreboardColumns.portrait;
 
     constructor(props: P, handlers: GameBaseHandlers) {
         super(props);
@@ -194,6 +200,10 @@ abstract class GameBase<P extends GameBaseProps, S extends GameBaseState> extend
     };
 
     componentDidMount() {
+        if (!isPortrait()) {
+            this.minimumScoreboardColumns = minimumScoreboardColumns.landscape;
+        }
+
         document.addEventListener("visibilitychange", this.onVisibilityChange);
         window.addEventListener("resize", this.changeOrientation);
         this.onStart();
@@ -336,7 +346,7 @@ abstract class GameBase<P extends GameBaseProps, S extends GameBaseState> extend
     }
 
     handleToggleScoreboard() {
-        this.props.gameSound.clickSound();
+        this.props.gameSound?.clickSound();
         this.setState((prevState) => ({
             showScoreboard: !prevState.showScoreboard,
         }));

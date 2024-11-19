@@ -29,6 +29,7 @@ export class GameFinishHandler {
     private _finish: Round<object, object>;
     private _elapsedTimeFromLastedFinishEvent = 0;
     private _intervalId: NodeJS.Timeout;
+    private _connectServiceTimeout: NodeJS.Timeout;
     private _wholeTurn = 0;
 
     constructor(private readonly props: GameFinishHandlerProps) {
@@ -47,12 +48,15 @@ export class GameFinishHandler {
         this._intervalId = setInterval(() => {
             // console.log(`_elapsedTimeFromLastedRound: ${this._elapsedTimeFromLastedRound}`);
             // console.log(`whole turn: ${this._wholeTurn}`);
-            if (this._elapsedTimeFromLastedFinishEvent++ > this._wholeTurn + 2) {
-                // console.log("Please check web socket connection");
+            if (this._elapsedTimeFromLastedFinishEvent++ > this._wholeTurn + 3) {
+                this._elapsedTimeFromLastedFinishEvent = 0;
+                console.log("GameFinishHandler: disconnect Socket");
                 this.props.disconnectSocket();
-                setTimeout(() => {
-                    this.props.connectSocket()
-                }, 1000)
+                this._connectServiceTimeout = setTimeout(() => {
+
+                    console.log("GameFinishHandler: connect Socket");
+                    this.props.connectSocket();
+                }, 500)
             }
         }, 1000);
     };
@@ -149,5 +153,7 @@ export class GameFinishHandler {
             clearInterval(this._intervalId);
             this._elapsedTimeFromLastedFinishEvent = 0;
         }
+
+        this._connectServiceTimeout && clearTimeout(this._connectServiceTimeout);
     };
 }

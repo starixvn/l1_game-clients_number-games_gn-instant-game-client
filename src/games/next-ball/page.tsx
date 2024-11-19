@@ -23,10 +23,11 @@ import { NextBallResult, NextBallSettlementResult } from "./types";
 import { createBeadRoadElement, createBigRoadElement, NextBallBigRoadConverter } from "./scoreboard-elements";
 import { BeadRoadElement, BigRoadElement } from "../../components/game-components/round-history/scoreboard/elements";
 import { SwitchableScoreboard } from "../../components/game-components/round-history/scoreboard";
+import { fakedRoundHistory } from "./faked-round-history";
 
 const DrawIdBlock = dynamic(() => import("../../components/game-components/draw-id"));
 
-class NextBall extends GameBase<GameBaseProps, GameBaseState> {
+class NextBall extends GameBase<GameBaseProps, GameBaseState & { noOfRound: number, testRounds?: Round<NextBallResult, NextBallSettlementResult>[] }> {
     private turnIdHandler?: TurnIdHandler;
 
     constructor(props: GameBaseProps) {
@@ -38,7 +39,13 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
         };
 
         super(props, gameBaseHandlers);
-
+        this.state = {
+            statisticGroup: 0,
+            showScoreboard: true,
+            scoreboardColumns: 100,
+            statisticColumns: this.getStatisticColumns(),
+            noOfRound: 0,
+        };
         this.turnIdHandler = new TurnIdHandler({
             dispatch: props.dispatch,
             gameStateContextModel: this.getGameStateContext.bind(this),
@@ -52,6 +59,15 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
         super.registerHandlers();
 
         this.turnIdHandler?.registerEvents();
+    }
+
+    componentDidMount(): void {
+        super.componentDidMount();
+
+        setInterval(() => {
+            this.setState(prevState => ({ noOfRound: prevState.noOfRound > 107 ? 0 : prevState.noOfRound + 1 }));
+
+        }, 500);
     }
 
     renderResultBlock() {
@@ -113,7 +129,7 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
                 </div>
                 <SwitchableScoreboard
                     className={`${Styles["custom-horizontal-scrollbar"]} ${Styles["scoreboard"]}`}
-                    rounds={settlements}
+                    rounds={fakedRoundHistory.slice(0, this.state.noOfRound)}
                     type="switch"
                     scoreboards={[
                         {
@@ -124,7 +140,7 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
                             updateScoreboardColumns: this.updateScoreboardColumns,
                             elementClassName: Styles["scoreboard-popup-element"],
                             blockClassName: Styles["scoreboard-popup-block"],
-                            scrollToRight: playResultAnimation
+                            scrollToRight: playResultAnimation,
                         },
                     ]}
                 />
@@ -139,6 +155,15 @@ class NextBall extends GameBase<GameBaseProps, GameBaseState> {
         return (
             <div className={Styles["statistic-wrapper"]}>
                 <div className={Styles["statistic"]} id="bead-road">
+                    <button
+                        style={{ position: "absolute", top: 140 }}
+                        onClick={() => {
+                            // this.setState(prevState => ({ noOfRound: prevState.noOfRound + 1 }));
+                        }}
+                    >
+                        {this.state.noOfRound}
+                    </button>
+
                     <SwitchableScoreboard
                         className={Styles["scoreboard-wrapper"]}
                         rounds={rounds}

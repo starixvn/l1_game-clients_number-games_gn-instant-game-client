@@ -40,6 +40,15 @@ export class GameFinishHandler {
         this._betWin = betWin;
     }
 
+    getLogTime() {
+        const now = new Date();
+        const hours = now.getHours().toString().padStart(2, "0");
+        const minutes = now.getMinutes().toString().padStart(2, "0");
+        const seconds = now.getSeconds().toString().padStart(2, "0");
+        const milliseconds = now.getMilliseconds().toString().padStart(3, "0");
+        return `${hours}:${minutes}:${seconds}.${milliseconds}`;
+    }
+
     registerEvents = () => {
         this.props.gameMessageHandler.register(messageEventType.FINISH, this.handleFinishHandler.bind(this));
         this.props.gameMessageHandler.register(messageEventType.STATUS, this.handleStatus);
@@ -52,12 +61,8 @@ export class GameFinishHandler {
                 console.log("------------------");
                 console.log({ _elapsedTimeFromLastedFinishEvent: this._elapsedTimeFromLastedFinishEvent, maxWholeTurn: this._wholeTurn })
                 console.log("GameFinishHandler: disconnect Socket");
-                const now = new Date();
-                const hours = now.getHours().toString().padStart(2, "0");
-                const minutes = now.getMinutes().toString().padStart(2, "0");
-                const seconds = now.getSeconds().toString().padStart(2, "0");
-                const milliseconds = now.getMilliseconds().toString().padStart(3, "0");
-                console.log(`_elapsedTimeFromLastedRound: ${this._elapsedTimeFromLastedFinishEvent} ${hours}:${minutes}:${seconds}.${milliseconds}`);
+                const logMessage = `_elapsedTimeFromLastedRound: ${this._elapsedTimeFromLastedFinishEvent} ${this.getLogTime()}`;
+                console.log(logMessage);
 
                 this._elapsedTimeFromLastedFinishEvent = 0;
                 this.props.disconnectSocket();
@@ -160,6 +165,8 @@ export class GameFinishHandler {
         this.showWinningAnimationTimeout && clearTimeout(this.showWinningAnimationTimeout);
         if (this._intervalId) {
             clearInterval(this._intervalId);
+            const logMessage = `_elapsedTimeFromLastedRound: ${this._elapsedTimeFromLastedFinishEvent} ${this.getLogTime()}`;
+            console.log(`GameFinishHandler: clearTimeout ${logMessage}`);
             this._elapsedTimeFromLastedFinishEvent = 0;
         }
 

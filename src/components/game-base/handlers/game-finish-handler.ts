@@ -63,26 +63,30 @@ export class GameFinishHandler {
         this._elapsedTimeIntervalId && clearTimeout(this._elapsedTimeIntervalId);
 
         this._elapsedTimeIntervalId = setInterval(() => {
-            console.log(`_elapsedTimeFromLastedFinishEvent: ${this._elapsedTimeFromLastedFinishEvent++}`);
+            this._elapsedTimeFromLastedFinishEvent++;
             if (this._elapsedTimeFromLastedFinishEvent > this._wholeTurn + 1) {
-                console.log("------------------");
-                console.log({ _elapsedTimeFromLastedFinishEvent: this._elapsedTimeFromLastedFinishEvent, maxWholeTurn: this._wholeTurn });
-                console.log("GameFinishHandler: disconnect Socket");
-                const logMessage = `_elapsedTimeFromLastedRound: ${this._elapsedTimeFromLastedFinishEvent} ${this.getLogTime()}`;
-                console.log(logMessage);
-
                 this.props.dispatch({
                     type: GameEventActionType.FORCE_DISCONNECT,
                     payload: { forceDisconnect: true },
                 });
-
-                this._elapsedTimeFromLastedFinishEvent = 0;
-                this.props.disconnectSocket();
-                this._connectServiceTimeout = setTimeout(() => {
-                    console.log("GameFinishHandler: connect Socket");
+                if (this._elapsedTimeFromLastedFinishEvent > this._wholeTurn + 2) {
                     console.log("------------------");
-                    this.props.connectSocket();
-                }, 3000);
+                    console.log({
+                        _elapsedTimeFromLastedFinishEvent: this._elapsedTimeFromLastedFinishEvent,
+                        maxWholeTurn: this._wholeTurn,
+                    });
+                    console.log("GameFinishHandler: disconnect Socket");
+                    const logMessage = `_elapsedTimeFromLastedRound: ${this._elapsedTimeFromLastedFinishEvent} ${this.getLogTime()}`;
+                    console.log(logMessage);
+
+                    this._elapsedTimeFromLastedFinishEvent = 0;
+                    this.props.disconnectSocket();
+                    this._connectServiceTimeout = setTimeout(() => {
+                        console.log("GameFinishHandler: connect Socket");
+                        console.log("------------------");
+                        this.props.connectSocket();
+                    }, 3000);
+                }
             }
         }, 1000);
     }

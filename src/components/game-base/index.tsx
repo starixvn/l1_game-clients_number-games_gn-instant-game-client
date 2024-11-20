@@ -227,10 +227,11 @@ abstract class GameBase<P extends GameBaseProps, S extends GameBaseState> extend
     }
 
     onDestroy() {
-        this.props.dispatch({
-            type: GameEventActionType.SIGN_OUT,
-            payload: { roundState: RoundState.None },
-        });
+        !this.props.gameStateContextModel.forceDisconnect &&
+            this.props.dispatch({
+                type: GameEventActionType.SIGN_OUT,
+                payload: { roundState: RoundState.None },
+            });
         this.socket?.disconnect();
 
         this.clearGameTimeoutAndInterval();
@@ -628,12 +629,13 @@ abstract class GameBase<P extends GameBaseProps, S extends GameBaseState> extend
     }
 
     render() {
-        const { signedIn, roundState, disabledMessage, disconnectReason, availableInGameData } = this.props.gameStateContextModel;
+        const { signedIn, roundState, disabledMessage, disconnectReason, availableInGameData, forceDisconnect } =
+            this.props.gameStateContextModel;
         const isDisabledGame = roundState === RoundState.Disabled;
-
+        const isRenderLoading = !signedIn && !forceDisconnect;        
         return (
             <GameContainer>
-                {signedIn ? this.renderGame() : <GameLoading />}
+                {isRenderLoading ? <GameLoading /> : this.renderGame()}
                 {(roundState === RoundState.None || !availableInGameData) && (
                     <LoadingSpinner removeSpinner={isDisabledGame || !!disconnectReason} />
                 )}

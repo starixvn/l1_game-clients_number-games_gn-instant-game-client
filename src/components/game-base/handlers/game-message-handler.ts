@@ -1,6 +1,7 @@
+import { Dispatch } from "react";
 import MessageTransmitter from "../../../_shared/helpers/message-transmitter";
 import { MessageTransmitterType } from "../../../_shared/helpers/message-transmitter/type";
-import { GameEventActionType } from "../../../_shared/react-contexts/game-state-context/game-event-action";
+import { GameEventAction, GameEventActionType } from "../../../_shared/react-contexts/game-state-context/game-event-action";
 
 export const messageEventType = {
     GAME_CONFIG: "gameConfigs",
@@ -42,7 +43,7 @@ export const messageEventType = {
 };
 
 export class GameMessageHandler {
-    constructor(private readonly dispatch: Function, private readonly messageTransmitter?: MessageTransmitterType) {
+    constructor(private readonly dispatch: Dispatch<GameEventAction>, private readonly messageTransmitter?: MessageTransmitterType) {
         this.messageTransmitter = messageTransmitter ?? MessageTransmitter();
     }
 
@@ -100,6 +101,11 @@ export class GameMessageHandler {
         this.dispatch({
             type: GameEventActionType.SIGN_IN,
             payload: {},
+        });
+
+        this.dispatch({
+            type: GameEventActionType.FORCE_DISCONNECT,
+            payload: { forceDisconnect: false },
         });
     };
 

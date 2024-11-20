@@ -1,4 +1,4 @@
-import { DrawInfo, GameConfigs, IUserStakeLevel, Round, RoundState } from "../../../components/game-base/type";
+import { GameConfigs, IUserStakeLevel, Round, RoundState } from "../../../components/game-base/type";
 
 export interface GameStateContextModel {
     isConnect: boolean;
@@ -27,7 +27,8 @@ export interface GameStateContextModel {
     turnCounter: number;
     userStakeLevel: IUserStakeLevel;
     isPlayStartRoundAnimation?: boolean;
-    availableInGameData?: boolean
+    availableInGameData?: boolean;
+    forceDisconnect: boolean;
 }
 
 export const initialGameStateContextModel = () => {
@@ -66,6 +67,7 @@ export const initialGameStateContextModel = () => {
             maxBet: 200_000,
         },
         isPlayStartRoundAnimation: false,
-        availableInGameData: false
+        availableInGameData: false,
+        forceDisconnect: false,
     };
 };

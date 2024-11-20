@@ -3,6 +3,7 @@ import { GameConfigs, GameDurations, RoundState } from "../../../components/game
 export enum GameEventActionType {
     CONNECT = "CONNECT",
     DISCONNECT = "DISCONNECT",
+    FORCE_DISCONNECT = "FORCE_DISCONNECT",
     SIGN_IN = "SIGN_IN",
     SIGN_OUT = "SIGN_OUT",
     UM = "UM",
@@ -66,6 +67,7 @@ export interface GameEventPayload {
     turnCounter?: number;
     isUMInFirstLoad?: boolean;
     isPlayStartRoundAnimation?: boolean;
+    forceDisconnect?: boolean;
 }
 
 export interface GameEventAction {

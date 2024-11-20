@@ -33,7 +33,10 @@ export class GameFinishHandler {
     private _wholeTurn = 0;
 
     constructor(private readonly props: GameFinishHandlerProps) {
-        this._wholeTurn = this.props.roundStateHandler.getWholeRoundDuration({ durations: this.props.durations }) + this.props.durations.beforePlaceBet + this.props.durations.switchRoundAnimation;
+        this._wholeTurn =
+            this.props.roundStateHandler.getWholeRoundDuration({ durations: this.props.durations }) +
+            this.props.durations.beforePlaceBet +
+            this.props.durations.switchRoundAnimation;
     }
 
     set betWin(betWin: number) {
@@ -63,10 +66,15 @@ export class GameFinishHandler {
             // console.log(`_elapsedTimeFromLastedFinishEvent: ${this._elapsedTimeFromLastedFinishEvent++}`);
             if (this._elapsedTimeFromLastedFinishEvent > this._wholeTurn + 1) {
                 console.log("------------------");
-                console.log({ _elapsedTimeFromLastedFinishEvent: this._elapsedTimeFromLastedFinishEvent, maxWholeTurn: this._wholeTurn })
+                console.log({ _elapsedTimeFromLastedFinishEvent: this._elapsedTimeFromLastedFinishEvent, maxWholeTurn: this._wholeTurn });
                 console.log("GameFinishHandler: disconnect Socket");
                 const logMessage = `_elapsedTimeFromLastedRound: ${this._elapsedTimeFromLastedFinishEvent} ${this.getLogTime()}`;
                 console.log(logMessage);
+
+                this.props.dispatch({
+                    type: GameEventActionType.FORCE_DISCONNECT,
+                    payload: { forceDisconnect: true },
+                });
 
                 this._elapsedTimeFromLastedFinishEvent = 0;
                 this.props.disconnectSocket();
@@ -74,7 +82,7 @@ export class GameFinishHandler {
                     console.log("GameFinishHandler: connect Socket");
                     console.log("------------------");
                     this.props.connectSocket();
-                }, 3000)
+                }, 3000);
             }
         }, 1000);
     }

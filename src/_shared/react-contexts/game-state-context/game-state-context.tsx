@@ -58,6 +58,7 @@ function gameStateReducer(state: GameStateContextModel, action: GameEventAction)
         turnCounter,
         isUMInFirstLoad,
         isPlayStartRoundAnimation,
+        forceDisconnect,
     } = payload;
 
     switch (type) {
@@ -75,7 +76,7 @@ function gameStateReducer(state: GameStateContextModel, action: GameEventAction)
             return {
                 ...state,
                 isConnect: false,
-                playResultAnimation: false
+                playResultAnimation: false,
             };
         }
 
@@ -83,7 +84,7 @@ function gameStateReducer(state: GameStateContextModel, action: GameEventAction)
             return {
                 ...state,
                 signedIn: true,
-                availableInGameData: false
+                availableInGameData: false,
             };
         }
 
@@ -108,7 +109,7 @@ function gameStateReducer(state: GameStateContextModel, action: GameEventAction)
             return {
                 ...state,
                 gameConfigs: gameConfigs,
-                availableInGameData: true
+                availableInGameData: true,
             };
         }
 
@@ -165,6 +166,13 @@ function gameStateReducer(state: GameStateContextModel, action: GameEventAction)
                 roundState: RoundState.ConnectFailed,
                 signedIn: false,
                 disconnectReason,
+            };
+        }
+
+        case GameEventActionType.FORCE_DISCONNECT: {
+            return {
+                ...state,
+                forceDisconnect,
             };
         }
 

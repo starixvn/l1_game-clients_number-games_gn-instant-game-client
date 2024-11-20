@@ -3,6 +3,7 @@ import { useCurrentLanguage, useTranslator } from "../../../_shared/react-hooks/
 import { ResourceTypes } from "../../../_shared/resources";
 import Styles from "./error-message.module.scss";
 import { ConnectFailedReasonKey } from "./type";
+import { useGameStateContext } from "../../../_shared/react-contexts/game-state-context/game-state-context";
 
 export const ConnectFailedMessage: React.FC<{
     tolgeeNamespace: string;
@@ -11,8 +12,11 @@ export const ConnectFailedMessage: React.FC<{
     reason: string;
 }> = ({ tolgeeNamespace, id, onReconnect, reason }) => {
     const { t } = useTranslator([tolgeeNamespace]);
-
+    const { forceDisconnect } = useGameStateContext();
     const locale = useCurrentLanguage();
+    if (forceDisconnect) {
+        return <></>;
+    }
     const isLostConnection = reason === ConnectFailedReasonKey.lostConnection;
     const renderButton = () => {
         return isLostConnection ? (

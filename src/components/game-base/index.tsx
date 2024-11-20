@@ -279,6 +279,9 @@ abstract class GameBase<P extends GameBaseProps, S extends GameBaseState> extend
         const { dispatch } = this.props;
         this.disconnectTimeout = setTimeout(
             () => {
+                if (this.props.gameStateContextModel.forceDisconnect) {
+                    return;
+                }
                 dispatch({ type: GameEventActionType.DISCONNECT, payload: {} });
                 if (!this.props.gameStateContextModel.signedIn) {
                     dispatch({

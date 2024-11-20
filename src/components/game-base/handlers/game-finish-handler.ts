@@ -28,7 +28,7 @@ export class GameFinishHandler {
     private _roundHistory: Round<object, object>[];
     private _finish: Round<object, object>;
     private _elapsedTimeFromLastedFinishEvent = 0;
-    private _intervalId: NodeJS.Timeout;
+    private _elapsedTimeIntervalId: NodeJS.Timeout;
     private _connectServiceTimeout: NodeJS.Timeout;
     private _wholeTurn = 0;
 
@@ -53,11 +53,15 @@ export class GameFinishHandler {
         this.props.gameMessageHandler.register(messageEventType.FINISH, this.handleFinishHandler.bind(this));
         this.props.gameMessageHandler.register(messageEventType.STATUS, this.handleStatus);
         this.props.gameMessageHandler.register(messageEventType.ROUND_HISTORY, this.handleRoundHistoryHandler.bind(this));
+    };
 
-        this._intervalId = setInterval(() => {
-            // console.log(`_elapsedTimeFromLastedRound: ${this._elapsedTimeFromLastedRound}`);
-            // console.log(`whole turn: ${this._wholeTurn}`);
-            if (this._elapsedTimeFromLastedFinishEvent++ > this._wholeTurn + 4) {
+    createElapsedTimerFromLastedFinishEvent = () => {
+        this._elapsedTimeFromLastedFinishEvent = 0;
+        this._elapsedTimeIntervalId && clearTimeout(this._elapsedTimeIntervalId);
+
+        this._elapsedTimeIntervalId = setInterval(() => {
+            // console.log(`_elapsedTimeFromLastedFinishEvent: ${this._elapsedTimeFromLastedFinishEvent++}`);
+            if (this._elapsedTimeFromLastedFinishEvent > this._wholeTurn + 1) {
                 console.log("------------------");
                 console.log({ _elapsedTimeFromLastedFinishEvent: this._elapsedTimeFromLastedFinishEvent, maxWholeTurn: this._wholeTurn })
                 console.log("GameFinishHandler: disconnect Socket");
@@ -73,7 +77,7 @@ export class GameFinishHandler {
                 }, 3000)
             }
         }, 1000);
-    };
+    }
 
     handleFinishHandler(finish) {
         this.handleFinish(finish);
@@ -103,7 +107,7 @@ export class GameFinishHandler {
             return;
         }
 
-        this._elapsedTimeFromLastedFinishEvent = 0;
+        this.createElapsedTimerFromLastedFinishEvent();
         const { result, settlementResult, roundId, drawId } = finish;
         const { dispatch, gameMessageHandler, gameRoundDataHandler, gameStateContextModel } = this.props;
         const durations = this.props.durations;
@@ -163,13 +167,7 @@ export class GameFinishHandler {
     clearTimeout = () => {
         this.showResultInfoTimeout && clearTimeout(this.showResultInfoTimeout);
         this.showWinningAnimationTimeout && clearTimeout(this.showWinningAnimationTimeout);
-        if (this._intervalId) {
-            clearInterval(this._intervalId);
-            const logMessage = `_elapsedTimeFromLastedRound: ${this._elapsedTimeFromLastedFinishEvent} ${this.getLogTime()}`;
-            console.log(`GameFinishHandler: clearTimeout ${logMessage}`);
-            this._elapsedTimeFromLastedFinishEvent = 0;
-        }
-
+        this._elapsedTimeIntervalId && clearTimeout(this._elapsedTimeIntervalId);
         this._connectServiceTimeout && clearTimeout(this._connectServiceTimeout);
     };
 }

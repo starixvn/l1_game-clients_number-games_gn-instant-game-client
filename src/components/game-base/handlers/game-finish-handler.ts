@@ -63,7 +63,7 @@ export class GameFinishHandler {
         this._elapsedTimeIntervalId && clearTimeout(this._elapsedTimeIntervalId);
 
         this._elapsedTimeIntervalId = setInterval(() => {
-            // console.log(`_elapsedTimeFromLastedFinishEvent: ${this._elapsedTimeFromLastedFinishEvent++}`);
+            console.log(`_elapsedTimeFromLastedFinishEvent: ${this._elapsedTimeFromLastedFinishEvent++}`);
             if (this._elapsedTimeFromLastedFinishEvent > this._wholeTurn + 1) {
                 console.log("------------------");
                 console.log({ _elapsedTimeFromLastedFinishEvent: this._elapsedTimeFromLastedFinishEvent, maxWholeTurn: this._wholeTurn });

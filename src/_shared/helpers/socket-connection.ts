@@ -14,10 +14,11 @@ export function InitSocketIO(socketInfo: SocketInfo, session: any, gameName: str
         path: `${proxy.path}/${socketInfo.path}/socket.io`,
         upgrade: false,
         parser: enableMsgpackParser ? MsgpackParser : undefined,
+        pingTimeout: 5000,
     };
 
     const socket = io(socketUri, socketOption);
-
+    let latency = 0;
     if (socket) {
         gameMessageHandler.registerSocketEvents();
 
@@ -41,6 +42,11 @@ export function InitSocketIO(socketInfo: SocketInfo, session: any, gameName: str
         });
         socket.on(messageEventType.SOCKET_DISCONNECTED, () => {
             gameMessageHandler.broadcastGameEvent({ [messageEventType.SOCKET_DISCONNECTED]: true });
+        });
+
+        socket.on("pong", (ms) => {
+            latency = ms;
+            console.log(`%cPong received. Latency: ${latency} ms`, 'color: blue; font-weight: bold; background: yellow;');
         });
     }
 

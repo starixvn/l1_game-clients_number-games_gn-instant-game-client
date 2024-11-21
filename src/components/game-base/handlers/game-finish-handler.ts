@@ -62,14 +62,12 @@ export class GameFinishHandler {
 
         const isNextRound = this.props.gameStateContextModel().drawId % 8 === 0;
         const nextReceiveFinish = isNextRound ? this._wholeTurn + this.props.durations.switchRoundAnimation : this._wholeTurn;
-        console.log(`nextReceiveFinish`, nextReceiveFinish);
 
         this._elapsedTimeIntervalId = setInterval(() => {
             this._elapsedTimeFromLastedFinishEvent++;
-            console.log(`_elapsedTimeFromLastedRound`, this._elapsedTimeFromLastedFinishEvent);
-            if (this._elapsedTimeFromLastedFinishEvent > nextReceiveFinish + 1) {
-                console.log("------starting to force disconnect");;
-                
+            if (this._elapsedTimeFromLastedFinishEvent > nextReceiveFinish + 2) {
+                console.log("------starting to force disconnect");
+
                 this.props.dispatch({
                     type: GameEventActionType.FORCE_DISCONNECT,
                     payload: { forceDisconnect: true },

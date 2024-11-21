@@ -11,6 +11,7 @@ export type GameFinishHandlerProps = {
     dispatch: Dispatch<GameEventAction>;
     gameMessageHandler: GameMessageHandler;
     durations: GameDurations;
+    totalTurns: number;
     roundStateHandler: IRoundStateHandler;
     runGame: Function;
     gameId: number;
@@ -60,10 +61,15 @@ export class GameFinishHandler {
         this._elapsedTimeFromLastedFinishEvent = 0;
         this._elapsedTimeIntervalId && clearTimeout(this._elapsedTimeIntervalId);
 
+        const isNextRound = this.props.gameStateContextModel().drawId % this.props.totalTurns === 0;
+        const validElapsedTime = (isNextRound ? this._wholeTurn + this.props.durations.switchRoundAnimation + this.props.durations.beforePlaceBet : this._wholeTurn) + 2;
+
+        // console.log({ validElapseTime, totalTurns: this.props.totalTurns });
+
         this._elapsedTimeIntervalId = setInterval(() => {
-            const timerTest = this._elapsedTimeFromLastedFinishEvent++;
+            // const timerTest = this._elapsedTimeFromLastedFinishEvent++;
             // console.log(`_elapsedTimeFromLastedFinishEvent: ${timerTest}`);
-            if (timerTest > this._wholeTurn - 14) {
+            if (this._elapsedTimeFromLastedFinishEvent++ > validElapsedTime) {
                 this._elapsedTimeFromLastedFinishEvent = 0;
                 console.log("------------------");
                 console.log({ _elapsedTimeFromLastedFinishEvent: this._elapsedTimeFromLastedFinishEvent, maxWholeTurn: this._wholeTurn })

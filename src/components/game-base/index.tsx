@@ -46,6 +46,7 @@ import { PlaceBetHandlerWrapper } from "./handlers/place-bet-wrapper/place-bet-h
 import { GameBaseHandlers, GameBaseProps, GameBaseState, RoundState } from "./type";
 import BetConfirmDialog from "../game-components/bet-confirm-dialog";
 import { isPortrait } from "../../_shared/react-hooks";
+import { set } from "lodash";
 
 const minimumScoreboardColumns = {
     portrait: 10,
@@ -139,6 +140,7 @@ abstract class GameBase<P extends GameBaseProps, S extends GameBaseState> extend
                 dispatch,
                 gameMessageHandler: this.gameMessageHandler,
                 durations: this.props.durations,
+                totalTurns: this.props.totalTurns,
                 roundStateHandler: this.roundStateHandler,
                 runGame: (remainingTime: number) => this.runGame(remainingTime),
                 gameId: this.props.id,
@@ -314,6 +316,12 @@ abstract class GameBase<P extends GameBaseProps, S extends GameBaseState> extend
 
         this.setState({ isForceReconnectService: false });
         this._isForceReconnectService = false;
+
+        // setTimeout(() => {
+        //     this.setState({ isForceReconnectService: false });
+        //     this._isForceReconnectService = false;
+
+        // }, 5000);
     }
 
     registerHandlers() {
@@ -648,8 +656,8 @@ abstract class GameBase<P extends GameBaseProps, S extends GameBaseState> extend
         return (
             <GameContainer>
                 {signedIn || this.checkIsForceDisconnect() ? this.renderGame() : <GameLoading />}
-                {(roundState === RoundState.None || !availableInGameData || this.state.isForceReconnectService) && (
-                    <LoadingSpinner removeSpinner={isDisabledGame || !!disconnectReason} />
+                {(roundState === RoundState.None || !availableInGameData || this.checkIsForceDisconnect()) && (
+                    <LoadingSpinner removeSpinner={isDisabledGame || !!disconnectReason} isForceReconnectService={this.checkIsForceDisconnect()} />
                 )}
                 {this.renderDisableGamePopup(isDisabledGame && !!disabledMessage, disabledMessage)}
                 {this.renderConnectFailed(roundState, disconnectReason)}

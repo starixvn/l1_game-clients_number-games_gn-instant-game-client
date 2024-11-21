@@ -21,6 +21,7 @@
     .round-id {
         width: 12rem;
         height: 1rem;
+
         @media screen and (orientation: landscape) {
             width: 16rem;
         }
@@ -60,9 +61,11 @@
     position: relative;
     height: 8rem;
     cursor: auto;
+
     @media screen and (orientation: landscape) {
         height: 2rem;
     }
+
     .countdown-timer {
         width: 6.5rem;
         height: 6.5rem;
@@ -110,11 +113,13 @@
         height: 4rem;
         width: 36rem;
         border-radius: 2rem;
+
         @media screen and (orientation: landscape) {
             width: 71.5rem;
             height: 3.5rem;
         }
     }
+
     .statistic-icon {
         height: 5rem;
         width: 5rem;
@@ -125,6 +130,7 @@
 .chip-container {
     padding-top: 2rem;
     height: 10rem;
+
     @media screen and (orientation: landscape) {
         padding-top: 1rem;
         height: 9rem;
@@ -132,11 +138,16 @@
 }
 
 .spinner-container {
+    width: 100%;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 9999;
+    display: grid;
+    place-items: center;
+    gap: 2rem;
+    color: #fff;
 }
 
 .loader {
@@ -146,41 +157,52 @@
     border-radius: 50%;
     border: 0.5rem solid #fff;
     animation: spin-1 0.6s infinite linear alternate, spin-2 1.2s infinite linear;
+
 }
 
 @keyframes spin-1 {
     0% {
         clip-path: polygon(50% 50%, 0 0, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%);
     }
+
     12.5% {
         clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%);
     }
+
     25% {
         clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 100% 100%, 100% 100%);
     }
+
     50% {
         clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%);
     }
+
     62.5% {
         clip-path: polygon(50% 50%, 100% 0, 100% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%);
     }
+
     75% {
         clip-path: polygon(50% 50%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 50% 100%, 0% 100%);
     }
+
     100% {
         clip-path: polygon(50% 50%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 0% 100%);
     }
 }
+
 @keyframes spin-2 {
     0% {
         transform: scaleY(1) rotate(0deg);
     }
+
     49.99% {
         transform: scaleY(1) rotate(135deg);
     }
+
     50% {
         transform: scaleY(-1) rotate(0deg);
     }
+
     100% {
         transform: scaleY(-1) rotate(-135deg);
     }

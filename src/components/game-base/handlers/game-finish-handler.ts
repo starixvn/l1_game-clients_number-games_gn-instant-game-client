@@ -6,6 +6,7 @@ import { IRoundStateHandler } from "../../round-base/round-state-handler";
 import { GameDurations, Round } from "../type";
 import { GameMessageHandler, messageEventType } from "./";
 import { GameRoundDataHandler } from "./game-round-data-handler";
+import * as Sentry from "@sentry/nextjs";
 
 export type GameFinishHandlerProps = {
     dispatch: Dispatch<GameEventAction>;
@@ -33,7 +34,7 @@ export class GameFinishHandler {
     private _wholeTurn = 0;
 
     constructor(private readonly props: GameFinishHandlerProps) {
-        this._wholeTurn = this.props.roundStateHandler.getWholeRoundDuration({ durations: this.props.durations }) + this.props.durations.beforePlaceBet + this.props.durations.switchRoundAnimation;
+        this._wholeTurn = this.props.roundStateHandler.getWholeRoundDuration({ durations: this.props.durations });
     }
 
     set betWin(betWin: number) {
@@ -61,8 +62,9 @@ export class GameFinishHandler {
         this._elapsedTimeFromLastedFinishEvent = 0;
         this._elapsedTimeIntervalId && clearTimeout(this._elapsedTimeIntervalId);
 
+        const { switchRoundAnimation, beforePlaceBet } = this.props.durations;
         const isNextRound = this.props.gameStateContextModel().drawId % this.props.totalTurns === 0;
-        const validElapsedTime = (isNextRound ? this._wholeTurn + this.props.durations.switchRoundAnimation + this.props.durations.beforePlaceBet : this._wholeTurn) + 2;
+        const validElapsedTime = (isNextRound ? this._wholeTurn + switchRoundAnimation + beforePlaceBet : this._wholeTurn) + 2;
 
         // console.log({ validElapseTime, totalTurns: this.props.totalTurns });
 
@@ -70,13 +72,14 @@ export class GameFinishHandler {
             // const timerTest = this._elapsedTimeFromLastedFinishEvent++;
             // console.log(`_elapsedTimeFromLastedFinishEvent: ${timerTest}`);
             if (this._elapsedTimeFromLastedFinishEvent++ > validElapsedTime) {
-                this._elapsedTimeFromLastedFinishEvent = 0;
                 console.log("------------------");
                 console.log({ _elapsedTimeFromLastedFinishEvent: this._elapsedTimeFromLastedFinishEvent, maxWholeTurn: this._wholeTurn })
                 console.log("GameFinishHandler: disconnect Socket");
-                const logMessage = `_elapsedTimeFromLastedRound: ${this._elapsedTimeFromLastedFinishEvent} ${this.getLogTime()}`;
+                const logMessage = `Turn Counter: ${this.props.gameStateContextModel().drawId % this.props.totalTurns} --- elapsedTimeFromLastedRound: ${this._elapsedTimeFromLastedFinishEvent} ---- Time: ${this.getLogTime()}`;
                 console.log(logMessage);
+                Sentry.captureException(`Force reconnect Socket --- ${logMessage}`);
 
+                this._elapsedTimeFromLastedFinishEvent = 0;
                 this.props.forceReconnectService();
             }
         }, 1000);

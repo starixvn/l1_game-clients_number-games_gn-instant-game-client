@@ -46,7 +46,6 @@ import { PlaceBetHandlerWrapper } from "./handlers/place-bet-wrapper/place-bet-h
 import { GameBaseHandlers, GameBaseProps, GameBaseState, RoundState } from "./type";
 import BetConfirmDialog from "../game-components/bet-confirm-dialog";
 import { isPortrait } from "../../_shared/react-hooks";
-import { set } from "lodash";
 
 const minimumScoreboardColumns = {
     portrait: 10,

@@ -16,8 +16,7 @@ export type GameFinishHandlerProps = {
     gameId: number;
     gameStateContextModel(): GameStateContextModel;
     gameRoundDataHandler: GameRoundDataHandler;
-    connectSocket: Function;
-    disconnectSocket: Function;
+    forceReconnectService: Function;
 };
 
 export class GameFinishHandler {
@@ -53,6 +52,8 @@ export class GameFinishHandler {
         this.props.gameMessageHandler.register(messageEventType.FINISH, this.handleFinishHandler.bind(this));
         this.props.gameMessageHandler.register(messageEventType.STATUS, this.handleStatus);
         this.props.gameMessageHandler.register(messageEventType.ROUND_HISTORY, this.handleRoundHistoryHandler.bind(this));
+
+        this.createElapsedTimerFromLastedFinishEvent();
     };
 
     createElapsedTimerFromLastedFinishEvent = () => {
@@ -60,21 +61,17 @@ export class GameFinishHandler {
         this._elapsedTimeIntervalId && clearTimeout(this._elapsedTimeIntervalId);
 
         this._elapsedTimeIntervalId = setInterval(() => {
-            // console.log(`_elapsedTimeFromLastedFinishEvent: ${this._elapsedTimeFromLastedFinishEvent++}`);
-            if (this._elapsedTimeFromLastedFinishEvent > this._wholeTurn + 1) {
+            const timerTest = this._elapsedTimeFromLastedFinishEvent++;
+            // console.log(`_elapsedTimeFromLastedFinishEvent: ${timerTest}`);
+            if (timerTest > this._wholeTurn - 14) {
+                this._elapsedTimeFromLastedFinishEvent = 0;
                 console.log("------------------");
                 console.log({ _elapsedTimeFromLastedFinishEvent: this._elapsedTimeFromLastedFinishEvent, maxWholeTurn: this._wholeTurn })
                 console.log("GameFinishHandler: disconnect Socket");
                 const logMessage = `_elapsedTimeFromLastedRound: ${this._elapsedTimeFromLastedFinishEvent} ${this.getLogTime()}`;
                 console.log(logMessage);
 
-                this._elapsedTimeFromLastedFinishEvent = 0;
-                this.props.disconnectSocket();
-                this._connectServiceTimeout = setTimeout(() => {
-                    console.log("GameFinishHandler: connect Socket");
-                    console.log("------------------");
-                    this.props.connectSocket();
-                }, 3000)
+                this.props.forceReconnectService();
             }
         }, 1000);
     }

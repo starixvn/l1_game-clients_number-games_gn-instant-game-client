@@ -33,7 +33,7 @@ class UserStakeLevel {
 }
 
 export class PlayerHandler {
-    constructor(private readonly props: PlayerHandlerProps) {}
+    constructor(private readonly props: PlayerHandlerProps) { }
 
     registerEvents = () => {
         this.props.gameMessageHandler.register(messageEventType.USER, ({ user, gameConfigs }) => {
@@ -52,6 +52,7 @@ export class PlayerHandler {
         userStakeLevel: UserStakeLevel;
     }) => {
         if (notPermittedToPlay) {
+            console.log(`handleRestrictPermission handleRestrictPermission`);
             this.props.gameMessageHandler.broadcastGameEvent({ [messageEventType.GAME_DESTROY]: true });
             this.props.dispatch({
                 type: GameEventActionType.DISCONNECT_ERROR,
@@ -69,14 +70,14 @@ export class PlayerHandler {
             payload: { userStakeLevel },
         });
 
-        hasNotice &&  GlobalMessageTransmitter.broadcast({ [GlobalTransmitterEvent.NOTICE]: { message: "Common.message_bet_limit_change" }});
+        hasNotice && GlobalMessageTransmitter.broadcast({ [GlobalTransmitterEvent.NOTICE]: { message: "Common.message_bet_limit_change" } });
     }
 
     handleUserData({ user, gameConfigs }: { user: Player; gameConfigs: any }) {
-        if(gameConfigs){
+        if (gameConfigs) {
             this.props.dispatch({
                 type: GameEventActionType.USER,
-                payload: {rate: user.rate },
+                payload: { rate: user.rate },
             });
         }
     }

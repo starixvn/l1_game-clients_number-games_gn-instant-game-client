@@ -91,6 +91,7 @@ export type GameBaseState = {
     showScoreboard: boolean;
     statisticColumns?: number;
     scoreboardColumns?: number;
+    isForceReconnectService?: boolean;
 };
 
 export interface NoticeModel {

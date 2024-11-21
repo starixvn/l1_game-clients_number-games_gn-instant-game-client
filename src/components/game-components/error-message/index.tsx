@@ -11,8 +11,8 @@ export const ConnectFailedMessage: React.FC<{
     reason: string;
 }> = ({ tolgeeNamespace, id, onReconnect, reason }) => {
     const { t } = useTranslator([tolgeeNamespace]);
-
     const locale = useCurrentLanguage();
+
     const isLostConnection = reason === ConnectFailedReasonKey.lostConnection;
     const renderButton = () => {
         return isLostConnection ? (

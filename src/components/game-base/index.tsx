@@ -274,9 +274,9 @@ abstract class GameBase<P extends GameBaseProps, S extends GameBaseState> extend
 
     onConnectFailed() {
         if (this.checkIsForceDisconnect()) {
-            console.log("onConnectFailed: " + this.state.isForceReconnectService);
             return;
         }
+
         this.onDestroy();
         this.props.dispatch({
             type: GameEventActionType.DISCONNECT_ERROR,
@@ -286,7 +286,6 @@ abstract class GameBase<P extends GameBaseProps, S extends GameBaseState> extend
 
     onSocketDisconnect() {
         if (this.checkIsForceDisconnect()) {
-            console.log("onSocketDisconnect: " + this.state.isForceReconnectService);
             return;
         }
 
@@ -294,7 +293,6 @@ abstract class GameBase<P extends GameBaseProps, S extends GameBaseState> extend
         const { dispatch } = this.props;
         this.disconnectTimeout = setTimeout(
             () => {
-                console.log(`onSocketDisconnect onSocketDisconnect onSocketDisconnect`);
                 dispatch({ type: GameEventActionType.DISCONNECT, payload: {} });
                 if (!this.props.gameStateContextModel.signedIn) {
                     dispatch({
@@ -316,7 +314,6 @@ abstract class GameBase<P extends GameBaseProps, S extends GameBaseState> extend
 
         this.setState({ isForceReconnectService: false });
         this._isForceReconnectService = false;
-        console.log(`disconnectSocket : ${this.state.isForceReconnectService}`);
     }
 
     registerHandlers() {

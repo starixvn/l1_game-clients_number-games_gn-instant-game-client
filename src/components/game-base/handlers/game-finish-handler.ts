@@ -34,9 +34,7 @@ export class GameFinishHandler {
 
     constructor(private readonly props: GameFinishHandlerProps) {
         this._wholeTurn =
-            this.props.roundStateHandler.getWholeRoundDuration({ durations: this.props.durations }) +
-            this.props.durations.beforePlaceBet +
-            this.props.durations.switchRoundAnimation;
+            this.props.roundStateHandler.getWholeRoundDuration({ durations: this.props.durations }) + this.props.durations.beforePlaceBet;
     }
 
     set betWin(betWin: number) {
@@ -62,14 +60,21 @@ export class GameFinishHandler {
         this._elapsedTimeFromLastedFinishEvent = 0;
         this._elapsedTimeIntervalId && clearTimeout(this._elapsedTimeIntervalId);
 
+        const isNextRound = this.props.gameStateContextModel().drawId % 8 === 0;
+        const nextReceiveFinish = isNextRound ? this._wholeTurn + this.props.durations.switchRoundAnimation : this._wholeTurn;
+        console.log(`nextReceiveFinish`, nextReceiveFinish);
+
         this._elapsedTimeIntervalId = setInterval(() => {
             this._elapsedTimeFromLastedFinishEvent++;
-            if (this._elapsedTimeFromLastedFinishEvent > this._wholeTurn + 1) {
+            console.log(`_elapsedTimeFromLastedRound`, this._elapsedTimeFromLastedFinishEvent);
+            if (this._elapsedTimeFromLastedFinishEvent > nextReceiveFinish + 1) {
+                console.log("------starting to force disconnect");;
+                
                 this.props.dispatch({
                     type: GameEventActionType.FORCE_DISCONNECT,
                     payload: { forceDisconnect: true },
                 });
-                if (this._elapsedTimeFromLastedFinishEvent > this._wholeTurn + 2) {
+                if (this._elapsedTimeFromLastedFinishEvent > nextReceiveFinish + 3) {
                     console.log("------------------");
                     console.log({
                         _elapsedTimeFromLastedFinishEvent: this._elapsedTimeFromLastedFinishEvent,
@@ -85,11 +90,11 @@ export class GameFinishHandler {
                         console.log("GameFinishHandler: connect Socket");
                         console.log("------------------");
                         this.props.connectSocket();
-                    }, 3000);
+                    }, 2000);
                 }
             }
         }, 1000);
-    }
+    };
 
     handleFinishHandler(finish) {
         this.handleFinish(finish);

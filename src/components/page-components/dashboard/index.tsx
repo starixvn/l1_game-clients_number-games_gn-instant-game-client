@@ -1,4 +1,5 @@
 import "../../../games/scoreboards";
+import * as Sentry from "@sentry/nextjs";
 
 import dynamic from "next/dynamic";
 import { withRouter } from "next/router";
@@ -7,10 +8,7 @@ import { isMobile } from "react-device-detect";
 
 import ErrorCodeDictionary, { NoticeErrorCode } from "../../../_shared/constants/error-code-dictionary";
 import { GetLocalizedErrorMessage, localStorageKeys, StorageHelper } from "../../../_shared/helpers";
-import {
-    PlayerContextProvider,
-    SettingContextProvider,
-} from "../../../_shared/react-contexts";
+import { PlayerContextProvider, SettingContextProvider } from "../../../_shared/react-contexts";
 import { UserStakeLevel } from "../../game-base/type";
 import { ModalType } from "../../game-components/base-dialog/type";
 import { ErrorApiText } from "../../game-components/error-api-text";
@@ -53,6 +51,8 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
         const buildId = process.env.buildVersion;
         const buildVersion = StorageHelper.get(localStorageKeys.buildVersion) ?? 0;
         if (buildId !== buildVersion) {
+            Sentry.captureException(`Reload app because of new build version: ${buildId} vs ${buildVersion}`);
+
             StorageHelper.set(localStorageKeys.buildVersion, buildId);
             buildVersion && location.reload();
         }
@@ -145,17 +145,18 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
         return (
             <PlayerContextProvider value={authContextValue}>
                 <SettingContextProvider>
-                    <div
-                        className={`${Styles["dashboard"]} no-scroll ${Styles["hidden-scrollbar"]}`}
-                        id={"dashboard"}
-                    >
+                    <div className={`${Styles["dashboard"]} no-scroll ${Styles["hidden-scrollbar"]}`} id={"dashboard"}>
                         <Header lobbyGamesIds={this.dashboardHandler.getLobbyGamesIds()} />
 
-                        {isNoGameOffer ? <></> : <Games
-                            setApiErrorMessage={this.notificationHandler.handleShowApiErrorMessage}
-                            userStakeLevel={userStakeLevel}
-                            updateUserStakeLevel={this.handleUpdateUserStakeLevel}
-                        />}
+                        {isNoGameOffer ? (
+                            <></>
+                        ) : (
+                            <Games
+                                setApiErrorMessage={this.notificationHandler.handleShowApiErrorMessage}
+                                userStakeLevel={userStakeLevel}
+                                updateUserStakeLevel={this.handleUpdateUserStakeLevel}
+                            />
+                        )}
 
                         {isShowErrorModal && (
                             <div className={Styles["container-modal"]}>
@@ -167,8 +168,9 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
                                     isBlockUI={isBlockUI}
                                 >
                                     <div
-                                        className={`modal-center red-color ${isBlockUI ? Styles["block-ui-message"] : ""} ${isNoGameOffer ? "no-game-offer" : ""
-                                            }`}
+                                        className={`modal-center red-color ${isBlockUI ? Styles["block-ui-message"] : ""} ${
+                                            isNoGameOffer ? "no-game-offer" : ""
+                                        }`}
                                     >
                                         {!isBlockUI && <div className={`icon-close modal-icon-close`} onClick={this.closeDialog}></div>}
                                         <ErrorApiText

@@ -170,6 +170,7 @@ body {
     padding-left: 0.8rem;
     line-height: 26.82px;
     font-size: 2.4rem;
+
     @media screen and (orientation: landscape) {
         font-size: 2.2rem;
     }
@@ -261,6 +262,10 @@ body {
 
     background-color: rgba(0, 0, 0, 0.5);
     z-index: var(--modal-index);
+
+    &.force-reconnect {
+        background-color: rgba(0, 0, 0, 0.7);
+    }
 }
 
 .slide-chip-wrapper {

@@ -1,8 +1,20 @@
 import { useEffect, useState } from "react";
-import Styles from "./game-loading.module.scss";
+import Styles from "./loading-spinner.module.scss";
 import { TimeOutConstants } from "../../../_shared/constants";
 
-export const LoadingSpinner = ({ removeSpinner = false, isForceReconnectService = false, timeOut = TimeOutConstants.OverlayMask }) => {
+type LoadingSpinnerProps = {
+    removeSpinner?: boolean;
+    timeOut?: number;
+    children?: React.ReactNode;
+    extraClass?: string;
+};
+
+export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
+    removeSpinner = false,
+    timeOut = TimeOutConstants.OverlayMask,
+    children,
+    extraClass
+}) => {
     const [isClearSpinner, setIsClearSpinner] = useState(false);
 
     useEffect(() => {
@@ -24,8 +36,8 @@ export const LoadingSpinner = ({ removeSpinner = false, isForceReconnectService 
     }
 
     return (
-        <div className={Styles["spinner-container"]}>
-            {isForceReconnectService && <div>The connection is unstable, please wait...</div>}
+        <div className={`${Styles["spinner-container"]} ${Styles[extraClass]}`}>
+            {children}
             <div className={Styles["loader"]}></div>
         </div>
     );

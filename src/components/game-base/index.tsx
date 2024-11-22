@@ -46,6 +46,7 @@ import { PlaceBetHandlerWrapper } from "./handlers/place-bet-wrapper/place-bet-h
 import { GameBaseHandlers, GameBaseProps, GameBaseState, RoundState } from "./type";
 import BetConfirmDialog from "../game-components/bet-confirm-dialog";
 import { isPortrait } from "../../_shared/react-hooks";
+import { ForceReconnectMessage } from "../game-components/game-loading/force-reconnect-message";
 
 const minimumScoreboardColumns = {
     portrait: 10,
@@ -265,7 +266,7 @@ abstract class GameBase<P extends GameBaseProps, S extends GameBaseState> extend
         this.socket = socket;
     }
 
-    checkIsForceDisconnect() {
+    checkForceReconnectService() {
         return this.state.isForceReconnectService || this._isForceReconnectService;
     }
 
@@ -274,7 +275,7 @@ abstract class GameBase<P extends GameBaseProps, S extends GameBaseState> extend
     };
 
     onConnectFailed() {
-        if (this.checkIsForceDisconnect()) {
+        if (this.checkForceReconnectService()) {
             return;
         }
 
@@ -286,7 +287,7 @@ abstract class GameBase<P extends GameBaseProps, S extends GameBaseState> extend
     }
 
     onSocketDisconnect() {
-        if (this.checkIsForceDisconnect()) {
+        if (this.checkForceReconnectService()) {
             return;
         }
 
@@ -315,12 +316,6 @@ abstract class GameBase<P extends GameBaseProps, S extends GameBaseState> extend
 
         this.setState({ isForceReconnectService: false });
         this._isForceReconnectService = false;
-
-        // setTimeout(() => {
-        //     this.setState({ isForceReconnectService: false });
-        //     this._isForceReconnectService = false;
-
-        // }, 5000);
     }
 
     registerHandlers() {
@@ -597,10 +592,37 @@ abstract class GameBase<P extends GameBaseProps, S extends GameBaseState> extend
         return <NewRoundTransitionWithoutExtraSeconds />;
     }
 
+    getCommonComponentExtraClass() {
+        return this.checkForceReconnectService() ? "force-reconnect" : "";
+    }
+
+    renderLoadingSpinner() {
+        const { roundState, availableInGameData } = this.props.gameStateContextModel;
+        const isShowSpinner = roundState === RoundState.None || !availableInGameData || this.checkForceReconnectService();
+
+        if (!isShowSpinner) {
+            return null;
+        }
+
+        return <LoadingSpinner removeSpinner={false} extraClass={this.getCommonComponentExtraClass()}>
+            {this.checkForceReconnectService() && <ForceReconnectMessage />}
+        </LoadingSpinner>
+    }
+
+    renderOverlayMask() {
+        const { availableInGameData, roundState } = this.props.gameStateContextModel;
+        const isShowOverlay = !availableInGameData || this.checkForceReconnectService();
+
+        if (!isShowOverlay) {
+            return null;
+        }
+
+        return <OverlayMask removeOverlay={roundState === RoundState.Disabled} extraClass={this.getCommonComponentExtraClass()} />
+    }
+
     getRenderTemplate() {
         const uid = (this.context as PlayerContextModel).authorizeInfo?.user?.UID;
-        const { availableInGameData, roundState } = this.props.gameStateContextModel;
-        const isDisabledGame = roundState === RoundState.Disabled;
+        const { availableInGameData } = this.props.gameStateContextModel;
 
         return (
             <>
@@ -623,7 +645,7 @@ abstract class GameBase<P extends GameBaseProps, S extends GameBaseState> extend
                         {this.renderScoreboardsPopup()}
                         <div className={`${SwiperNoSwiping} slide-chip-wrapper`}> {this.renderSlidingChips()}</div>
                     </div>
-                    {(!availableInGameData || this.checkIsForceDisconnect()) && <OverlayMask removeOverlay={isDisabledGame} />}
+                    {this.renderOverlayMask()}
                     {this.renderGameGuideModal()}
                     {this.renderNewRoundTransition()}
                     {this.renderNotice()}
@@ -649,15 +671,13 @@ abstract class GameBase<P extends GameBaseProps, S extends GameBaseState> extend
     }
 
     render() {
-        const { signedIn, roundState, disabledMessage, disconnectReason, availableInGameData } = this.props.gameStateContextModel;
+        const { signedIn, roundState, disabledMessage, disconnectReason } = this.props.gameStateContextModel;
         const isDisabledGame = roundState === RoundState.Disabled;
 
         return (
             <GameContainer>
-                {signedIn || this.checkIsForceDisconnect() ? this.renderGame() : <GameLoading />}
-                {(roundState === RoundState.None || !availableInGameData || this.checkIsForceDisconnect()) && (
-                    <LoadingSpinner removeSpinner={isDisabledGame || !!disconnectReason} isForceReconnectService={this.checkIsForceDisconnect()} />
-                )}
+                {signedIn || this.checkForceReconnectService() ? this.renderGame() : <GameLoading />}
+                {this.renderLoadingSpinner()}
                 {this.renderDisableGamePopup(isDisabledGame && !!disabledMessage, disabledMessage)}
                 {this.renderConnectFailed(roundState, disconnectReason)}
             </GameContainer>
@@ -667,7 +687,7 @@ abstract class GameBase<P extends GameBaseProps, S extends GameBaseState> extend
     private renderConnectFailed(roundState: RoundState, disconnectReason: string): React.ReactNode {
         const { tolgeeNamespace, id } = this.props;
 
-        if (this.checkIsForceDisconnect()) {
+        if (this.checkForceReconnectService()) {
             return null;
         }
 

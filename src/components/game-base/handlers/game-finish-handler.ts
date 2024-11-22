@@ -77,7 +77,8 @@ export class GameFinishHandler {
                 console.log("GameFinishHandler: disconnect Socket");
                 const logMessage = `Turn Counter: ${this.props.gameStateContextModel().drawId % this.props.totalTurns} --- elapsedTimeFromLastedRound: ${this._elapsedTimeFromLastedFinishEvent} ---- Time: ${this.getLogTime()}`;
                 console.log(logMessage);
-                Sentry.captureException(`Force reconnect Socket --- ${logMessage}`);
+                // Sentry.captureException(`Force reconnect Socket --- ${logMessage}`);
+                Sentry.captureMessage(`Force reconnect Socket --- ${logMessage}`);
 
                 this._elapsedTimeFromLastedFinishEvent = 0;
                 this.props.forceReconnectService();

@@ -12,7 +12,7 @@ import { Chip } from "./chip";
 import Styles from "./chip-slider.module.scss";
 import { localStorageKeys, StorageHelper } from "../../../_shared/helpers";
 
-const SlidingTimeInMillisecond = 300;
+const SlidingTimeInMillisecond = 400;
 const slideToShowConstant = {
     portrait: 4,
     landscape: 7
@@ -29,7 +29,10 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
     const settingContext = useSettingContext();
     const chipSettings = settingContext.chipSettings;
     const [isFirstLoad, setIsFirstLoad] = useState(false);
-    const [isScrolling, setIsScrolling] = useState(false);
+    const [scrollingState, setScrollingState] = useState({
+        isScrolling: false,
+        direction: ""
+    });
 
     let sliderRef = useRef<any>(null);
     let sliderWrapperRef = useRef<any>(null);
@@ -41,6 +44,12 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
 
     const playClickChip = useSelectChipSound();
 
+    const resetScrollState = () => {
+        setScrollingState({
+            isScrolling: false,
+            direction: ""
+        });
+    }
 
     const chipValues = useMemo(() => {
         if (gameConfigs && userStakeLevel) {
@@ -55,6 +64,7 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
         const checkOrientation = () => {
             const { portrait, landscape } = slideToShowConstant;
             setSlidesToShow(isPortrait ? portrait : landscape);
+            !isFirstLoad && onClickChip(chipValues[selectedChip]);
         };
 
         setIsFirstLoad(true);
@@ -84,10 +94,11 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
         updateSlickListStyle(chipIndex);
 
         if (isManualCLick) {
-            setIsScrolling(false);
+            resetScrollState();
         }
         else {
-            handleAfterChangeSlider();
+            !isFirstLoad && handleScrollChips();
+            setIsFirstLoad(false);
         }
     };
 
@@ -135,11 +146,11 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
             id="icon-chip-slider-pre"
             className={`${Styles["icon-prev"]} ${!enabledPrevBtn && Styles["disabled"]}`}
             onClick={() => {
-                if (enabledPrevBtn && !isScrolling) {
+                if (enabledPrevBtn && !scrollingState.isScrolling) {
                     sliderRef.current?.slickGoTo(currentSlide - 1);
                     const chipIndex = chipValues.indexOf(selectedChip);
                     handleSelectChip(chipValues[chipIndex - 1]);
-                    setIsScrolling(false);
+                    resetScrollState();
                     setEnabledNextBtn(false);
                     setEnabledPrevBtn(false);
                 }
@@ -152,11 +163,11 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
             id="icon-chip-slider-next"
             className={`${Styles["icon-next"]} ${!enabledNextBtn && Styles["disabled"]}`}
             onClick={() => {
-                if (enabledNextBtn && !isScrolling) {
+                if (enabledNextBtn && !scrollingState.isScrolling) {
                     sliderRef.current?.slickGoTo(currentSlide + 1);
                     const chipIndex = chipValues.indexOf(selectedChip);
                     handleSelectChip(chipValues[chipIndex + 1]);
-                    setIsScrolling(false);
+                    resetScrollState();
                     setEnabledNextBtn(false);
                     setEnabledPrevBtn(false);
                 }
@@ -165,17 +176,22 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
     );
 
     const handleScrollChips = () => {
+        if (isVisibleCurrentSelectedChip()) return;
         const activeElements = sliderWrapperRef.current?.querySelectorAll(".slick-active") || [];
-        const parentIndex = parseInt(activeElements[activeElements.length - 1]?.getAttribute("data-index") || "0", 10);
+
+        const slickElmIndex = scrollingState.direction === "right" ? 0 : activeElements.length - 1;
+        // console.log({ direction: scrollingState.direction, slickElmIndex });
+
+        const parentIndex = parseInt(activeElements[slickElmIndex]?.getAttribute("data-index") || "0", 10);
         sliderRef.current?.slickGoTo(parentIndex);
         handleSelectChip(chipValues[parentIndex]);
-        setIsScrolling(false);
+        resetScrollState();
     };
 
-    const isPrevOrNextEvent = () => {
+    const isVisibleCurrentSelectedChip = () => {
         const activeElements = Array.from((sliderWrapperRef as React.RefObject<HTMLDivElement>).current?.querySelectorAll(".slick-active") || []);
-        const dataIndexes = activeElements.map((element) => element.getAttribute("data-index"));
-        return dataIndexes.includes(chipValues.indexOf(selectedChip).toString());
+        const activeSlidesIndices = activeElements.map((element) => element.getAttribute("data-index"));
+        return activeSlidesIndices.includes(chipValues.indexOf(selectedChip).toString());
     }
 
     const handleSleepMode = () => {
@@ -199,14 +215,6 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
         }
     }
 
-    const handleAfterChangeSlider = () => {
-        if (!isPrevOrNextEvent() && !isFirstLoad) {
-            handleScrollChips();
-        }
-
-        setIsFirstLoad(false);
-    };
-
     const SliderSetting = {
         speed: SlidingTimeInMillisecond,
         infinite: false,
@@ -218,13 +226,19 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
         pauseOnHover: true,
         slidesToScroll: slidesToShow,
         touchThreshold: 10,
-        swipeEvent: () => setIsScrolling(true),
+        swipeEvent: (direction: string) => {
+            setScrollingState({
+                isScrolling: true,
+                direction
+            })
+        },
         afterChange: (currentSlide: number) => {
             StorageHelper.set(localStorageKeys.currentChipSlide, currentSlide);
             if (StorageHelper.get<boolean>(localStorageKeys.isSleepMode)) {
                 handleSleepMode();
             }
-            isScrolling && handleScrollChips();
+
+            scrollingState.isScrolling && handleScrollChips();
         },
         nextArrow: <NextArrow currentSlide={0} />,
         prevArrow: <PrevArrow currentSlide={0} />,

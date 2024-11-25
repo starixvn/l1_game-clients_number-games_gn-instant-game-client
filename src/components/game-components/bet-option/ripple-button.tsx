@@ -40,6 +40,8 @@ const RippleButton: React.FC<RippleButtonProps> = ({ choice, className, id }) =>
     };
 
     useEffect(() => {
+        if (!systemContext.selectedChip) return;
+
         setCursorImage(
             `${DEFAULT_CHIP_CURSOR_PATH}/${findChipSetting(systemContext.selectedChip)?.color?.replace("#", "")}.svg?v=${buildVersion}`
         );

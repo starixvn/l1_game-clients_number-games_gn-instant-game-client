@@ -12,7 +12,7 @@ import { Chip } from "./chip";
 import Styles from "./chip-slider.module.scss";
 import { localStorageKeys, StorageHelper } from "../../../_shared/helpers";
 
-const SlidingTimeInMillisecond = 400;
+const SlidingTimeInMillisecond = 300;
 const slideToShowConstant = {
     portrait: 4,
     landscape: 7
@@ -103,6 +103,7 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
     };
 
     const handleSelectChip = (chipValue: number) => {
+        console.log({ selectedChip, chipValue });
         if (selectedChip !== chipValue && !StorageHelper.get<boolean>(`${localStorageKeys.isSleepMode}`)) {
             dispatch({
                 type: SystemEventActionType.SELECT_CHIP,
@@ -123,8 +124,11 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
 
     useEffect(() => {
         const chip = chipValues.find((chip) => chip === selectedChip) || chipValues?.[0];
-        chip > 0 && onClickChip(chip, false);
-        chipValues && updateArrowsByChipValue(selectedChip);
+        chip > 0 && onClickChip(chip, true);
+
+        setTimeout(() => {
+            chipValues && updateArrowsByChipValue(selectedChip);
+        }, scrollingState.isScrolling ? 0 : 100);
     }, [chipValues, selectedChip]);
 
     const findChipSetting = (value) => {
@@ -141,46 +145,38 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
         );
     };
 
-    const PrevArrow: React.FC<{ currentSlide: number }> = ({ currentSlide }) => (
+    const setStateWhenClickPrevOrNext = (isEnableButton: boolean, isNextButton: boolean) => {
+        if (isEnableButton) {
+            const chipIndex = chipValues.indexOf(selectedChip);
+            onClickChip(chipValues[chipIndex + (isNextButton ? 1 : -1)]);
+            resetScrollState();
+            setEnabledNextBtn(false);
+            setEnabledPrevBtn(false);
+        }
+    }
+
+    const PrevArrow = () => (
         <span
             id="icon-chip-slider-pre"
             className={`${Styles["icon-prev"]} ${!enabledPrevBtn && Styles["disabled"]}`}
-            onClick={() => {
-                if (enabledPrevBtn && !scrollingState.isScrolling) {
-                    sliderRef.current?.slickGoTo(currentSlide - 1);
-                    const chipIndex = chipValues.indexOf(selectedChip);
-                    handleSelectChip(chipValues[chipIndex - 1]);
-                    resetScrollState();
-                    setEnabledNextBtn(false);
-                    setEnabledPrevBtn(false);
-                }
-            }}
+            onClick={() => setStateWhenClickPrevOrNext(enabledPrevBtn, false)}
         ></span>
     );
 
-    const NextArrow: React.FC<{ currentSlide: number }> = ({ currentSlide }) => (
+    const NextArrow = () => (
         <span
             id="icon-chip-slider-next"
             className={`${Styles["icon-next"]} ${!enabledNextBtn && Styles["disabled"]}`}
-            onClick={() => {
-                if (enabledNextBtn && !scrollingState.isScrolling) {
-                    sliderRef.current?.slickGoTo(currentSlide + 1);
-                    const chipIndex = chipValues.indexOf(selectedChip);
-                    handleSelectChip(chipValues[chipIndex + 1]);
-                    resetScrollState();
-                    setEnabledNextBtn(false);
-                    setEnabledPrevBtn(false);
-                }
-            }}
+            onClick={() => setStateWhenClickPrevOrNext(enabledNextBtn, true)}
         ></span>
     );
 
     const handleScrollChips = () => {
+        // console.log(`inner handleScrollChips`);
         if (isVisibleCurrentSelectedChip()) return;
         const activeElements = sliderWrapperRef.current?.querySelectorAll(".slick-active") || [];
 
         const slickElmIndex = scrollingState.direction === "right" ? 0 : activeElements.length - 1;
-        // console.log({ direction: scrollingState.direction, slickElmIndex });
 
         const parentIndex = parseInt(activeElements[slickElmIndex]?.getAttribute("data-index") || "0", 10);
         sliderRef.current?.slickGoTo(parentIndex);
@@ -222,15 +218,17 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
         slidesToShow,
         arrows: true,
         variableWidth: true,
-        pauseOnFocus: true,
-        pauseOnHover: true,
         slidesToScroll: slidesToShow,
         touchThreshold: 10,
         swipeEvent: (direction: string) => {
+            console.log({ direction })
             setScrollingState({
                 isScrolling: true,
                 direction
             })
+        },
+        beforeChange: (currentSlide: number) => {
+
         },
         afterChange: (currentSlide: number) => {
             StorageHelper.set(localStorageKeys.currentChipSlide, currentSlide);
@@ -238,10 +236,11 @@ export const ChipSlider: React.FC<{ gameConfigs: GameConfigs; userStakeLevel: Us
                 handleSleepMode();
             }
 
+            console.log({ isScrolling: scrollingState.isScrolling });
             scrollingState.isScrolling && handleScrollChips();
         },
-        nextArrow: <NextArrow currentSlide={0} />,
-        prevArrow: <PrevArrow currentSlide={0} />,
+        nextArrow: <NextArrow />,
+        prevArrow: <PrevArrow />,
     };
 
     return (

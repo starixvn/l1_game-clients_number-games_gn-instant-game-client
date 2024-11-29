@@ -18,7 +18,21 @@ export function InitSocketIO(socketInfo: SocketInfo, session: any, gameName: str
     };
 
     const socket = io(socketUri, socketOption);
-    let latency = 0;
+
+    let lastPong = null;
+    const sendPing = () => {
+        const timestamp = Date.now();
+        console.log(`Sending custom_ping with timestamp: ${timestamp}`);
+        socket.emit("custom_ping", timestamp);
+
+
+        setTimeout(() => {
+            if (!lastPong || lastPong < timestamp) {
+                console.warn("No pong received for the last ping!");
+            }
+        }, 5000);
+    }
+
     if (socket) {
         gameMessageHandler.registerSocketEvents();
 
@@ -44,10 +58,17 @@ export function InitSocketIO(socketInfo: SocketInfo, session: any, gameName: str
             gameMessageHandler.broadcastGameEvent({ [messageEventType.SOCKET_DISCONNECTED]: true });
         });
 
-        socket.on("pong", (ms) => {
-            latency = ms;
-            console.log(`%cPong received. Latency: ${latency} ms`, 'color: blue; font-weight: bold; background: yellow;');
+        socket.on("custom_pong", (timestamp) => {
+            console.log(`%cReceived custom_pong for timestamp: ${timestamp}`, 'color: blue; font-weight: bold; background: yellow;');
+            lastPong = timestamp;
         });
+
+        socket.on('health-check', (message, callback) => {
+            console.log(message);
+            callback('yes');
+        });
+
+        setInterval(sendPing, 2000);
     }
 
     return { socket };

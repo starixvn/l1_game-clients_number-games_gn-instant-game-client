@@ -85,7 +85,7 @@ export class GameFinishHandler {
                 Sentry.captureMessage(`Force reconnect Socket --- ${logMessage}`);
 
                 this._elapsedTimeFromLastedFinishEvent = 0;
-                // this.props.forceReconnectService();
+                this.props.forceReconnectService();
             }
         }, 1000);
     }

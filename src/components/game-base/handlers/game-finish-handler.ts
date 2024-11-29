@@ -69,10 +69,11 @@ export class GameFinishHandler {
         // console.log({ validElapseTime, totalTurns: this.props.totalTurns });
 
         this._elapsedTimeIntervalId = setInterval(() => {
-            // const timerTest = this._elapsedTimeFromLastedFinishEvent++;
-            // console.log(`_elapsedTimeFromLastedFinishEvent: ${timerTest}`);
-            if (this._elapsedTimeFromLastedFinishEvent++ > validElapsedTime) {
+            const timerTest = this._elapsedTimeFromLastedFinishEvent++;
+            console.log(`_elapsedTimeFromLastedFinishEvent: ${timerTest}`);
+            if (this._elapsedTimeFromLastedFinishEvent > validElapsedTime) {
                 console.log("------------------");
+
                 console.log({ _elapsedTimeFromLastedFinishEvent: this._elapsedTimeFromLastedFinishEvent, maxWholeTurn: this._wholeTurn })
                 console.log("GameFinishHandler: disconnect Socket");
                 const logMessage = `Turn Counter: ${this.props.gameStateContextModel().drawId % this.props.totalTurns} --- elapsedTimeFromLastedRound: ${this._elapsedTimeFromLastedFinishEvent} ---- Time: ${this.getLogTime()}`;

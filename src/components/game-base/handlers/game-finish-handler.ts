@@ -174,7 +174,11 @@ export class GameFinishHandler {
     clearTimeout = () => {
         this.showResultInfoTimeout && clearTimeout(this.showResultInfoTimeout);
         this.showWinningAnimationTimeout && clearTimeout(this.showWinningAnimationTimeout);
-        this._elapsedTimeIntervalId && clearTimeout(this._elapsedTimeIntervalId);
         this._connectServiceTimeout && clearTimeout(this._connectServiceTimeout);
+
+        if (this._elapsedTimeIntervalId) {
+            clearTimeout(this._elapsedTimeIntervalId);
+            this._elapsedTimeFromLastedFinishEvent = 0;
+        }
     };
 }

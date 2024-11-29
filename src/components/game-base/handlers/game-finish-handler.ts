@@ -71,7 +71,7 @@ export class GameFinishHandler {
         this._elapsedTimeIntervalId = setInterval(() => {
             const timerTest = this._elapsedTimeFromLastedFinishEvent++;
             console.log(`_elapsedTimeFromLastedFinishEvent: ${timerTest}`);
-            if (this._elapsedTimeFromLastedFinishEvent > validElapsedTime) {
+            if (this._elapsedTimeFromLastedFinishEvent > 30) {
                 console.log("------------------");
 
                 console.log({ _elapsedTimeFromLastedFinishEvent: this._elapsedTimeFromLastedFinishEvent, maxWholeTurn: this._wholeTurn })

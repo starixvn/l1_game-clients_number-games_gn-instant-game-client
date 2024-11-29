@@ -30,7 +30,7 @@ export function InitSocketIO(socketInfo: SocketInfo, session: any, gameName: str
             if (!lastPong || lastPong < timestamp) {
                 console.warn("No pong received for the last ping!");
             }
-        }, 5000);
+        }, 3000);
     }
 
     if (socket) {
@@ -68,7 +68,7 @@ export function InitSocketIO(socketInfo: SocketInfo, session: any, gameName: str
             callback('yes');
         });
 
-        // setInterval(sendPing, 2000);
+        setInterval(sendPing, 6000);
     }
 
     return { socket };

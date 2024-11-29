@@ -72,6 +72,7 @@ abstract class GameBase<P extends GameBaseProps, S extends GameBaseState> extend
     private readonly gameRoundDataHandler?: GameRoundDataHandler;
     private minimumScoreboardColumns = minimumScoreboardColumns.portrait;
     private _isForceReconnectService = false;
+    private lastPong = 0;
 
     constructor(props: P, handlers: GameBaseHandlers) {
         super(props);
@@ -382,6 +383,19 @@ abstract class GameBase<P extends GameBaseProps, S extends GameBaseState> extend
             this.runGame(clientRemainingTime);
         }
     }
+
+    // sendPing = () => {
+    //     const timestamp = Date.now();
+    //     console.log(`Sending custom_ping with timestamp: ${timestamp}`);
+    //     this.socket.emit("custom_ping", timestamp);
+
+
+    //     setTimeout(() => {
+    //         if (!this.lastPong || this.lastPong < timestamp) {
+    //             console.warn("No pong received for the last ping!");
+    //         }
+    //     }, 5000);
+    // }
 
     runGame(remainingTime: number) {
         this.timeCounter = remainingTime;

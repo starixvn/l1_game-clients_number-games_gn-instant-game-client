@@ -41,6 +41,7 @@ export class GameFinishHandler {
         this._betWin = betWin;
     }
 
+
     getLogTime() {
         const now = new Date();
         const hours = now.getHours().toString().padStart(2, "0");
@@ -58,6 +59,8 @@ export class GameFinishHandler {
         this.createElapsedTimerFromLastedFinishEvent();
     };
 
+
+
     createElapsedTimerFromLastedFinishEvent = () => {
         this._elapsedTimeFromLastedFinishEvent = 0;
         this._elapsedTimeIntervalId && clearTimeout(this._elapsedTimeIntervalId);
@@ -66,15 +69,15 @@ export class GameFinishHandler {
         const isNextRound = this.props.gameStateContextModel().drawId % this.props.totalTurns === 0;
         const validElapsedTime = (isNextRound ? this._wholeTurn + switchRoundAnimation + beforePlaceBet : this._wholeTurn) + 2;
 
-        // console.log({ validElapseTime, totalTurns: this.props.totalTurns });
+        console.log({ validElapsedTime });
 
         this._elapsedTimeIntervalId = setInterval(() => {
-            const timerTest = this._elapsedTimeFromLastedFinishEvent++;
-            console.log(`_elapsedTimeFromLastedFinishEvent: ${timerTest}`);
-            if (this._elapsedTimeFromLastedFinishEvent > 30) {
-                console.log("------------------");
+            this._elapsedTimeFromLastedFinishEvent++;
+            console.log(`_elapsedTimeFromLastedFinishEvent: ${this._elapsedTimeFromLastedFinishEvent}`);
+            if (this._elapsedTimeFromLastedFinishEvent > validElapsedTime) {
+                console.log("------------------------------------------------------");
 
-                console.log({ _elapsedTimeFromLastedFinishEvent: this._elapsedTimeFromLastedFinishEvent, maxWholeTurn: this._wholeTurn })
+                // console.log({ _elapsedTimeFromLastedFinishEvent: this._elapsedTimeFromLastedFinishEvent, maxWholeTurn: this._wholeTurn })
                 console.log("GameFinishHandler: disconnect Socket");
                 const logMessage = `Turn Counter: ${this.props.gameStateContextModel().drawId % this.props.totalTurns} --- elapsedTimeFromLastedRound: ${this._elapsedTimeFromLastedFinishEvent} ---- Time: ${this.getLogTime()}`;
                 console.log(logMessage);

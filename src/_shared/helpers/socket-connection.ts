@@ -68,7 +68,7 @@ export function InitSocketIO(socketInfo: SocketInfo, session: any, gameName: str
             callback('yes');
         });
 
-        setInterval(sendPing, 2000);
+        // setInterval(sendPing, 2000);
     }
 
     return { socket };
